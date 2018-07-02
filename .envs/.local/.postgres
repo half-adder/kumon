@@ -1,0 +1,7 @@
+# PostgreSQL
+# ------------------------------------------------------------------------------
+POSTGRES_HOST=postgres
+POSTGRES_PORT=5432
+POSTGRES_DB=kumon_student_db
+POSTGRES_USER=LvbjoNjgemDHCWrTBDNjrtXWruJtoLRt
+POSTGRES_PASSWORD=PPOxYRAsLXhuzhxsMWVmnX56Zd53p4IVDey5tL9rz7qnPTDmU0fxx40V0BLC6Jqm

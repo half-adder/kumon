@@ -1,0 +1,5 @@
+[run]
+include = kumon_student_db/*
+omit = *migrations*, *tests*
+plugins =
+    django_coverage_plugin
