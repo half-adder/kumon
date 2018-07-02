@@ -1,3 +1,4 @@
+from django.core.exceptions import FieldError
 import pytest
 from kumon_student_db.student_registration.tests import factories
 from kumon_student_db.student_registration.models import Student
@@ -39,3 +40,15 @@ def test_student_2_subj_if_reg_reading_and_math():
         reading_level=Student.LEVEL_CHOICES[1][0],
     )
     assert student.n_subjects == 2
+
+
+def test_registration_discount_non_negative():
+    with pytest.raises(FieldError):
+        student = factories.StudentFactory(registration_discount_percent=-1)
+        student.save()
+
+
+def test_registration_discount_max_100():
+    with pytest.raises(FieldError):
+        student = factories.StudentFactory(registration_discount_percent=101)
+        student.save()

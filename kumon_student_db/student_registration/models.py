@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.exceptions import FieldError
 from phonenumber_field.modelfields import PhoneNumberField
 from datetime import date
 from dateutil.relativedelta import relativedelta
@@ -143,3 +144,8 @@ class Student(core_models.TimeStampedModel):
     @property
     def total_paid(self):
         return self.cash_paid + self.debit_paid + self.check_paid + self.credit_paid
+
+    def save(self, *args, **kwargs):
+        if self.registration_discount_percent < 0 or self.registration_discount_percent > 100:
+            raise FieldError('Registration discount must be in range [0,100].')
+        super().save(*args, **kwargs)
