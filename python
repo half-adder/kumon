@@ -1,0 +1,2084 @@
+PostgreSQL is available
+[1mTest session starts (platform: linux, Python 3.6.6, pytest 3.6.2, pytest-sugar 0.9.1)[0m
+Django settings: config.settings.test (from ini file)
+rootdir: /app, inifile: pytest.ini
+plugins: sugar-0.9.1, django-3.3.2
+
+ [36mkumon_student_db/student_registration/tests/[0mtest_models.py[0m [32m✓[0m     [32m10% [0m[40m[32m█[0m[40m[32m         [0m
+
+―――――――――― ERROR at setup of TestUserCreationForm.test_clean_username ――――――――――
+
+self = <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>
+sql = 'SELECT "student_registration_monthlycost"."id", "student_registration_monthlycost"."cost", "student_registration_monthlycost"."effective_date" FROM "student_registration_monthlycost" ORDER BY "student_registration_monthlycost"."id" ASC'
+params = ()
+ignored_wrapper_args = (False, {'connection': <django.db.backends.postgresql.base.DatabaseWrapper object at 0x7fea480fcbe0>, 'cursor': <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>})
+
+[1m    def _execute(self, sql, params, *ignored_wrapper_args):[0m
+[1m        self.db.validate_no_broken_transaction()[0m
+[1m        with self.db.wrap_database_errors:[0m
+[1m            if params is None:[0m
+[1m                return self.cursor.execute(sql)[0m
+[1m            else:[0m
+[1m>               return self.cursor.execute(sql, params)[0m
+[1m[31mE               psycopg2.ProgrammingError: relation "student_registration_monthlycost" does not exist[0m
+[1m[31mE               LINE 1: ...t_registration_monthlycost"."effective_date" FROM "student_r...[0m
+[1m[31mE                                                                            ^[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/utils.py[0m:85: ProgrammingError
+
+[33mThe above exception was the direct cause of the following exception:[0m
+
+self = <django.db.models.sql.compiler.SQLCompiler object at 0x7fea46a67048>
+result_type = 'multi', chunked_fetch = True, chunk_size = 2000
+
+[1m    def execute_sql(self, result_type=MULTI, chunked_fetch=False, chunk_size=GET_ITERATOR_CHUNK_SIZE):[0m
+[1m        """[0m
+[1m            Run the query against the database and return the result(s). The[0m
+[1m            return value is a single data item if result_type is SINGLE, or an[0m
+[1m            iterator over the results if the result_type is MULTI.[0m
+[1m    [0m
+[1m            result_type is either MULTI (use fetchmany() to retrieve all rows),[0m
+[1m            SINGLE (only retrieve a single row), or None. In this last case, the[0m
+[1m            cursor is returned if any query is executed, since it's used by[0m
+[1m            subclasses such as InsertQuery). It's possible, however, that no query[0m
+[1m            is needed, as the filters describe an empty set. In that case, None is[0m
+[1m            returned, to avoid any unnecessary database interaction.[0m
+[1m            """[0m
+[1m        if not result_type:[0m
+[1m            result_type = NO_RESULTS[0m
+[1m        try:[0m
+[1m            sql, params = self.as_sql()[0m
+[1m            if not sql:[0m
+[1m                raise EmptyResultSet[0m
+[1m        except EmptyResultSet:[0m
+[1m            if result_type == MULTI:[0m
+[1m                return iter([])[0m
+[1m            else:[0m
+[1m                return[0m
+[1m        if chunked_fetch:[0m
+[1m            cursor = self.connection.chunked_cursor()[0m
+[1m        else:[0m
+[1m            cursor = self.connection.cursor()[0m
+[1m        try:[0m
+[1m>           cursor.execute(sql, params)[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/models/sql/compiler.py[0m:1068: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>
+sql = 'SELECT "student_registration_monthlycost"."id", "student_registration_monthlycost"."cost", "student_registration_monthlycost"."effective_date" FROM "student_registration_monthlycost" ORDER BY "student_registration_monthlycost"."id" ASC'
+params = ()
+
+[1m    def execute(self, sql, params=None):[0m
+[1m>       return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/utils.py[0m:68: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>
+sql = 'SELECT "student_registration_monthlycost"."id", "student_registration_monthlycost"."cost", "student_registration_monthlycost"."effective_date" FROM "student_registration_monthlycost" ORDER BY "student_registration_monthlycost"."id" ASC'
+params = (), many = False
+executor = <bound method CursorWrapper._execute of <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>>
+
+[1m    def _execute_with_wrappers(self, sql, params, many, executor):[0m
+[1m        context = {'connection': self.db, 'cursor': self}[0m
+[1m        for wrapper in reversed(self.db.execute_wrappers):[0m
+[1m            executor = functools.partial(wrapper, executor)[0m
+[1m>       return executor(sql, params, many, context)[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/utils.py[0m:77: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>
+sql = 'SELECT "student_registration_monthlycost"."id", "student_registration_monthlycost"."cost", "student_registration_monthlycost"."effective_date" FROM "student_registration_monthlycost" ORDER BY "student_registration_monthlycost"."id" ASC'
+params = ()
+ignored_wrapper_args = (False, {'connection': <django.db.backends.postgresql.base.DatabaseWrapper object at 0x7fea480fcbe0>, 'cursor': <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>})
+
+[1m    def _execute(self, sql, params, *ignored_wrapper_args):[0m
+[1m        self.db.validate_no_broken_transaction()[0m
+[1m        with self.db.wrap_database_errors:[0m
+[1m            if params is None:[0m
+[1m                return self.cursor.execute(sql)[0m
+[1m            else:[0m
+[1m>               return self.cursor.execute(sql, params)[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/utils.py[0m:85: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <django.db.utils.DatabaseErrorWrapper object at 0x7fea46ae16a0>
+exc_type = <class 'psycopg2.ProgrammingError'>
+exc_value = ProgrammingError('relation "student_registration_monthlycost" does not exist\nLINE 1: ...t_registration_monthlycost"."effective_date" FROM "student_r...\n                                                             ^\n',)
+traceback = <traceback object at 0x7fea46895fc8>
+
+[1m    def __exit__(self, exc_type, exc_value, traceback):[0m
+[1m        if exc_type is None:[0m
+[1m            return[0m
+[1m        for dj_exc_type in ([0m
+[1m                DataError,[0m
+[1m                OperationalError,[0m
+[1m                IntegrityError,[0m
+[1m                InternalError,[0m
+[1m                ProgrammingError,[0m
+[1m                NotSupportedError,[0m
+[1m                DatabaseError,[0m
+[1m                InterfaceError,[0m
+[1m                Error,[0m
+[1m        ):[0m
+[1m            db_exc_type = getattr(self.wrapper.Database, dj_exc_type.__name__)[0m
+[1m            if issubclass(exc_type, db_exc_type):[0m
+[1m                dj_exc_value = dj_exc_type(*exc_value.args)[0m
+[1m                # Only set the 'errors_occurred' flag for errors that may make[0m
+[1m                # the connection unusable.[0m
+[1m                if dj_exc_type not in (DataError, IntegrityError):[0m
+[1m                    self.wrapper.errors_occurred = True[0m
+[1m>               raise dj_exc_value.with_traceback(traceback) from exc_value[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/utils.py[0m:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>
+sql = 'SELECT "student_registration_monthlycost"."id", "student_registration_monthlycost"."cost", "student_registration_monthlycost"."effective_date" FROM "student_registration_monthlycost" ORDER BY "student_registration_monthlycost"."id" ASC'
+params = ()
+ignored_wrapper_args = (False, {'connection': <django.db.backends.postgresql.base.DatabaseWrapper object at 0x7fea480fcbe0>, 'cursor': <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>})
+
+[1m    def _execute(self, sql, params, *ignored_wrapper_args):[0m
+[1m        self.db.validate_no_broken_transaction()[0m
+[1m        with self.db.wrap_database_errors:[0m
+[1m            if params is None:[0m
+[1m                return self.cursor.execute(sql)[0m
+[1m            else:[0m
+[1m>               return self.cursor.execute(sql, params)[0m
+[1m[31mE               django.db.utils.ProgrammingError: relation "student_registration_monthlycost" does not exist[0m
+[1m[31mE               LINE 1: ...t_registration_monthlycost"."effective_date" FROM "student_r...[0m
+[1m[31mE                                                                            ^[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/utils.py[0m:85: ProgrammingError
+
+[33mDuring handling of the above exception, another exception occurred:[0m
+
+request = <SubRequest '_django_db_marker' for <Function 'test_clean_username'>>
+
+[1m    @pytest.fixture(autouse=True)[0m
+[1m    def _django_db_marker(request):[0m
+[1m        """Implement the django_db marker, internal to pytest-django.[0m
+[1m    [0m
+[1m        This will dynamically request the ``db`` or ``transactional_db``[0m
+[1m        fixtures as required by the django_db marker.[0m
+[1m        """[0m
+[1m        marker = request.node.get_closest_marker('django_db')[0m
+[1m        if marker:[0m
+[1m            transaction = validate_django_db(marker)[0m
+[1m            if transaction:[0m
+[1m                request.getfixturevalue('transactional_db')[0m
+[1m            else:[0m
+[1m>               request.getfixturevalue('db')[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/pytest_django/plugin.py[0m:391: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+[1m[31m/usr/local/lib/python3.6/site-packages/pytest_django/fixtures.py[0m:96: in django_db_setup
+[1m    **setup_databases_args[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/test/utils.py[0m:176: in setup_databases
+[1m    serialize=connection.settings_dict.get('TEST', {}).get('SERIALIZE', True),[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/base/creation.py[0m:76: in create_test_db
+[1m    self.connection._test_serialized_contents = self.serialize_db_to_string()[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/base/creation.py[0m:119: in serialize_db_to_string
+[1m    serializers.serialize("json", get_objects(), indent=None, stream=out)[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/core/serializers/__init__.py[0m:128: in serialize
+[1m    s.serialize(queryset, **options)[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/core/serializers/base.py[0m:80: in serialize
+[1m    for count, obj in enumerate(queryset, start=1):[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/base/creation.py[0m:116: in get_objects
+[1m    yield from queryset.iterator()[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/models/query.py[0m:336: in _iterator
+[1m    yield from self._iterable_class(self, chunked_fetch=use_chunked_fetch, chunk_size=chunk_size)[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/models/query.py[0m:53: in __iter__
+[1m    results = compiler.execute_sql(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size)[0m
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <django.db.models.sql.compiler.SQLCompiler object at 0x7fea46a67048>
+result_type = 'multi', chunked_fetch = True, chunk_size = 2000
+
+[1m    def execute_sql(self, result_type=MULTI, chunked_fetch=False, chunk_size=GET_ITERATOR_CHUNK_SIZE):[0m
+[1m        """[0m
+[1m            Run the query against the database and return the result(s). The[0m
+[1m            return value is a single data item if result_type is SINGLE, or an[0m
+[1m            iterator over the results if the result_type is MULTI.[0m
+[1m    [0m
+[1m            result_type is either MULTI (use fetchmany() to retrieve all rows),[0m
+[1m            SINGLE (only retrieve a single row), or None. In this last case, the[0m
+[1m            cursor is returned if any query is executed, since it's used by[0m
+[1m            subclasses such as InsertQuery). It's possible, however, that no query[0m
+[1m            is needed, as the filters describe an empty set. In that case, None is[0m
+[1m            returned, to avoid any unnecessary database interaction.[0m
+[1m            """[0m
+[1m        if not result_type:[0m
+[1m            result_type = NO_RESULTS[0m
+[1m        try:[0m
+[1m            sql, params = self.as_sql()[0m
+[1m            if not sql:[0m
+[1m                raise EmptyResultSet[0m
+[1m        except EmptyResultSet:[0m
+[1m            if result_type == MULTI:[0m
+[1m                return iter([])[0m
+[1m            else:[0m
+[1m                return[0m
+[1m        if chunked_fetch:[0m
+[1m            cursor = self.connection.chunked_cursor()[0m
+[1m        else:[0m
+[1m            cursor = self.connection.cursor()[0m
+[1m        try:[0m
+[1m            cursor.execute(sql, params)[0m
+[1m        except Exception:[0m
+[1m            # Might fail for server-side cursors (e.g. connection closed)[0m
+[1m>           cursor.close()[0m
+[1m[31mE           psycopg2.OperationalError: cursor "_django_curs_140644337785736_7" does not exist[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/models/sql/compiler.py[0m:1071: OperationalError
+---------------------------- Captured stderr setup -----------------------------
+Got an error creating the test database: database "test_kumon_student_db" already exists
+
+                                                                  [32m20% [0m[40m[32m█[0m[40m[32m█        [0m
+
+――――――――――――――――― ERROR at setup of test_user_get_absolute_url ―――――――――――――――――
+
+self = <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>
+sql = 'SELECT "student_registration_monthlycost"."id", "student_registration_monthlycost"."cost", "student_registration_monthlycost"."effective_date" FROM "student_registration_monthlycost" ORDER BY "student_registration_monthlycost"."id" ASC'
+params = ()
+ignored_wrapper_args = (False, {'connection': <django.db.backends.postgresql.base.DatabaseWrapper object at 0x7fea480fcbe0>, 'cursor': <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>})
+
+[1m    def _execute(self, sql, params, *ignored_wrapper_args):[0m
+[1m        self.db.validate_no_broken_transaction()[0m
+[1m        with self.db.wrap_database_errors:[0m
+[1m            if params is None:[0m
+[1m                return self.cursor.execute(sql)[0m
+[1m            else:[0m
+[1m>               return self.cursor.execute(sql, params)[0m
+[1m[31mE               psycopg2.ProgrammingError: relation "student_registration_monthlycost" does not exist[0m
+[1m[31mE               LINE 1: ...t_registration_monthlycost"."effective_date" FROM "student_r...[0m
+[1m[31mE                                                                            ^[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/utils.py[0m:85: ProgrammingError
+
+[33mThe above exception was the direct cause of the following exception:[0m
+
+self = <django.db.models.sql.compiler.SQLCompiler object at 0x7fea46a67048>
+result_type = 'multi', chunked_fetch = True, chunk_size = 2000
+
+[1m    def execute_sql(self, result_type=MULTI, chunked_fetch=False, chunk_size=GET_ITERATOR_CHUNK_SIZE):[0m
+[1m        """[0m
+[1m            Run the query against the database and return the result(s). The[0m
+[1m            return value is a single data item if result_type is SINGLE, or an[0m
+[1m            iterator over the results if the result_type is MULTI.[0m
+[1m    [0m
+[1m            result_type is either MULTI (use fetchmany() to retrieve all rows),[0m
+[1m            SINGLE (only retrieve a single row), or None. In this last case, the[0m
+[1m            cursor is returned if any query is executed, since it's used by[0m
+[1m            subclasses such as InsertQuery). It's possible, however, that no query[0m
+[1m            is needed, as the filters describe an empty set. In that case, None is[0m
+[1m            returned, to avoid any unnecessary database interaction.[0m
+[1m            """[0m
+[1m        if not result_type:[0m
+[1m            result_type = NO_RESULTS[0m
+[1m        try:[0m
+[1m            sql, params = self.as_sql()[0m
+[1m            if not sql:[0m
+[1m                raise EmptyResultSet[0m
+[1m        except EmptyResultSet:[0m
+[1m            if result_type == MULTI:[0m
+[1m                return iter([])[0m
+[1m            else:[0m
+[1m                return[0m
+[1m        if chunked_fetch:[0m
+[1m            cursor = self.connection.chunked_cursor()[0m
+[1m        else:[0m
+[1m            cursor = self.connection.cursor()[0m
+[1m        try:[0m
+[1m>           cursor.execute(sql, params)[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/models/sql/compiler.py[0m:1068: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>
+sql = 'SELECT "student_registration_monthlycost"."id", "student_registration_monthlycost"."cost", "student_registration_monthlycost"."effective_date" FROM "student_registration_monthlycost" ORDER BY "student_registration_monthlycost"."id" ASC'
+params = ()
+
+[1m    def execute(self, sql, params=None):[0m
+[1m>       return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/utils.py[0m:68: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>
+sql = 'SELECT "student_registration_monthlycost"."id", "student_registration_monthlycost"."cost", "student_registration_monthlycost"."effective_date" FROM "student_registration_monthlycost" ORDER BY "student_registration_monthlycost"."id" ASC'
+params = (), many = False
+executor = <bound method CursorWrapper._execute of <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>>
+
+[1m    def _execute_with_wrappers(self, sql, params, many, executor):[0m
+[1m        context = {'connection': self.db, 'cursor': self}[0m
+[1m        for wrapper in reversed(self.db.execute_wrappers):[0m
+[1m            executor = functools.partial(wrapper, executor)[0m
+[1m>       return executor(sql, params, many, context)[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/utils.py[0m:77: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>
+sql = 'SELECT "student_registration_monthlycost"."id", "student_registration_monthlycost"."cost", "student_registration_monthlycost"."effective_date" FROM "student_registration_monthlycost" ORDER BY "student_registration_monthlycost"."id" ASC'
+params = ()
+ignored_wrapper_args = (False, {'connection': <django.db.backends.postgresql.base.DatabaseWrapper object at 0x7fea480fcbe0>, 'cursor': <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>})
+
+[1m    def _execute(self, sql, params, *ignored_wrapper_args):[0m
+[1m        self.db.validate_no_broken_transaction()[0m
+[1m        with self.db.wrap_database_errors:[0m
+[1m            if params is None:[0m
+[1m                return self.cursor.execute(sql)[0m
+[1m            else:[0m
+[1m>               return self.cursor.execute(sql, params)[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/utils.py[0m:85: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <django.db.utils.DatabaseErrorWrapper object at 0x7fea46ae16a0>
+exc_type = <class 'psycopg2.ProgrammingError'>
+exc_value = ProgrammingError('relation "student_registration_monthlycost" does not exist\nLINE 1: ...t_registration_monthlycost"."effective_date" FROM "student_r...\n                                                             ^\n',)
+traceback = <traceback object at 0x7fea46895fc8>
+
+[1m    def __exit__(self, exc_type, exc_value, traceback):[0m
+[1m        if exc_type is None:[0m
+[1m            return[0m
+[1m        for dj_exc_type in ([0m
+[1m                DataError,[0m
+[1m                OperationalError,[0m
+[1m                IntegrityError,[0m
+[1m                InternalError,[0m
+[1m                ProgrammingError,[0m
+[1m                NotSupportedError,[0m
+[1m                DatabaseError,[0m
+[1m                InterfaceError,[0m
+[1m                Error,[0m
+[1m        ):[0m
+[1m            db_exc_type = getattr(self.wrapper.Database, dj_exc_type.__name__)[0m
+[1m            if issubclass(exc_type, db_exc_type):[0m
+[1m                dj_exc_value = dj_exc_type(*exc_value.args)[0m
+[1m                # Only set the 'errors_occurred' flag for errors that may make[0m
+[1m                # the connection unusable.[0m
+[1m                if dj_exc_type not in (DataError, IntegrityError):[0m
+[1m                    self.wrapper.errors_occurred = True[0m
+[1m>               raise dj_exc_value.with_traceback(traceback) from exc_value[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/utils.py[0m:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>
+sql = 'SELECT "student_registration_monthlycost"."id", "student_registration_monthlycost"."cost", "student_registration_monthlycost"."effective_date" FROM "student_registration_monthlycost" ORDER BY "student_registration_monthlycost"."id" ASC'
+params = ()
+ignored_wrapper_args = (False, {'connection': <django.db.backends.postgresql.base.DatabaseWrapper object at 0x7fea480fcbe0>, 'cursor': <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>})
+
+[1m    def _execute(self, sql, params, *ignored_wrapper_args):[0m
+[1m        self.db.validate_no_broken_transaction()[0m
+[1m        with self.db.wrap_database_errors:[0m
+[1m            if params is None:[0m
+[1m                return self.cursor.execute(sql)[0m
+[1m            else:[0m
+[1m>               return self.cursor.execute(sql, params)[0m
+[1m[31mE               django.db.utils.ProgrammingError: relation "student_registration_monthlycost" does not exist[0m
+[1m[31mE               LINE 1: ...t_registration_monthlycost"."effective_date" FROM "student_r...[0m
+[1m[31mE                                                                            ^[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/utils.py[0m:85: ProgrammingError
+
+[33mDuring handling of the above exception, another exception occurred:[0m
+
+request = <SubRequest '_django_db_marker' for <Function 'test_user_get_absolute_url'>>
+
+[1m    @pytest.fixture(autouse=True)[0m
+[1m    def _django_db_marker(request):[0m
+[1m        """Implement the django_db marker, internal to pytest-django.[0m
+[1m    [0m
+[1m        This will dynamically request the ``db`` or ``transactional_db``[0m
+[1m        fixtures as required by the django_db marker.[0m
+[1m        """[0m
+[1m        marker = request.node.get_closest_marker('django_db')[0m
+[1m        if marker:[0m
+[1m            transaction = validate_django_db(marker)[0m
+[1m            if transaction:[0m
+[1m                request.getfixturevalue('transactional_db')[0m
+[1m            else:[0m
+[1m>               request.getfixturevalue('db')[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/pytest_django/plugin.py[0m:391: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+[1m[31m/usr/local/lib/python3.6/site-packages/pytest_django/fixtures.py[0m:96: in django_db_setup
+[1m    **setup_databases_args[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/test/utils.py[0m:176: in setup_databases
+[1m    serialize=connection.settings_dict.get('TEST', {}).get('SERIALIZE', True),[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/base/creation.py[0m:76: in create_test_db
+[1m    self.connection._test_serialized_contents = self.serialize_db_to_string()[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/base/creation.py[0m:119: in serialize_db_to_string
+[1m    serializers.serialize("json", get_objects(), indent=None, stream=out)[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/core/serializers/__init__.py[0m:128: in serialize
+[1m    s.serialize(queryset, **options)[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/core/serializers/base.py[0m:80: in serialize
+[1m    for count, obj in enumerate(queryset, start=1):[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/base/creation.py[0m:116: in get_objects
+[1m    yield from queryset.iterator()[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/models/query.py[0m:336: in _iterator
+[1m    yield from self._iterable_class(self, chunked_fetch=use_chunked_fetch, chunk_size=chunk_size)[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/models/query.py[0m:53: in __iter__
+[1m    results = compiler.execute_sql(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size)[0m
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <django.db.models.sql.compiler.SQLCompiler object at 0x7fea46a67048>
+result_type = 'multi', chunked_fetch = True, chunk_size = 2000
+
+[1m    def execute_sql(self, result_type=MULTI, chunked_fetch=False, chunk_size=GET_ITERATOR_CHUNK_SIZE):[0m
+[1m        """[0m
+[1m            Run the query against the database and return the result(s). The[0m
+[1m            return value is a single data item if result_type is SINGLE, or an[0m
+[1m            iterator over the results if the result_type is MULTI.[0m
+[1m    [0m
+[1m            result_type is either MULTI (use fetchmany() to retrieve all rows),[0m
+[1m            SINGLE (only retrieve a single row), or None. In this last case, the[0m
+[1m            cursor is returned if any query is executed, since it's used by[0m
+[1m            subclasses such as InsertQuery). It's possible, however, that no query[0m
+[1m            is needed, as the filters describe an empty set. In that case, None is[0m
+[1m            returned, to avoid any unnecessary database interaction.[0m
+[1m            """[0m
+[1m        if not result_type:[0m
+[1m            result_type = NO_RESULTS[0m
+[1m        try:[0m
+[1m            sql, params = self.as_sql()[0m
+[1m            if not sql:[0m
+[1m                raise EmptyResultSet[0m
+[1m        except EmptyResultSet:[0m
+[1m            if result_type == MULTI:[0m
+[1m                return iter([])[0m
+[1m            else:[0m
+[1m                return[0m
+[1m        if chunked_fetch:[0m
+[1m            cursor = self.connection.chunked_cursor()[0m
+[1m        else:[0m
+[1m            cursor = self.connection.cursor()[0m
+[1m        try:[0m
+[1m            cursor.execute(sql, params)[0m
+[1m        except Exception:[0m
+[1m            # Might fail for server-side cursors (e.g. connection closed)[0m
+[1m>           cursor.close()[0m
+[1m[31mE           psycopg2.OperationalError: cursor "_django_curs_140644337785736_7" does not exist[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/models/sql/compiler.py[0m:1071: OperationalError
+                                                                  [32m30% [0m[40m[32m█[0m[40m[32m██       [0m
+
+―――――――――――――――――――――――― ERROR at setup of test_detail ―――――――――――――――――――――――――
+
+self = <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>
+sql = 'SELECT "student_registration_monthlycost"."id", "student_registration_monthlycost"."cost", "student_registration_monthlycost"."effective_date" FROM "student_registration_monthlycost" ORDER BY "student_registration_monthlycost"."id" ASC'
+params = ()
+ignored_wrapper_args = (False, {'connection': <django.db.backends.postgresql.base.DatabaseWrapper object at 0x7fea480fcbe0>, 'cursor': <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>})
+
+[1m    def _execute(self, sql, params, *ignored_wrapper_args):[0m
+[1m        self.db.validate_no_broken_transaction()[0m
+[1m        with self.db.wrap_database_errors:[0m
+[1m            if params is None:[0m
+[1m                return self.cursor.execute(sql)[0m
+[1m            else:[0m
+[1m>               return self.cursor.execute(sql, params)[0m
+[1m[31mE               psycopg2.ProgrammingError: relation "student_registration_monthlycost" does not exist[0m
+[1m[31mE               LINE 1: ...t_registration_monthlycost"."effective_date" FROM "student_r...[0m
+[1m[31mE                                                                            ^[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/utils.py[0m:85: ProgrammingError
+
+[33mThe above exception was the direct cause of the following exception:[0m
+
+self = <django.db.models.sql.compiler.SQLCompiler object at 0x7fea46a67048>
+result_type = 'multi', chunked_fetch = True, chunk_size = 2000
+
+[1m    def execute_sql(self, result_type=MULTI, chunked_fetch=False, chunk_size=GET_ITERATOR_CHUNK_SIZE):[0m
+[1m        """[0m
+[1m            Run the query against the database and return the result(s). The[0m
+[1m            return value is a single data item if result_type is SINGLE, or an[0m
+[1m            iterator over the results if the result_type is MULTI.[0m
+[1m    [0m
+[1m            result_type is either MULTI (use fetchmany() to retrieve all rows),[0m
+[1m            SINGLE (only retrieve a single row), or None. In this last case, the[0m
+[1m            cursor is returned if any query is executed, since it's used by[0m
+[1m            subclasses such as InsertQuery). It's possible, however, that no query[0m
+[1m            is needed, as the filters describe an empty set. In that case, None is[0m
+[1m            returned, to avoid any unnecessary database interaction.[0m
+[1m            """[0m
+[1m        if not result_type:[0m
+[1m            result_type = NO_RESULTS[0m
+[1m        try:[0m
+[1m            sql, params = self.as_sql()[0m
+[1m            if not sql:[0m
+[1m                raise EmptyResultSet[0m
+[1m        except EmptyResultSet:[0m
+[1m            if result_type == MULTI:[0m
+[1m                return iter([])[0m
+[1m            else:[0m
+[1m                return[0m
+[1m        if chunked_fetch:[0m
+[1m            cursor = self.connection.chunked_cursor()[0m
+[1m        else:[0m
+[1m            cursor = self.connection.cursor()[0m
+[1m        try:[0m
+[1m>           cursor.execute(sql, params)[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/models/sql/compiler.py[0m:1068: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>
+sql = 'SELECT "student_registration_monthlycost"."id", "student_registration_monthlycost"."cost", "student_registration_monthlycost"."effective_date" FROM "student_registration_monthlycost" ORDER BY "student_registration_monthlycost"."id" ASC'
+params = ()
+
+[1m    def execute(self, sql, params=None):[0m
+[1m>       return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/utils.py[0m:68: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>
+sql = 'SELECT "student_registration_monthlycost"."id", "student_registration_monthlycost"."cost", "student_registration_monthlycost"."effective_date" FROM "student_registration_monthlycost" ORDER BY "student_registration_monthlycost"."id" ASC'
+params = (), many = False
+executor = <bound method CursorWrapper._execute of <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>>
+
+[1m    def _execute_with_wrappers(self, sql, params, many, executor):[0m
+[1m        context = {'connection': self.db, 'cursor': self}[0m
+[1m        for wrapper in reversed(self.db.execute_wrappers):[0m
+[1m            executor = functools.partial(wrapper, executor)[0m
+[1m>       return executor(sql, params, many, context)[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/utils.py[0m:77: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>
+sql = 'SELECT "student_registration_monthlycost"."id", "student_registration_monthlycost"."cost", "student_registration_monthlycost"."effective_date" FROM "student_registration_monthlycost" ORDER BY "student_registration_monthlycost"."id" ASC'
+params = ()
+ignored_wrapper_args = (False, {'connection': <django.db.backends.postgresql.base.DatabaseWrapper object at 0x7fea480fcbe0>, 'cursor': <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>})
+
+[1m    def _execute(self, sql, params, *ignored_wrapper_args):[0m
+[1m        self.db.validate_no_broken_transaction()[0m
+[1m        with self.db.wrap_database_errors:[0m
+[1m            if params is None:[0m
+[1m                return self.cursor.execute(sql)[0m
+[1m            else:[0m
+[1m>               return self.cursor.execute(sql, params)[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/utils.py[0m:85: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <django.db.utils.DatabaseErrorWrapper object at 0x7fea46ae16a0>
+exc_type = <class 'psycopg2.ProgrammingError'>
+exc_value = ProgrammingError('relation "student_registration_monthlycost" does not exist\nLINE 1: ...t_registration_monthlycost"."effective_date" FROM "student_r...\n                                                             ^\n',)
+traceback = <traceback object at 0x7fea46895fc8>
+
+[1m    def __exit__(self, exc_type, exc_value, traceback):[0m
+[1m        if exc_type is None:[0m
+[1m            return[0m
+[1m        for dj_exc_type in ([0m
+[1m                DataError,[0m
+[1m                OperationalError,[0m
+[1m                IntegrityError,[0m
+[1m                InternalError,[0m
+[1m                ProgrammingError,[0m
+[1m                NotSupportedError,[0m
+[1m                DatabaseError,[0m
+[1m                InterfaceError,[0m
+[1m                Error,[0m
+[1m        ):[0m
+[1m            db_exc_type = getattr(self.wrapper.Database, dj_exc_type.__name__)[0m
+[1m            if issubclass(exc_type, db_exc_type):[0m
+[1m                dj_exc_value = dj_exc_type(*exc_value.args)[0m
+[1m                # Only set the 'errors_occurred' flag for errors that may make[0m
+[1m                # the connection unusable.[0m
+[1m                if dj_exc_type not in (DataError, IntegrityError):[0m
+[1m                    self.wrapper.errors_occurred = True[0m
+[1m>               raise dj_exc_value.with_traceback(traceback) from exc_value[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/utils.py[0m:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>
+sql = 'SELECT "student_registration_monthlycost"."id", "student_registration_monthlycost"."cost", "student_registration_monthlycost"."effective_date" FROM "student_registration_monthlycost" ORDER BY "student_registration_monthlycost"."id" ASC'
+params = ()
+ignored_wrapper_args = (False, {'connection': <django.db.backends.postgresql.base.DatabaseWrapper object at 0x7fea480fcbe0>, 'cursor': <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>})
+
+[1m    def _execute(self, sql, params, *ignored_wrapper_args):[0m
+[1m        self.db.validate_no_broken_transaction()[0m
+[1m        with self.db.wrap_database_errors:[0m
+[1m            if params is None:[0m
+[1m                return self.cursor.execute(sql)[0m
+[1m            else:[0m
+[1m>               return self.cursor.execute(sql, params)[0m
+[1m[31mE               django.db.utils.ProgrammingError: relation "student_registration_monthlycost" does not exist[0m
+[1m[31mE               LINE 1: ...t_registration_monthlycost"."effective_date" FROM "student_r...[0m
+[1m[31mE                                                                            ^[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/utils.py[0m:85: ProgrammingError
+
+[33mDuring handling of the above exception, another exception occurred:[0m
+
+request = <SubRequest '_django_db_marker' for <Function 'test_detail'>>
+
+[1m    @pytest.fixture(autouse=True)[0m
+[1m    def _django_db_marker(request):[0m
+[1m        """Implement the django_db marker, internal to pytest-django.[0m
+[1m    [0m
+[1m        This will dynamically request the ``db`` or ``transactional_db``[0m
+[1m        fixtures as required by the django_db marker.[0m
+[1m        """[0m
+[1m        marker = request.node.get_closest_marker('django_db')[0m
+[1m        if marker:[0m
+[1m            transaction = validate_django_db(marker)[0m
+[1m            if transaction:[0m
+[1m                request.getfixturevalue('transactional_db')[0m
+[1m            else:[0m
+[1m>               request.getfixturevalue('db')[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/pytest_django/plugin.py[0m:391: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+[1m[31m/usr/local/lib/python3.6/site-packages/pytest_django/fixtures.py[0m:96: in django_db_setup
+[1m    **setup_databases_args[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/test/utils.py[0m:176: in setup_databases
+[1m    serialize=connection.settings_dict.get('TEST', {}).get('SERIALIZE', True),[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/base/creation.py[0m:76: in create_test_db
+[1m    self.connection._test_serialized_contents = self.serialize_db_to_string()[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/base/creation.py[0m:119: in serialize_db_to_string
+[1m    serializers.serialize("json", get_objects(), indent=None, stream=out)[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/core/serializers/__init__.py[0m:128: in serialize
+[1m    s.serialize(queryset, **options)[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/core/serializers/base.py[0m:80: in serialize
+[1m    for count, obj in enumerate(queryset, start=1):[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/base/creation.py[0m:116: in get_objects
+[1m    yield from queryset.iterator()[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/models/query.py[0m:336: in _iterator
+[1m    yield from self._iterable_class(self, chunked_fetch=use_chunked_fetch, chunk_size=chunk_size)[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/models/query.py[0m:53: in __iter__
+[1m    results = compiler.execute_sql(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size)[0m
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <django.db.models.sql.compiler.SQLCompiler object at 0x7fea46a67048>
+result_type = 'multi', chunked_fetch = True, chunk_size = 2000
+
+[1m    def execute_sql(self, result_type=MULTI, chunked_fetch=False, chunk_size=GET_ITERATOR_CHUNK_SIZE):[0m
+[1m        """[0m
+[1m            Run the query against the database and return the result(s). The[0m
+[1m            return value is a single data item if result_type is SINGLE, or an[0m
+[1m            iterator over the results if the result_type is MULTI.[0m
+[1m    [0m
+[1m            result_type is either MULTI (use fetchmany() to retrieve all rows),[0m
+[1m            SINGLE (only retrieve a single row), or None. In this last case, the[0m
+[1m            cursor is returned if any query is executed, since it's used by[0m
+[1m            subclasses such as InsertQuery). It's possible, however, that no query[0m
+[1m            is needed, as the filters describe an empty set. In that case, None is[0m
+[1m            returned, to avoid any unnecessary database interaction.[0m
+[1m            """[0m
+[1m        if not result_type:[0m
+[1m            result_type = NO_RESULTS[0m
+[1m        try:[0m
+[1m            sql, params = self.as_sql()[0m
+[1m            if not sql:[0m
+[1m                raise EmptyResultSet[0m
+[1m        except EmptyResultSet:[0m
+[1m            if result_type == MULTI:[0m
+[1m                return iter([])[0m
+[1m            else:[0m
+[1m                return[0m
+[1m        if chunked_fetch:[0m
+[1m            cursor = self.connection.chunked_cursor()[0m
+[1m        else:[0m
+[1m            cursor = self.connection.cursor()[0m
+[1m        try:[0m
+[1m            cursor.execute(sql, params)[0m
+[1m        except Exception:[0m
+[1m            # Might fail for server-side cursors (e.g. connection closed)[0m
+[1m>           cursor.close()[0m
+[1m[31mE           psycopg2.OperationalError: cursor "_django_curs_140644337785736_7" does not exist[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/models/sql/compiler.py[0m:1071: OperationalError
+                                                                  [32m40% [0m[40m[32m█[0m[40m[32m███      [0m
+
+――――――――――――――――――――――――― ERROR at setup of test_list ――――――――――――――――――――――――――
+
+self = <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>
+sql = 'SELECT "student_registration_monthlycost"."id", "student_registration_monthlycost"."cost", "student_registration_monthlycost"."effective_date" FROM "student_registration_monthlycost" ORDER BY "student_registration_monthlycost"."id" ASC'
+params = ()
+ignored_wrapper_args = (False, {'connection': <django.db.backends.postgresql.base.DatabaseWrapper object at 0x7fea480fcbe0>, 'cursor': <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>})
+
+[1m    def _execute(self, sql, params, *ignored_wrapper_args):[0m
+[1m        self.db.validate_no_broken_transaction()[0m
+[1m        with self.db.wrap_database_errors:[0m
+[1m            if params is None:[0m
+[1m                return self.cursor.execute(sql)[0m
+[1m            else:[0m
+[1m>               return self.cursor.execute(sql, params)[0m
+[1m[31mE               psycopg2.ProgrammingError: relation "student_registration_monthlycost" does not exist[0m
+[1m[31mE               LINE 1: ...t_registration_monthlycost"."effective_date" FROM "student_r...[0m
+[1m[31mE                                                                            ^[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/utils.py[0m:85: ProgrammingError
+
+[33mThe above exception was the direct cause of the following exception:[0m
+
+self = <django.db.models.sql.compiler.SQLCompiler object at 0x7fea46a67048>
+result_type = 'multi', chunked_fetch = True, chunk_size = 2000
+
+[1m    def execute_sql(self, result_type=MULTI, chunked_fetch=False, chunk_size=GET_ITERATOR_CHUNK_SIZE):[0m
+[1m        """[0m
+[1m            Run the query against the database and return the result(s). The[0m
+[1m            return value is a single data item if result_type is SINGLE, or an[0m
+[1m            iterator over the results if the result_type is MULTI.[0m
+[1m    [0m
+[1m            result_type is either MULTI (use fetchmany() to retrieve all rows),[0m
+[1m            SINGLE (only retrieve a single row), or None. In this last case, the[0m
+[1m            cursor is returned if any query is executed, since it's used by[0m
+[1m            subclasses such as InsertQuery). It's possible, however, that no query[0m
+[1m            is needed, as the filters describe an empty set. In that case, None is[0m
+[1m            returned, to avoid any unnecessary database interaction.[0m
+[1m            """[0m
+[1m        if not result_type:[0m
+[1m            result_type = NO_RESULTS[0m
+[1m        try:[0m
+[1m            sql, params = self.as_sql()[0m
+[1m            if not sql:[0m
+[1m                raise EmptyResultSet[0m
+[1m        except EmptyResultSet:[0m
+[1m            if result_type == MULTI:[0m
+[1m                return iter([])[0m
+[1m            else:[0m
+[1m                return[0m
+[1m        if chunked_fetch:[0m
+[1m            cursor = self.connection.chunked_cursor()[0m
+[1m        else:[0m
+[1m            cursor = self.connection.cursor()[0m
+[1m        try:[0m
+[1m>           cursor.execute(sql, params)[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/models/sql/compiler.py[0m:1068: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>
+sql = 'SELECT "student_registration_monthlycost"."id", "student_registration_monthlycost"."cost", "student_registration_monthlycost"."effective_date" FROM "student_registration_monthlycost" ORDER BY "student_registration_monthlycost"."id" ASC'
+params = ()
+
+[1m    def execute(self, sql, params=None):[0m
+[1m>       return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/utils.py[0m:68: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>
+sql = 'SELECT "student_registration_monthlycost"."id", "student_registration_monthlycost"."cost", "student_registration_monthlycost"."effective_date" FROM "student_registration_monthlycost" ORDER BY "student_registration_monthlycost"."id" ASC'
+params = (), many = False
+executor = <bound method CursorWrapper._execute of <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>>
+
+[1m    def _execute_with_wrappers(self, sql, params, many, executor):[0m
+[1m        context = {'connection': self.db, 'cursor': self}[0m
+[1m        for wrapper in reversed(self.db.execute_wrappers):[0m
+[1m            executor = functools.partial(wrapper, executor)[0m
+[1m>       return executor(sql, params, many, context)[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/utils.py[0m:77: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>
+sql = 'SELECT "student_registration_monthlycost"."id", "student_registration_monthlycost"."cost", "student_registration_monthlycost"."effective_date" FROM "student_registration_monthlycost" ORDER BY "student_registration_monthlycost"."id" ASC'
+params = ()
+ignored_wrapper_args = (False, {'connection': <django.db.backends.postgresql.base.DatabaseWrapper object at 0x7fea480fcbe0>, 'cursor': <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>})
+
+[1m    def _execute(self, sql, params, *ignored_wrapper_args):[0m
+[1m        self.db.validate_no_broken_transaction()[0m
+[1m        with self.db.wrap_database_errors:[0m
+[1m            if params is None:[0m
+[1m                return self.cursor.execute(sql)[0m
+[1m            else:[0m
+[1m>               return self.cursor.execute(sql, params)[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/utils.py[0m:85: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <django.db.utils.DatabaseErrorWrapper object at 0x7fea46ae16a0>
+exc_type = <class 'psycopg2.ProgrammingError'>
+exc_value = ProgrammingError('relation "student_registration_monthlycost" does not exist\nLINE 1: ...t_registration_monthlycost"."effective_date" FROM "student_r...\n                                                             ^\n',)
+traceback = <traceback object at 0x7fea46895fc8>
+
+[1m    def __exit__(self, exc_type, exc_value, traceback):[0m
+[1m        if exc_type is None:[0m
+[1m            return[0m
+[1m        for dj_exc_type in ([0m
+[1m                DataError,[0m
+[1m                OperationalError,[0m
+[1m                IntegrityError,[0m
+[1m                InternalError,[0m
+[1m                ProgrammingError,[0m
+[1m                NotSupportedError,[0m
+[1m                DatabaseError,[0m
+[1m                InterfaceError,[0m
+[1m                Error,[0m
+[1m        ):[0m
+[1m            db_exc_type = getattr(self.wrapper.Database, dj_exc_type.__name__)[0m
+[1m            if issubclass(exc_type, db_exc_type):[0m
+[1m                dj_exc_value = dj_exc_type(*exc_value.args)[0m
+[1m                # Only set the 'errors_occurred' flag for errors that may make[0m
+[1m                # the connection unusable.[0m
+[1m                if dj_exc_type not in (DataError, IntegrityError):[0m
+[1m                    self.wrapper.errors_occurred = True[0m
+[1m>               raise dj_exc_value.with_traceback(traceback) from exc_value[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/utils.py[0m:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>
+sql = 'SELECT "student_registration_monthlycost"."id", "student_registration_monthlycost"."cost", "student_registration_monthlycost"."effective_date" FROM "student_registration_monthlycost" ORDER BY "student_registration_monthlycost"."id" ASC'
+params = ()
+ignored_wrapper_args = (False, {'connection': <django.db.backends.postgresql.base.DatabaseWrapper object at 0x7fea480fcbe0>, 'cursor': <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>})
+
+[1m    def _execute(self, sql, params, *ignored_wrapper_args):[0m
+[1m        self.db.validate_no_broken_transaction()[0m
+[1m        with self.db.wrap_database_errors:[0m
+[1m            if params is None:[0m
+[1m                return self.cursor.execute(sql)[0m
+[1m            else:[0m
+[1m>               return self.cursor.execute(sql, params)[0m
+[1m[31mE               django.db.utils.ProgrammingError: relation "student_registration_monthlycost" does not exist[0m
+[1m[31mE               LINE 1: ...t_registration_monthlycost"."effective_date" FROM "student_r...[0m
+[1m[31mE                                                                            ^[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/utils.py[0m:85: ProgrammingError
+
+[33mDuring handling of the above exception, another exception occurred:[0m
+
+request = <SubRequest '_django_db_marker' for <Function 'test_list'>>
+
+[1m    @pytest.fixture(autouse=True)[0m
+[1m    def _django_db_marker(request):[0m
+[1m        """Implement the django_db marker, internal to pytest-django.[0m
+[1m    [0m
+[1m        This will dynamically request the ``db`` or ``transactional_db``[0m
+[1m        fixtures as required by the django_db marker.[0m
+[1m        """[0m
+[1m        marker = request.node.get_closest_marker('django_db')[0m
+[1m        if marker:[0m
+[1m            transaction = validate_django_db(marker)[0m
+[1m            if transaction:[0m
+[1m                request.getfixturevalue('transactional_db')[0m
+[1m            else:[0m
+[1m>               request.getfixturevalue('db')[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/pytest_django/plugin.py[0m:391: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+[1m[31m/usr/local/lib/python3.6/site-packages/pytest_django/fixtures.py[0m:96: in django_db_setup
+[1m    **setup_databases_args[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/test/utils.py[0m:176: in setup_databases
+[1m    serialize=connection.settings_dict.get('TEST', {}).get('SERIALIZE', True),[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/base/creation.py[0m:76: in create_test_db
+[1m    self.connection._test_serialized_contents = self.serialize_db_to_string()[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/base/creation.py[0m:119: in serialize_db_to_string
+[1m    serializers.serialize("json", get_objects(), indent=None, stream=out)[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/core/serializers/__init__.py[0m:128: in serialize
+[1m    s.serialize(queryset, **options)[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/core/serializers/base.py[0m:80: in serialize
+[1m    for count, obj in enumerate(queryset, start=1):[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/base/creation.py[0m:116: in get_objects
+[1m    yield from queryset.iterator()[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/models/query.py[0m:336: in _iterator
+[1m    yield from self._iterable_class(self, chunked_fetch=use_chunked_fetch, chunk_size=chunk_size)[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/models/query.py[0m:53: in __iter__
+[1m    results = compiler.execute_sql(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size)[0m
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <django.db.models.sql.compiler.SQLCompiler object at 0x7fea46a67048>
+result_type = 'multi', chunked_fetch = True, chunk_size = 2000
+
+[1m    def execute_sql(self, result_type=MULTI, chunked_fetch=False, chunk_size=GET_ITERATOR_CHUNK_SIZE):[0m
+[1m        """[0m
+[1m            Run the query against the database and return the result(s). The[0m
+[1m            return value is a single data item if result_type is SINGLE, or an[0m
+[1m            iterator over the results if the result_type is MULTI.[0m
+[1m    [0m
+[1m            result_type is either MULTI (use fetchmany() to retrieve all rows),[0m
+[1m            SINGLE (only retrieve a single row), or None. In this last case, the[0m
+[1m            cursor is returned if any query is executed, since it's used by[0m
+[1m            subclasses such as InsertQuery). It's possible, however, that no query[0m
+[1m            is needed, as the filters describe an empty set. In that case, None is[0m
+[1m            returned, to avoid any unnecessary database interaction.[0m
+[1m            """[0m
+[1m        if not result_type:[0m
+[1m            result_type = NO_RESULTS[0m
+[1m        try:[0m
+[1m            sql, params = self.as_sql()[0m
+[1m            if not sql:[0m
+[1m                raise EmptyResultSet[0m
+[1m        except EmptyResultSet:[0m
+[1m            if result_type == MULTI:[0m
+[1m                return iter([])[0m
+[1m            else:[0m
+[1m                return[0m
+[1m        if chunked_fetch:[0m
+[1m            cursor = self.connection.chunked_cursor()[0m
+[1m        else:[0m
+[1m            cursor = self.connection.cursor()[0m
+[1m        try:[0m
+[1m            cursor.execute(sql, params)[0m
+[1m        except Exception:[0m
+[1m            # Might fail for server-side cursors (e.g. connection closed)[0m
+[1m>           cursor.close()[0m
+[1m[31mE           psycopg2.OperationalError: cursor "_django_curs_140644337785736_7" does not exist[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/models/sql/compiler.py[0m:1071: OperationalError
+                                                                  [32m50% [0m[40m[32m█[0m[40m[32m████     [0m
+
+―――――――――――――――――――――――― ERROR at setup of test_update ―――――――――――――――――――――――――
+
+self = <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>
+sql = 'SELECT "student_registration_monthlycost"."id", "student_registration_monthlycost"."cost", "student_registration_monthlycost"."effective_date" FROM "student_registration_monthlycost" ORDER BY "student_registration_monthlycost"."id" ASC'
+params = ()
+ignored_wrapper_args = (False, {'connection': <django.db.backends.postgresql.base.DatabaseWrapper object at 0x7fea480fcbe0>, 'cursor': <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>})
+
+[1m    def _execute(self, sql, params, *ignored_wrapper_args):[0m
+[1m        self.db.validate_no_broken_transaction()[0m
+[1m        with self.db.wrap_database_errors:[0m
+[1m            if params is None:[0m
+[1m                return self.cursor.execute(sql)[0m
+[1m            else:[0m
+[1m>               return self.cursor.execute(sql, params)[0m
+[1m[31mE               psycopg2.ProgrammingError: relation "student_registration_monthlycost" does not exist[0m
+[1m[31mE               LINE 1: ...t_registration_monthlycost"."effective_date" FROM "student_r...[0m
+[1m[31mE                                                                            ^[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/utils.py[0m:85: ProgrammingError
+
+[33mThe above exception was the direct cause of the following exception:[0m
+
+self = <django.db.models.sql.compiler.SQLCompiler object at 0x7fea46a67048>
+result_type = 'multi', chunked_fetch = True, chunk_size = 2000
+
+[1m    def execute_sql(self, result_type=MULTI, chunked_fetch=False, chunk_size=GET_ITERATOR_CHUNK_SIZE):[0m
+[1m        """[0m
+[1m            Run the query against the database and return the result(s). The[0m
+[1m            return value is a single data item if result_type is SINGLE, or an[0m
+[1m            iterator over the results if the result_type is MULTI.[0m
+[1m    [0m
+[1m            result_type is either MULTI (use fetchmany() to retrieve all rows),[0m
+[1m            SINGLE (only retrieve a single row), or None. In this last case, the[0m
+[1m            cursor is returned if any query is executed, since it's used by[0m
+[1m            subclasses such as InsertQuery). It's possible, however, that no query[0m
+[1m            is needed, as the filters describe an empty set. In that case, None is[0m
+[1m            returned, to avoid any unnecessary database interaction.[0m
+[1m            """[0m
+[1m        if not result_type:[0m
+[1m            result_type = NO_RESULTS[0m
+[1m        try:[0m
+[1m            sql, params = self.as_sql()[0m
+[1m            if not sql:[0m
+[1m                raise EmptyResultSet[0m
+[1m        except EmptyResultSet:[0m
+[1m            if result_type == MULTI:[0m
+[1m                return iter([])[0m
+[1m            else:[0m
+[1m                return[0m
+[1m        if chunked_fetch:[0m
+[1m            cursor = self.connection.chunked_cursor()[0m
+[1m        else:[0m
+[1m            cursor = self.connection.cursor()[0m
+[1m        try:[0m
+[1m>           cursor.execute(sql, params)[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/models/sql/compiler.py[0m:1068: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>
+sql = 'SELECT "student_registration_monthlycost"."id", "student_registration_monthlycost"."cost", "student_registration_monthlycost"."effective_date" FROM "student_registration_monthlycost" ORDER BY "student_registration_monthlycost"."id" ASC'
+params = ()
+
+[1m    def execute(self, sql, params=None):[0m
+[1m>       return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/utils.py[0m:68: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>
+sql = 'SELECT "student_registration_monthlycost"."id", "student_registration_monthlycost"."cost", "student_registration_monthlycost"."effective_date" FROM "student_registration_monthlycost" ORDER BY "student_registration_monthlycost"."id" ASC'
+params = (), many = False
+executor = <bound method CursorWrapper._execute of <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>>
+
+[1m    def _execute_with_wrappers(self, sql, params, many, executor):[0m
+[1m        context = {'connection': self.db, 'cursor': self}[0m
+[1m        for wrapper in reversed(self.db.execute_wrappers):[0m
+[1m            executor = functools.partial(wrapper, executor)[0m
+[1m>       return executor(sql, params, many, context)[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/utils.py[0m:77: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>
+sql = 'SELECT "student_registration_monthlycost"."id", "student_registration_monthlycost"."cost", "student_registration_monthlycost"."effective_date" FROM "student_registration_monthlycost" ORDER BY "student_registration_monthlycost"."id" ASC'
+params = ()
+ignored_wrapper_args = (False, {'connection': <django.db.backends.postgresql.base.DatabaseWrapper object at 0x7fea480fcbe0>, 'cursor': <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>})
+
+[1m    def _execute(self, sql, params, *ignored_wrapper_args):[0m
+[1m        self.db.validate_no_broken_transaction()[0m
+[1m        with self.db.wrap_database_errors:[0m
+[1m            if params is None:[0m
+[1m                return self.cursor.execute(sql)[0m
+[1m            else:[0m
+[1m>               return self.cursor.execute(sql, params)[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/utils.py[0m:85: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <django.db.utils.DatabaseErrorWrapper object at 0x7fea46ae16a0>
+exc_type = <class 'psycopg2.ProgrammingError'>
+exc_value = ProgrammingError('relation "student_registration_monthlycost" does not exist\nLINE 1: ...t_registration_monthlycost"."effective_date" FROM "student_r...\n                                                             ^\n',)
+traceback = <traceback object at 0x7fea46895fc8>
+
+[1m    def __exit__(self, exc_type, exc_value, traceback):[0m
+[1m        if exc_type is None:[0m
+[1m            return[0m
+[1m        for dj_exc_type in ([0m
+[1m                DataError,[0m
+[1m                OperationalError,[0m
+[1m                IntegrityError,[0m
+[1m                InternalError,[0m
+[1m                ProgrammingError,[0m
+[1m                NotSupportedError,[0m
+[1m                DatabaseError,[0m
+[1m                InterfaceError,[0m
+[1m                Error,[0m
+[1m        ):[0m
+[1m            db_exc_type = getattr(self.wrapper.Database, dj_exc_type.__name__)[0m
+[1m            if issubclass(exc_type, db_exc_type):[0m
+[1m                dj_exc_value = dj_exc_type(*exc_value.args)[0m
+[1m                # Only set the 'errors_occurred' flag for errors that may make[0m
+[1m                # the connection unusable.[0m
+[1m                if dj_exc_type not in (DataError, IntegrityError):[0m
+[1m                    self.wrapper.errors_occurred = True[0m
+[1m>               raise dj_exc_value.with_traceback(traceback) from exc_value[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/utils.py[0m:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>
+sql = 'SELECT "student_registration_monthlycost"."id", "student_registration_monthlycost"."cost", "student_registration_monthlycost"."effective_date" FROM "student_registration_monthlycost" ORDER BY "student_registration_monthlycost"."id" ASC'
+params = ()
+ignored_wrapper_args = (False, {'connection': <django.db.backends.postgresql.base.DatabaseWrapper object at 0x7fea480fcbe0>, 'cursor': <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>})
+
+[1m    def _execute(self, sql, params, *ignored_wrapper_args):[0m
+[1m        self.db.validate_no_broken_transaction()[0m
+[1m        with self.db.wrap_database_errors:[0m
+[1m            if params is None:[0m
+[1m                return self.cursor.execute(sql)[0m
+[1m            else:[0m
+[1m>               return self.cursor.execute(sql, params)[0m
+[1m[31mE               django.db.utils.ProgrammingError: relation "student_registration_monthlycost" does not exist[0m
+[1m[31mE               LINE 1: ...t_registration_monthlycost"."effective_date" FROM "student_r...[0m
+[1m[31mE                                                                            ^[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/utils.py[0m:85: ProgrammingError
+
+[33mDuring handling of the above exception, another exception occurred:[0m
+
+request = <SubRequest '_django_db_marker' for <Function 'test_update'>>
+
+[1m    @pytest.fixture(autouse=True)[0m
+[1m    def _django_db_marker(request):[0m
+[1m        """Implement the django_db marker, internal to pytest-django.[0m
+[1m    [0m
+[1m        This will dynamically request the ``db`` or ``transactional_db``[0m
+[1m        fixtures as required by the django_db marker.[0m
+[1m        """[0m
+[1m        marker = request.node.get_closest_marker('django_db')[0m
+[1m        if marker:[0m
+[1m            transaction = validate_django_db(marker)[0m
+[1m            if transaction:[0m
+[1m                request.getfixturevalue('transactional_db')[0m
+[1m            else:[0m
+[1m>               request.getfixturevalue('db')[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/pytest_django/plugin.py[0m:391: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+[1m[31m/usr/local/lib/python3.6/site-packages/pytest_django/fixtures.py[0m:96: in django_db_setup
+[1m    **setup_databases_args[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/test/utils.py[0m:176: in setup_databases
+[1m    serialize=connection.settings_dict.get('TEST', {}).get('SERIALIZE', True),[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/base/creation.py[0m:76: in create_test_db
+[1m    self.connection._test_serialized_contents = self.serialize_db_to_string()[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/base/creation.py[0m:119: in serialize_db_to_string
+[1m    serializers.serialize("json", get_objects(), indent=None, stream=out)[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/core/serializers/__init__.py[0m:128: in serialize
+[1m    s.serialize(queryset, **options)[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/core/serializers/base.py[0m:80: in serialize
+[1m    for count, obj in enumerate(queryset, start=1):[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/base/creation.py[0m:116: in get_objects
+[1m    yield from queryset.iterator()[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/models/query.py[0m:336: in _iterator
+[1m    yield from self._iterable_class(self, chunked_fetch=use_chunked_fetch, chunk_size=chunk_size)[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/models/query.py[0m:53: in __iter__
+[1m    results = compiler.execute_sql(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size)[0m
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <django.db.models.sql.compiler.SQLCompiler object at 0x7fea46a67048>
+result_type = 'multi', chunked_fetch = True, chunk_size = 2000
+
+[1m    def execute_sql(self, result_type=MULTI, chunked_fetch=False, chunk_size=GET_ITERATOR_CHUNK_SIZE):[0m
+[1m        """[0m
+[1m            Run the query against the database and return the result(s). The[0m
+[1m            return value is a single data item if result_type is SINGLE, or an[0m
+[1m            iterator over the results if the result_type is MULTI.[0m
+[1m    [0m
+[1m            result_type is either MULTI (use fetchmany() to retrieve all rows),[0m
+[1m            SINGLE (only retrieve a single row), or None. In this last case, the[0m
+[1m            cursor is returned if any query is executed, since it's used by[0m
+[1m            subclasses such as InsertQuery). It's possible, however, that no query[0m
+[1m            is needed, as the filters describe an empty set. In that case, None is[0m
+[1m            returned, to avoid any unnecessary database interaction.[0m
+[1m            """[0m
+[1m        if not result_type:[0m
+[1m            result_type = NO_RESULTS[0m
+[1m        try:[0m
+[1m            sql, params = self.as_sql()[0m
+[1m            if not sql:[0m
+[1m                raise EmptyResultSet[0m
+[1m        except EmptyResultSet:[0m
+[1m            if result_type == MULTI:[0m
+[1m                return iter([])[0m
+[1m            else:[0m
+[1m                return[0m
+[1m        if chunked_fetch:[0m
+[1m            cursor = self.connection.chunked_cursor()[0m
+[1m        else:[0m
+[1m            cursor = self.connection.cursor()[0m
+[1m        try:[0m
+[1m            cursor.execute(sql, params)[0m
+[1m        except Exception:[0m
+[1m            # Might fail for server-side cursors (e.g. connection closed)[0m
+[1m>           cursor.close()[0m
+[1m[31mE           psycopg2.OperationalError: cursor "_django_curs_140644337785736_7" does not exist[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/models/sql/compiler.py[0m:1071: OperationalError
+                                                                  [32m60% [0m[40m[32m█[0m[40m[32m█████    [0m
+
+――――――――――――――――――――――― ERROR at setup of test_redirect ――――――――――――――――――――――――
+
+self = <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>
+sql = 'SELECT "student_registration_monthlycost"."id", "student_registration_monthlycost"."cost", "student_registration_monthlycost"."effective_date" FROM "student_registration_monthlycost" ORDER BY "student_registration_monthlycost"."id" ASC'
+params = ()
+ignored_wrapper_args = (False, {'connection': <django.db.backends.postgresql.base.DatabaseWrapper object at 0x7fea480fcbe0>, 'cursor': <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>})
+
+[1m    def _execute(self, sql, params, *ignored_wrapper_args):[0m
+[1m        self.db.validate_no_broken_transaction()[0m
+[1m        with self.db.wrap_database_errors:[0m
+[1m            if params is None:[0m
+[1m                return self.cursor.execute(sql)[0m
+[1m            else:[0m
+[1m>               return self.cursor.execute(sql, params)[0m
+[1m[31mE               psycopg2.ProgrammingError: relation "student_registration_monthlycost" does not exist[0m
+[1m[31mE               LINE 1: ...t_registration_monthlycost"."effective_date" FROM "student_r...[0m
+[1m[31mE                                                                            ^[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/utils.py[0m:85: ProgrammingError
+
+[33mThe above exception was the direct cause of the following exception:[0m
+
+self = <django.db.models.sql.compiler.SQLCompiler object at 0x7fea46a67048>
+result_type = 'multi', chunked_fetch = True, chunk_size = 2000
+
+[1m    def execute_sql(self, result_type=MULTI, chunked_fetch=False, chunk_size=GET_ITERATOR_CHUNK_SIZE):[0m
+[1m        """[0m
+[1m            Run the query against the database and return the result(s). The[0m
+[1m            return value is a single data item if result_type is SINGLE, or an[0m
+[1m            iterator over the results if the result_type is MULTI.[0m
+[1m    [0m
+[1m            result_type is either MULTI (use fetchmany() to retrieve all rows),[0m
+[1m            SINGLE (only retrieve a single row), or None. In this last case, the[0m
+[1m            cursor is returned if any query is executed, since it's used by[0m
+[1m            subclasses such as InsertQuery). It's possible, however, that no query[0m
+[1m            is needed, as the filters describe an empty set. In that case, None is[0m
+[1m            returned, to avoid any unnecessary database interaction.[0m
+[1m            """[0m
+[1m        if not result_type:[0m
+[1m            result_type = NO_RESULTS[0m
+[1m        try:[0m
+[1m            sql, params = self.as_sql()[0m
+[1m            if not sql:[0m
+[1m                raise EmptyResultSet[0m
+[1m        except EmptyResultSet:[0m
+[1m            if result_type == MULTI:[0m
+[1m                return iter([])[0m
+[1m            else:[0m
+[1m                return[0m
+[1m        if chunked_fetch:[0m
+[1m            cursor = self.connection.chunked_cursor()[0m
+[1m        else:[0m
+[1m            cursor = self.connection.cursor()[0m
+[1m        try:[0m
+[1m>           cursor.execute(sql, params)[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/models/sql/compiler.py[0m:1068: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>
+sql = 'SELECT "student_registration_monthlycost"."id", "student_registration_monthlycost"."cost", "student_registration_monthlycost"."effective_date" FROM "student_registration_monthlycost" ORDER BY "student_registration_monthlycost"."id" ASC'
+params = ()
+
+[1m    def execute(self, sql, params=None):[0m
+[1m>       return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/utils.py[0m:68: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>
+sql = 'SELECT "student_registration_monthlycost"."id", "student_registration_monthlycost"."cost", "student_registration_monthlycost"."effective_date" FROM "student_registration_monthlycost" ORDER BY "student_registration_monthlycost"."id" ASC'
+params = (), many = False
+executor = <bound method CursorWrapper._execute of <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>>
+
+[1m    def _execute_with_wrappers(self, sql, params, many, executor):[0m
+[1m        context = {'connection': self.db, 'cursor': self}[0m
+[1m        for wrapper in reversed(self.db.execute_wrappers):[0m
+[1m            executor = functools.partial(wrapper, executor)[0m
+[1m>       return executor(sql, params, many, context)[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/utils.py[0m:77: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>
+sql = 'SELECT "student_registration_monthlycost"."id", "student_registration_monthlycost"."cost", "student_registration_monthlycost"."effective_date" FROM "student_registration_monthlycost" ORDER BY "student_registration_monthlycost"."id" ASC'
+params = ()
+ignored_wrapper_args = (False, {'connection': <django.db.backends.postgresql.base.DatabaseWrapper object at 0x7fea480fcbe0>, 'cursor': <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>})
+
+[1m    def _execute(self, sql, params, *ignored_wrapper_args):[0m
+[1m        self.db.validate_no_broken_transaction()[0m
+[1m        with self.db.wrap_database_errors:[0m
+[1m            if params is None:[0m
+[1m                return self.cursor.execute(sql)[0m
+[1m            else:[0m
+[1m>               return self.cursor.execute(sql, params)[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/utils.py[0m:85: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <django.db.utils.DatabaseErrorWrapper object at 0x7fea46ae16a0>
+exc_type = <class 'psycopg2.ProgrammingError'>
+exc_value = ProgrammingError('relation "student_registration_monthlycost" does not exist\nLINE 1: ...t_registration_monthlycost"."effective_date" FROM "student_r...\n                                                             ^\n',)
+traceback = <traceback object at 0x7fea46895fc8>
+
+[1m    def __exit__(self, exc_type, exc_value, traceback):[0m
+[1m        if exc_type is None:[0m
+[1m            return[0m
+[1m        for dj_exc_type in ([0m
+[1m                DataError,[0m
+[1m                OperationalError,[0m
+[1m                IntegrityError,[0m
+[1m                InternalError,[0m
+[1m                ProgrammingError,[0m
+[1m                NotSupportedError,[0m
+[1m                DatabaseError,[0m
+[1m                InterfaceError,[0m
+[1m                Error,[0m
+[1m        ):[0m
+[1m            db_exc_type = getattr(self.wrapper.Database, dj_exc_type.__name__)[0m
+[1m            if issubclass(exc_type, db_exc_type):[0m
+[1m                dj_exc_value = dj_exc_type(*exc_value.args)[0m
+[1m                # Only set the 'errors_occurred' flag for errors that may make[0m
+[1m                # the connection unusable.[0m
+[1m                if dj_exc_type not in (DataError, IntegrityError):[0m
+[1m                    self.wrapper.errors_occurred = True[0m
+[1m>               raise dj_exc_value.with_traceback(traceback) from exc_value[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/utils.py[0m:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>
+sql = 'SELECT "student_registration_monthlycost"."id", "student_registration_monthlycost"."cost", "student_registration_monthlycost"."effective_date" FROM "student_registration_monthlycost" ORDER BY "student_registration_monthlycost"."id" ASC'
+params = ()
+ignored_wrapper_args = (False, {'connection': <django.db.backends.postgresql.base.DatabaseWrapper object at 0x7fea480fcbe0>, 'cursor': <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>})
+
+[1m    def _execute(self, sql, params, *ignored_wrapper_args):[0m
+[1m        self.db.validate_no_broken_transaction()[0m
+[1m        with self.db.wrap_database_errors:[0m
+[1m            if params is None:[0m
+[1m                return self.cursor.execute(sql)[0m
+[1m            else:[0m
+[1m>               return self.cursor.execute(sql, params)[0m
+[1m[31mE               django.db.utils.ProgrammingError: relation "student_registration_monthlycost" does not exist[0m
+[1m[31mE               LINE 1: ...t_registration_monthlycost"."effective_date" FROM "student_r...[0m
+[1m[31mE                                                                            ^[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/utils.py[0m:85: ProgrammingError
+
+[33mDuring handling of the above exception, another exception occurred:[0m
+
+request = <SubRequest '_django_db_marker' for <Function 'test_redirect'>>
+
+[1m    @pytest.fixture(autouse=True)[0m
+[1m    def _django_db_marker(request):[0m
+[1m        """Implement the django_db marker, internal to pytest-django.[0m
+[1m    [0m
+[1m        This will dynamically request the ``db`` or ``transactional_db``[0m
+[1m        fixtures as required by the django_db marker.[0m
+[1m        """[0m
+[1m        marker = request.node.get_closest_marker('django_db')[0m
+[1m        if marker:[0m
+[1m            transaction = validate_django_db(marker)[0m
+[1m            if transaction:[0m
+[1m                request.getfixturevalue('transactional_db')[0m
+[1m            else:[0m
+[1m>               request.getfixturevalue('db')[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/pytest_django/plugin.py[0m:391: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+[1m[31m/usr/local/lib/python3.6/site-packages/pytest_django/fixtures.py[0m:96: in django_db_setup
+[1m    **setup_databases_args[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/test/utils.py[0m:176: in setup_databases
+[1m    serialize=connection.settings_dict.get('TEST', {}).get('SERIALIZE', True),[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/base/creation.py[0m:76: in create_test_db
+[1m    self.connection._test_serialized_contents = self.serialize_db_to_string()[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/base/creation.py[0m:119: in serialize_db_to_string
+[1m    serializers.serialize("json", get_objects(), indent=None, stream=out)[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/core/serializers/__init__.py[0m:128: in serialize
+[1m    s.serialize(queryset, **options)[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/core/serializers/base.py[0m:80: in serialize
+[1m    for count, obj in enumerate(queryset, start=1):[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/base/creation.py[0m:116: in get_objects
+[1m    yield from queryset.iterator()[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/models/query.py[0m:336: in _iterator
+[1m    yield from self._iterable_class(self, chunked_fetch=use_chunked_fetch, chunk_size=chunk_size)[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/models/query.py[0m:53: in __iter__
+[1m    results = compiler.execute_sql(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size)[0m
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <django.db.models.sql.compiler.SQLCompiler object at 0x7fea46a67048>
+result_type = 'multi', chunked_fetch = True, chunk_size = 2000
+
+[1m    def execute_sql(self, result_type=MULTI, chunked_fetch=False, chunk_size=GET_ITERATOR_CHUNK_SIZE):[0m
+[1m        """[0m
+[1m            Run the query against the database and return the result(s). The[0m
+[1m            return value is a single data item if result_type is SINGLE, or an[0m
+[1m            iterator over the results if the result_type is MULTI.[0m
+[1m    [0m
+[1m            result_type is either MULTI (use fetchmany() to retrieve all rows),[0m
+[1m            SINGLE (only retrieve a single row), or None. In this last case, the[0m
+[1m            cursor is returned if any query is executed, since it's used by[0m
+[1m            subclasses such as InsertQuery). It's possible, however, that no query[0m
+[1m            is needed, as the filters describe an empty set. In that case, None is[0m
+[1m            returned, to avoid any unnecessary database interaction.[0m
+[1m            """[0m
+[1m        if not result_type:[0m
+[1m            result_type = NO_RESULTS[0m
+[1m        try:[0m
+[1m            sql, params = self.as_sql()[0m
+[1m            if not sql:[0m
+[1m                raise EmptyResultSet[0m
+[1m        except EmptyResultSet:[0m
+[1m            if result_type == MULTI:[0m
+[1m                return iter([])[0m
+[1m            else:[0m
+[1m                return[0m
+[1m        if chunked_fetch:[0m
+[1m            cursor = self.connection.chunked_cursor()[0m
+[1m        else:[0m
+[1m            cursor = self.connection.cursor()[0m
+[1m        try:[0m
+[1m            cursor.execute(sql, params)[0m
+[1m        except Exception:[0m
+[1m            # Might fail for server-side cursors (e.g. connection closed)[0m
+[1m>           cursor.close()[0m
+[1m[31mE           psycopg2.OperationalError: cursor "_django_curs_140644337785736_7" does not exist[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/models/sql/compiler.py[0m:1071: OperationalError
+                                                                  [32m70% [0m[40m[32m█[0m[40m[32m██████   [0m
+
+―――――――――― ERROR at setup of TestUserUpdateView.test_get_success_url ―――――――――――
+
+self = <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>
+sql = 'SELECT "student_registration_monthlycost"."id", "student_registration_monthlycost"."cost", "student_registration_monthlycost"."effective_date" FROM "student_registration_monthlycost" ORDER BY "student_registration_monthlycost"."id" ASC'
+params = ()
+ignored_wrapper_args = (False, {'connection': <django.db.backends.postgresql.base.DatabaseWrapper object at 0x7fea480fcbe0>, 'cursor': <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>})
+
+[1m    def _execute(self, sql, params, *ignored_wrapper_args):[0m
+[1m        self.db.validate_no_broken_transaction()[0m
+[1m        with self.db.wrap_database_errors:[0m
+[1m            if params is None:[0m
+[1m                return self.cursor.execute(sql)[0m
+[1m            else:[0m
+[1m>               return self.cursor.execute(sql, params)[0m
+[1m[31mE               psycopg2.ProgrammingError: relation "student_registration_monthlycost" does not exist[0m
+[1m[31mE               LINE 1: ...t_registration_monthlycost"."effective_date" FROM "student_r...[0m
+[1m[31mE                                                                            ^[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/utils.py[0m:85: ProgrammingError
+
+[33mThe above exception was the direct cause of the following exception:[0m
+
+self = <django.db.models.sql.compiler.SQLCompiler object at 0x7fea46a67048>
+result_type = 'multi', chunked_fetch = True, chunk_size = 2000
+
+[1m    def execute_sql(self, result_type=MULTI, chunked_fetch=False, chunk_size=GET_ITERATOR_CHUNK_SIZE):[0m
+[1m        """[0m
+[1m            Run the query against the database and return the result(s). The[0m
+[1m            return value is a single data item if result_type is SINGLE, or an[0m
+[1m            iterator over the results if the result_type is MULTI.[0m
+[1m    [0m
+[1m            result_type is either MULTI (use fetchmany() to retrieve all rows),[0m
+[1m            SINGLE (only retrieve a single row), or None. In this last case, the[0m
+[1m            cursor is returned if any query is executed, since it's used by[0m
+[1m            subclasses such as InsertQuery). It's possible, however, that no query[0m
+[1m            is needed, as the filters describe an empty set. In that case, None is[0m
+[1m            returned, to avoid any unnecessary database interaction.[0m
+[1m            """[0m
+[1m        if not result_type:[0m
+[1m            result_type = NO_RESULTS[0m
+[1m        try:[0m
+[1m            sql, params = self.as_sql()[0m
+[1m            if not sql:[0m
+[1m                raise EmptyResultSet[0m
+[1m        except EmptyResultSet:[0m
+[1m            if result_type == MULTI:[0m
+[1m                return iter([])[0m
+[1m            else:[0m
+[1m                return[0m
+[1m        if chunked_fetch:[0m
+[1m            cursor = self.connection.chunked_cursor()[0m
+[1m        else:[0m
+[1m            cursor = self.connection.cursor()[0m
+[1m        try:[0m
+[1m>           cursor.execute(sql, params)[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/models/sql/compiler.py[0m:1068: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>
+sql = 'SELECT "student_registration_monthlycost"."id", "student_registration_monthlycost"."cost", "student_registration_monthlycost"."effective_date" FROM "student_registration_monthlycost" ORDER BY "student_registration_monthlycost"."id" ASC'
+params = ()
+
+[1m    def execute(self, sql, params=None):[0m
+[1m>       return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/utils.py[0m:68: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>
+sql = 'SELECT "student_registration_monthlycost"."id", "student_registration_monthlycost"."cost", "student_registration_monthlycost"."effective_date" FROM "student_registration_monthlycost" ORDER BY "student_registration_monthlycost"."id" ASC'
+params = (), many = False
+executor = <bound method CursorWrapper._execute of <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>>
+
+[1m    def _execute_with_wrappers(self, sql, params, many, executor):[0m
+[1m        context = {'connection': self.db, 'cursor': self}[0m
+[1m        for wrapper in reversed(self.db.execute_wrappers):[0m
+[1m            executor = functools.partial(wrapper, executor)[0m
+[1m>       return executor(sql, params, many, context)[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/utils.py[0m:77: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>
+sql = 'SELECT "student_registration_monthlycost"."id", "student_registration_monthlycost"."cost", "student_registration_monthlycost"."effective_date" FROM "student_registration_monthlycost" ORDER BY "student_registration_monthlycost"."id" ASC'
+params = ()
+ignored_wrapper_args = (False, {'connection': <django.db.backends.postgresql.base.DatabaseWrapper object at 0x7fea480fcbe0>, 'cursor': <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>})
+
+[1m    def _execute(self, sql, params, *ignored_wrapper_args):[0m
+[1m        self.db.validate_no_broken_transaction()[0m
+[1m        with self.db.wrap_database_errors:[0m
+[1m            if params is None:[0m
+[1m                return self.cursor.execute(sql)[0m
+[1m            else:[0m
+[1m>               return self.cursor.execute(sql, params)[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/utils.py[0m:85: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <django.db.utils.DatabaseErrorWrapper object at 0x7fea46ae16a0>
+exc_type = <class 'psycopg2.ProgrammingError'>
+exc_value = ProgrammingError('relation "student_registration_monthlycost" does not exist\nLINE 1: ...t_registration_monthlycost"."effective_date" FROM "student_r...\n                                                             ^\n',)
+traceback = <traceback object at 0x7fea46895fc8>
+
+[1m    def __exit__(self, exc_type, exc_value, traceback):[0m
+[1m        if exc_type is None:[0m
+[1m            return[0m
+[1m        for dj_exc_type in ([0m
+[1m                DataError,[0m
+[1m                OperationalError,[0m
+[1m                IntegrityError,[0m
+[1m                InternalError,[0m
+[1m                ProgrammingError,[0m
+[1m                NotSupportedError,[0m
+[1m                DatabaseError,[0m
+[1m                InterfaceError,[0m
+[1m                Error,[0m
+[1m        ):[0m
+[1m            db_exc_type = getattr(self.wrapper.Database, dj_exc_type.__name__)[0m
+[1m            if issubclass(exc_type, db_exc_type):[0m
+[1m                dj_exc_value = dj_exc_type(*exc_value.args)[0m
+[1m                # Only set the 'errors_occurred' flag for errors that may make[0m
+[1m                # the connection unusable.[0m
+[1m                if dj_exc_type not in (DataError, IntegrityError):[0m
+[1m                    self.wrapper.errors_occurred = True[0m
+[1m>               raise dj_exc_value.with_traceback(traceback) from exc_value[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/utils.py[0m:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>
+sql = 'SELECT "student_registration_monthlycost"."id", "student_registration_monthlycost"."cost", "student_registration_monthlycost"."effective_date" FROM "student_registration_monthlycost" ORDER BY "student_registration_monthlycost"."id" ASC'
+params = ()
+ignored_wrapper_args = (False, {'connection': <django.db.backends.postgresql.base.DatabaseWrapper object at 0x7fea480fcbe0>, 'cursor': <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>})
+
+[1m    def _execute(self, sql, params, *ignored_wrapper_args):[0m
+[1m        self.db.validate_no_broken_transaction()[0m
+[1m        with self.db.wrap_database_errors:[0m
+[1m            if params is None:[0m
+[1m                return self.cursor.execute(sql)[0m
+[1m            else:[0m
+[1m>               return self.cursor.execute(sql, params)[0m
+[1m[31mE               django.db.utils.ProgrammingError: relation "student_registration_monthlycost" does not exist[0m
+[1m[31mE               LINE 1: ...t_registration_monthlycost"."effective_date" FROM "student_r...[0m
+[1m[31mE                                                                            ^[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/utils.py[0m:85: ProgrammingError
+
+[33mDuring handling of the above exception, another exception occurred:[0m
+
+request = <SubRequest '_django_db_marker' for <Function 'test_get_success_url'>>
+
+[1m    @pytest.fixture(autouse=True)[0m
+[1m    def _django_db_marker(request):[0m
+[1m        """Implement the django_db marker, internal to pytest-django.[0m
+[1m    [0m
+[1m        This will dynamically request the ``db`` or ``transactional_db``[0m
+[1m        fixtures as required by the django_db marker.[0m
+[1m        """[0m
+[1m        marker = request.node.get_closest_marker('django_db')[0m
+[1m        if marker:[0m
+[1m            transaction = validate_django_db(marker)[0m
+[1m            if transaction:[0m
+[1m                request.getfixturevalue('transactional_db')[0m
+[1m            else:[0m
+[1m>               request.getfixturevalue('db')[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/pytest_django/plugin.py[0m:391: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+[1m[31m/usr/local/lib/python3.6/site-packages/pytest_django/fixtures.py[0m:96: in django_db_setup
+[1m    **setup_databases_args[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/test/utils.py[0m:176: in setup_databases
+[1m    serialize=connection.settings_dict.get('TEST', {}).get('SERIALIZE', True),[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/base/creation.py[0m:76: in create_test_db
+[1m    self.connection._test_serialized_contents = self.serialize_db_to_string()[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/base/creation.py[0m:119: in serialize_db_to_string
+[1m    serializers.serialize("json", get_objects(), indent=None, stream=out)[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/core/serializers/__init__.py[0m:128: in serialize
+[1m    s.serialize(queryset, **options)[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/core/serializers/base.py[0m:80: in serialize
+[1m    for count, obj in enumerate(queryset, start=1):[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/base/creation.py[0m:116: in get_objects
+[1m    yield from queryset.iterator()[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/models/query.py[0m:336: in _iterator
+[1m    yield from self._iterable_class(self, chunked_fetch=use_chunked_fetch, chunk_size=chunk_size)[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/models/query.py[0m:53: in __iter__
+[1m    results = compiler.execute_sql(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size)[0m
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <django.db.models.sql.compiler.SQLCompiler object at 0x7fea46a67048>
+result_type = 'multi', chunked_fetch = True, chunk_size = 2000
+
+[1m    def execute_sql(self, result_type=MULTI, chunked_fetch=False, chunk_size=GET_ITERATOR_CHUNK_SIZE):[0m
+[1m        """[0m
+[1m            Run the query against the database and return the result(s). The[0m
+[1m            return value is a single data item if result_type is SINGLE, or an[0m
+[1m            iterator over the results if the result_type is MULTI.[0m
+[1m    [0m
+[1m            result_type is either MULTI (use fetchmany() to retrieve all rows),[0m
+[1m            SINGLE (only retrieve a single row), or None. In this last case, the[0m
+[1m            cursor is returned if any query is executed, since it's used by[0m
+[1m            subclasses such as InsertQuery). It's possible, however, that no query[0m
+[1m            is needed, as the filters describe an empty set. In that case, None is[0m
+[1m            returned, to avoid any unnecessary database interaction.[0m
+[1m            """[0m
+[1m        if not result_type:[0m
+[1m            result_type = NO_RESULTS[0m
+[1m        try:[0m
+[1m            sql, params = self.as_sql()[0m
+[1m            if not sql:[0m
+[1m                raise EmptyResultSet[0m
+[1m        except EmptyResultSet:[0m
+[1m            if result_type == MULTI:[0m
+[1m                return iter([])[0m
+[1m            else:[0m
+[1m                return[0m
+[1m        if chunked_fetch:[0m
+[1m            cursor = self.connection.chunked_cursor()[0m
+[1m        else:[0m
+[1m            cursor = self.connection.cursor()[0m
+[1m        try:[0m
+[1m            cursor.execute(sql, params)[0m
+[1m        except Exception:[0m
+[1m            # Might fail for server-side cursors (e.g. connection closed)[0m
+[1m>           cursor.close()[0m
+[1m[31mE           psycopg2.OperationalError: cursor "_django_curs_140644337785736_7" does not exist[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/models/sql/compiler.py[0m:1071: OperationalError
+                                                                  [32m80% [0m[40m[32m█[0m[40m[32m███████  [0m
+
+――――――――――――― ERROR at setup of TestUserUpdateView.test_get_object ―――――――――――――
+
+self = <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>
+sql = 'SELECT "student_registration_monthlycost"."id", "student_registration_monthlycost"."cost", "student_registration_monthlycost"."effective_date" FROM "student_registration_monthlycost" ORDER BY "student_registration_monthlycost"."id" ASC'
+params = ()
+ignored_wrapper_args = (False, {'connection': <django.db.backends.postgresql.base.DatabaseWrapper object at 0x7fea480fcbe0>, 'cursor': <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>})
+
+[1m    def _execute(self, sql, params, *ignored_wrapper_args):[0m
+[1m        self.db.validate_no_broken_transaction()[0m
+[1m        with self.db.wrap_database_errors:[0m
+[1m            if params is None:[0m
+[1m                return self.cursor.execute(sql)[0m
+[1m            else:[0m
+[1m>               return self.cursor.execute(sql, params)[0m
+[1m[31mE               psycopg2.ProgrammingError: relation "student_registration_monthlycost" does not exist[0m
+[1m[31mE               LINE 1: ...t_registration_monthlycost"."effective_date" FROM "student_r...[0m
+[1m[31mE                                                                            ^[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/utils.py[0m:85: ProgrammingError
+
+[33mThe above exception was the direct cause of the following exception:[0m
+
+self = <django.db.models.sql.compiler.SQLCompiler object at 0x7fea46a67048>
+result_type = 'multi', chunked_fetch = True, chunk_size = 2000
+
+[1m    def execute_sql(self, result_type=MULTI, chunked_fetch=False, chunk_size=GET_ITERATOR_CHUNK_SIZE):[0m
+[1m        """[0m
+[1m            Run the query against the database and return the result(s). The[0m
+[1m            return value is a single data item if result_type is SINGLE, or an[0m
+[1m            iterator over the results if the result_type is MULTI.[0m
+[1m    [0m
+[1m            result_type is either MULTI (use fetchmany() to retrieve all rows),[0m
+[1m            SINGLE (only retrieve a single row), or None. In this last case, the[0m
+[1m            cursor is returned if any query is executed, since it's used by[0m
+[1m            subclasses such as InsertQuery). It's possible, however, that no query[0m
+[1m            is needed, as the filters describe an empty set. In that case, None is[0m
+[1m            returned, to avoid any unnecessary database interaction.[0m
+[1m            """[0m
+[1m        if not result_type:[0m
+[1m            result_type = NO_RESULTS[0m
+[1m        try:[0m
+[1m            sql, params = self.as_sql()[0m
+[1m            if not sql:[0m
+[1m                raise EmptyResultSet[0m
+[1m        except EmptyResultSet:[0m
+[1m            if result_type == MULTI:[0m
+[1m                return iter([])[0m
+[1m            else:[0m
+[1m                return[0m
+[1m        if chunked_fetch:[0m
+[1m            cursor = self.connection.chunked_cursor()[0m
+[1m        else:[0m
+[1m            cursor = self.connection.cursor()[0m
+[1m        try:[0m
+[1m>           cursor.execute(sql, params)[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/models/sql/compiler.py[0m:1068: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>
+sql = 'SELECT "student_registration_monthlycost"."id", "student_registration_monthlycost"."cost", "student_registration_monthlycost"."effective_date" FROM "student_registration_monthlycost" ORDER BY "student_registration_monthlycost"."id" ASC'
+params = ()
+
+[1m    def execute(self, sql, params=None):[0m
+[1m>       return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/utils.py[0m:68: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>
+sql = 'SELECT "student_registration_monthlycost"."id", "student_registration_monthlycost"."cost", "student_registration_monthlycost"."effective_date" FROM "student_registration_monthlycost" ORDER BY "student_registration_monthlycost"."id" ASC'
+params = (), many = False
+executor = <bound method CursorWrapper._execute of <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>>
+
+[1m    def _execute_with_wrappers(self, sql, params, many, executor):[0m
+[1m        context = {'connection': self.db, 'cursor': self}[0m
+[1m        for wrapper in reversed(self.db.execute_wrappers):[0m
+[1m            executor = functools.partial(wrapper, executor)[0m
+[1m>       return executor(sql, params, many, context)[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/utils.py[0m:77: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>
+sql = 'SELECT "student_registration_monthlycost"."id", "student_registration_monthlycost"."cost", "student_registration_monthlycost"."effective_date" FROM "student_registration_monthlycost" ORDER BY "student_registration_monthlycost"."id" ASC'
+params = ()
+ignored_wrapper_args = (False, {'connection': <django.db.backends.postgresql.base.DatabaseWrapper object at 0x7fea480fcbe0>, 'cursor': <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>})
+
+[1m    def _execute(self, sql, params, *ignored_wrapper_args):[0m
+[1m        self.db.validate_no_broken_transaction()[0m
+[1m        with self.db.wrap_database_errors:[0m
+[1m            if params is None:[0m
+[1m                return self.cursor.execute(sql)[0m
+[1m            else:[0m
+[1m>               return self.cursor.execute(sql, params)[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/utils.py[0m:85: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <django.db.utils.DatabaseErrorWrapper object at 0x7fea46ae16a0>
+exc_type = <class 'psycopg2.ProgrammingError'>
+exc_value = ProgrammingError('relation "student_registration_monthlycost" does not exist\nLINE 1: ...t_registration_monthlycost"."effective_date" FROM "student_r...\n                                                             ^\n',)
+traceback = <traceback object at 0x7fea46895fc8>
+
+[1m    def __exit__(self, exc_type, exc_value, traceback):[0m
+[1m        if exc_type is None:[0m
+[1m            return[0m
+[1m        for dj_exc_type in ([0m
+[1m                DataError,[0m
+[1m                OperationalError,[0m
+[1m                IntegrityError,[0m
+[1m                InternalError,[0m
+[1m                ProgrammingError,[0m
+[1m                NotSupportedError,[0m
+[1m                DatabaseError,[0m
+[1m                InterfaceError,[0m
+[1m                Error,[0m
+[1m        ):[0m
+[1m            db_exc_type = getattr(self.wrapper.Database, dj_exc_type.__name__)[0m
+[1m            if issubclass(exc_type, db_exc_type):[0m
+[1m                dj_exc_value = dj_exc_type(*exc_value.args)[0m
+[1m                # Only set the 'errors_occurred' flag for errors that may make[0m
+[1m                # the connection unusable.[0m
+[1m                if dj_exc_type not in (DataError, IntegrityError):[0m
+[1m                    self.wrapper.errors_occurred = True[0m
+[1m>               raise dj_exc_value.with_traceback(traceback) from exc_value[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/utils.py[0m:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>
+sql = 'SELECT "student_registration_monthlycost"."id", "student_registration_monthlycost"."cost", "student_registration_monthlycost"."effective_date" FROM "student_registration_monthlycost" ORDER BY "student_registration_monthlycost"."id" ASC'
+params = ()
+ignored_wrapper_args = (False, {'connection': <django.db.backends.postgresql.base.DatabaseWrapper object at 0x7fea480fcbe0>, 'cursor': <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>})
+
+[1m    def _execute(self, sql, params, *ignored_wrapper_args):[0m
+[1m        self.db.validate_no_broken_transaction()[0m
+[1m        with self.db.wrap_database_errors:[0m
+[1m            if params is None:[0m
+[1m                return self.cursor.execute(sql)[0m
+[1m            else:[0m
+[1m>               return self.cursor.execute(sql, params)[0m
+[1m[31mE               django.db.utils.ProgrammingError: relation "student_registration_monthlycost" does not exist[0m
+[1m[31mE               LINE 1: ...t_registration_monthlycost"."effective_date" FROM "student_r...[0m
+[1m[31mE                                                                            ^[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/utils.py[0m:85: ProgrammingError
+
+[33mDuring handling of the above exception, another exception occurred:[0m
+
+request = <SubRequest '_django_db_marker' for <Function 'test_get_object'>>
+
+[1m    @pytest.fixture(autouse=True)[0m
+[1m    def _django_db_marker(request):[0m
+[1m        """Implement the django_db marker, internal to pytest-django.[0m
+[1m    [0m
+[1m        This will dynamically request the ``db`` or ``transactional_db``[0m
+[1m        fixtures as required by the django_db marker.[0m
+[1m        """[0m
+[1m        marker = request.node.get_closest_marker('django_db')[0m
+[1m        if marker:[0m
+[1m            transaction = validate_django_db(marker)[0m
+[1m            if transaction:[0m
+[1m                request.getfixturevalue('transactional_db')[0m
+[1m            else:[0m
+[1m>               request.getfixturevalue('db')[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/pytest_django/plugin.py[0m:391: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+[1m[31m/usr/local/lib/python3.6/site-packages/pytest_django/fixtures.py[0m:96: in django_db_setup
+[1m    **setup_databases_args[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/test/utils.py[0m:176: in setup_databases
+[1m    serialize=connection.settings_dict.get('TEST', {}).get('SERIALIZE', True),[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/base/creation.py[0m:76: in create_test_db
+[1m    self.connection._test_serialized_contents = self.serialize_db_to_string()[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/base/creation.py[0m:119: in serialize_db_to_string
+[1m    serializers.serialize("json", get_objects(), indent=None, stream=out)[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/core/serializers/__init__.py[0m:128: in serialize
+[1m    s.serialize(queryset, **options)[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/core/serializers/base.py[0m:80: in serialize
+[1m    for count, obj in enumerate(queryset, start=1):[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/base/creation.py[0m:116: in get_objects
+[1m    yield from queryset.iterator()[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/models/query.py[0m:336: in _iterator
+[1m    yield from self._iterable_class(self, chunked_fetch=use_chunked_fetch, chunk_size=chunk_size)[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/models/query.py[0m:53: in __iter__
+[1m    results = compiler.execute_sql(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size)[0m
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <django.db.models.sql.compiler.SQLCompiler object at 0x7fea46a67048>
+result_type = 'multi', chunked_fetch = True, chunk_size = 2000
+
+[1m    def execute_sql(self, result_type=MULTI, chunked_fetch=False, chunk_size=GET_ITERATOR_CHUNK_SIZE):[0m
+[1m        """[0m
+[1m            Run the query against the database and return the result(s). The[0m
+[1m            return value is a single data item if result_type is SINGLE, or an[0m
+[1m            iterator over the results if the result_type is MULTI.[0m
+[1m    [0m
+[1m            result_type is either MULTI (use fetchmany() to retrieve all rows),[0m
+[1m            SINGLE (only retrieve a single row), or None. In this last case, the[0m
+[1m            cursor is returned if any query is executed, since it's used by[0m
+[1m            subclasses such as InsertQuery). It's possible, however, that no query[0m
+[1m            is needed, as the filters describe an empty set. In that case, None is[0m
+[1m            returned, to avoid any unnecessary database interaction.[0m
+[1m            """[0m
+[1m        if not result_type:[0m
+[1m            result_type = NO_RESULTS[0m
+[1m        try:[0m
+[1m            sql, params = self.as_sql()[0m
+[1m            if not sql:[0m
+[1m                raise EmptyResultSet[0m
+[1m        except EmptyResultSet:[0m
+[1m            if result_type == MULTI:[0m
+[1m                return iter([])[0m
+[1m            else:[0m
+[1m                return[0m
+[1m        if chunked_fetch:[0m
+[1m            cursor = self.connection.chunked_cursor()[0m
+[1m        else:[0m
+[1m            cursor = self.connection.cursor()[0m
+[1m        try:[0m
+[1m            cursor.execute(sql, params)[0m
+[1m        except Exception:[0m
+[1m            # Might fail for server-side cursors (e.g. connection closed)[0m
+[1m>           cursor.close()[0m
+[1m[31mE           psycopg2.OperationalError: cursor "_django_curs_140644337785736_7" does not exist[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/models/sql/compiler.py[0m:1071: OperationalError
+                                                                  [32m90% [0m[40m[32m█[0m[40m[32m████████ [0m
+
+――――――――― ERROR at setup of TestUserRedirectView.test_get_redirect_url ―――――――――
+
+self = <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>
+sql = 'SELECT "student_registration_monthlycost"."id", "student_registration_monthlycost"."cost", "student_registration_monthlycost"."effective_date" FROM "student_registration_monthlycost" ORDER BY "student_registration_monthlycost"."id" ASC'
+params = ()
+ignored_wrapper_args = (False, {'connection': <django.db.backends.postgresql.base.DatabaseWrapper object at 0x7fea480fcbe0>, 'cursor': <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>})
+
+[1m    def _execute(self, sql, params, *ignored_wrapper_args):[0m
+[1m        self.db.validate_no_broken_transaction()[0m
+[1m        with self.db.wrap_database_errors:[0m
+[1m            if params is None:[0m
+[1m                return self.cursor.execute(sql)[0m
+[1m            else:[0m
+[1m>               return self.cursor.execute(sql, params)[0m
+[1m[31mE               psycopg2.ProgrammingError: relation "student_registration_monthlycost" does not exist[0m
+[1m[31mE               LINE 1: ...t_registration_monthlycost"."effective_date" FROM "student_r...[0m
+[1m[31mE                                                                            ^[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/utils.py[0m:85: ProgrammingError
+
+[33mThe above exception was the direct cause of the following exception:[0m
+
+self = <django.db.models.sql.compiler.SQLCompiler object at 0x7fea46a67048>
+result_type = 'multi', chunked_fetch = True, chunk_size = 2000
+
+[1m    def execute_sql(self, result_type=MULTI, chunked_fetch=False, chunk_size=GET_ITERATOR_CHUNK_SIZE):[0m
+[1m        """[0m
+[1m            Run the query against the database and return the result(s). The[0m
+[1m            return value is a single data item if result_type is SINGLE, or an[0m
+[1m            iterator over the results if the result_type is MULTI.[0m
+[1m    [0m
+[1m            result_type is either MULTI (use fetchmany() to retrieve all rows),[0m
+[1m            SINGLE (only retrieve a single row), or None. In this last case, the[0m
+[1m            cursor is returned if any query is executed, since it's used by[0m
+[1m            subclasses such as InsertQuery). It's possible, however, that no query[0m
+[1m            is needed, as the filters describe an empty set. In that case, None is[0m
+[1m            returned, to avoid any unnecessary database interaction.[0m
+[1m            """[0m
+[1m        if not result_type:[0m
+[1m            result_type = NO_RESULTS[0m
+[1m        try:[0m
+[1m            sql, params = self.as_sql()[0m
+[1m            if not sql:[0m
+[1m                raise EmptyResultSet[0m
+[1m        except EmptyResultSet:[0m
+[1m            if result_type == MULTI:[0m
+[1m                return iter([])[0m
+[1m            else:[0m
+[1m                return[0m
+[1m        if chunked_fetch:[0m
+[1m            cursor = self.connection.chunked_cursor()[0m
+[1m        else:[0m
+[1m            cursor = self.connection.cursor()[0m
+[1m        try:[0m
+[1m>           cursor.execute(sql, params)[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/models/sql/compiler.py[0m:1068: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>
+sql = 'SELECT "student_registration_monthlycost"."id", "student_registration_monthlycost"."cost", "student_registration_monthlycost"."effective_date" FROM "student_registration_monthlycost" ORDER BY "student_registration_monthlycost"."id" ASC'
+params = ()
+
+[1m    def execute(self, sql, params=None):[0m
+[1m>       return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/utils.py[0m:68: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>
+sql = 'SELECT "student_registration_monthlycost"."id", "student_registration_monthlycost"."cost", "student_registration_monthlycost"."effective_date" FROM "student_registration_monthlycost" ORDER BY "student_registration_monthlycost"."id" ASC'
+params = (), many = False
+executor = <bound method CursorWrapper._execute of <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>>
+
+[1m    def _execute_with_wrappers(self, sql, params, many, executor):[0m
+[1m        context = {'connection': self.db, 'cursor': self}[0m
+[1m        for wrapper in reversed(self.db.execute_wrappers):[0m
+[1m            executor = functools.partial(wrapper, executor)[0m
+[1m>       return executor(sql, params, many, context)[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/utils.py[0m:77: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>
+sql = 'SELECT "student_registration_monthlycost"."id", "student_registration_monthlycost"."cost", "student_registration_monthlycost"."effective_date" FROM "student_registration_monthlycost" ORDER BY "student_registration_monthlycost"."id" ASC'
+params = ()
+ignored_wrapper_args = (False, {'connection': <django.db.backends.postgresql.base.DatabaseWrapper object at 0x7fea480fcbe0>, 'cursor': <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>})
+
+[1m    def _execute(self, sql, params, *ignored_wrapper_args):[0m
+[1m        self.db.validate_no_broken_transaction()[0m
+[1m        with self.db.wrap_database_errors:[0m
+[1m            if params is None:[0m
+[1m                return self.cursor.execute(sql)[0m
+[1m            else:[0m
+[1m>               return self.cursor.execute(sql, params)[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/utils.py[0m:85: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <django.db.utils.DatabaseErrorWrapper object at 0x7fea46ae16a0>
+exc_type = <class 'psycopg2.ProgrammingError'>
+exc_value = ProgrammingError('relation "student_registration_monthlycost" does not exist\nLINE 1: ...t_registration_monthlycost"."effective_date" FROM "student_r...\n                                                             ^\n',)
+traceback = <traceback object at 0x7fea46895fc8>
+
+[1m    def __exit__(self, exc_type, exc_value, traceback):[0m
+[1m        if exc_type is None:[0m
+[1m            return[0m
+[1m        for dj_exc_type in ([0m
+[1m                DataError,[0m
+[1m                OperationalError,[0m
+[1m                IntegrityError,[0m
+[1m                InternalError,[0m
+[1m                ProgrammingError,[0m
+[1m                NotSupportedError,[0m
+[1m                DatabaseError,[0m
+[1m                InterfaceError,[0m
+[1m                Error,[0m
+[1m        ):[0m
+[1m            db_exc_type = getattr(self.wrapper.Database, dj_exc_type.__name__)[0m
+[1m            if issubclass(exc_type, db_exc_type):[0m
+[1m                dj_exc_value = dj_exc_type(*exc_value.args)[0m
+[1m                # Only set the 'errors_occurred' flag for errors that may make[0m
+[1m                # the connection unusable.[0m
+[1m                if dj_exc_type not in (DataError, IntegrityError):[0m
+[1m                    self.wrapper.errors_occurred = True[0m
+[1m>               raise dj_exc_value.with_traceback(traceback) from exc_value[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/utils.py[0m:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>
+sql = 'SELECT "student_registration_monthlycost"."id", "student_registration_monthlycost"."cost", "student_registration_monthlycost"."effective_date" FROM "student_registration_monthlycost" ORDER BY "student_registration_monthlycost"."id" ASC'
+params = ()
+ignored_wrapper_args = (False, {'connection': <django.db.backends.postgresql.base.DatabaseWrapper object at 0x7fea480fcbe0>, 'cursor': <django.db.backends.utils.CursorWrapper object at 0x7fea46b048d0>})
+
+[1m    def _execute(self, sql, params, *ignored_wrapper_args):[0m
+[1m        self.db.validate_no_broken_transaction()[0m
+[1m        with self.db.wrap_database_errors:[0m
+[1m            if params is None:[0m
+[1m                return self.cursor.execute(sql)[0m
+[1m            else:[0m
+[1m>               return self.cursor.execute(sql, params)[0m
+[1m[31mE               django.db.utils.ProgrammingError: relation "student_registration_monthlycost" does not exist[0m
+[1m[31mE               LINE 1: ...t_registration_monthlycost"."effective_date" FROM "student_r...[0m
+[1m[31mE                                                                            ^[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/utils.py[0m:85: ProgrammingError
+
+[33mDuring handling of the above exception, another exception occurred:[0m
+
+request = <SubRequest '_django_db_marker' for <Function 'test_get_redirect_url'>>
+
+[1m    @pytest.fixture(autouse=True)[0m
+[1m    def _django_db_marker(request):[0m
+[1m        """Implement the django_db marker, internal to pytest-django.[0m
+[1m    [0m
+[1m        This will dynamically request the ``db`` or ``transactional_db``[0m
+[1m        fixtures as required by the django_db marker.[0m
+[1m        """[0m
+[1m        marker = request.node.get_closest_marker('django_db')[0m
+[1m        if marker:[0m
+[1m            transaction = validate_django_db(marker)[0m
+[1m            if transaction:[0m
+[1m                request.getfixturevalue('transactional_db')[0m
+[1m            else:[0m
+[1m>               request.getfixturevalue('db')[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/pytest_django/plugin.py[0m:391: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+[1m[31m/usr/local/lib/python3.6/site-packages/pytest_django/fixtures.py[0m:96: in django_db_setup
+[1m    **setup_databases_args[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/test/utils.py[0m:176: in setup_databases
+[1m    serialize=connection.settings_dict.get('TEST', {}).get('SERIALIZE', True),[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/base/creation.py[0m:76: in create_test_db
+[1m    self.connection._test_serialized_contents = self.serialize_db_to_string()[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/base/creation.py[0m:119: in serialize_db_to_string
+[1m    serializers.serialize("json", get_objects(), indent=None, stream=out)[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/core/serializers/__init__.py[0m:128: in serialize
+[1m    s.serialize(queryset, **options)[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/core/serializers/base.py[0m:80: in serialize
+[1m    for count, obj in enumerate(queryset, start=1):[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/backends/base/creation.py[0m:116: in get_objects
+[1m    yield from queryset.iterator()[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/models/query.py[0m:336: in _iterator
+[1m    yield from self._iterable_class(self, chunked_fetch=use_chunked_fetch, chunk_size=chunk_size)[0m
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/models/query.py[0m:53: in __iter__
+[1m    results = compiler.execute_sql(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size)[0m
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <django.db.models.sql.compiler.SQLCompiler object at 0x7fea46a67048>
+result_type = 'multi', chunked_fetch = True, chunk_size = 2000
+
+[1m    def execute_sql(self, result_type=MULTI, chunked_fetch=False, chunk_size=GET_ITERATOR_CHUNK_SIZE):[0m
+[1m        """[0m
+[1m            Run the query against the database and return the result(s). The[0m
+[1m            return value is a single data item if result_type is SINGLE, or an[0m
+[1m            iterator over the results if the result_type is MULTI.[0m
+[1m    [0m
+[1m            result_type is either MULTI (use fetchmany() to retrieve all rows),[0m
+[1m            SINGLE (only retrieve a single row), or None. In this last case, the[0m
+[1m            cursor is returned if any query is executed, since it's used by[0m
+[1m            subclasses such as InsertQuery). It's possible, however, that no query[0m
+[1m            is needed, as the filters describe an empty set. In that case, None is[0m
+[1m            returned, to avoid any unnecessary database interaction.[0m
+[1m            """[0m
+[1m        if not result_type:[0m
+[1m            result_type = NO_RESULTS[0m
+[1m        try:[0m
+[1m            sql, params = self.as_sql()[0m
+[1m            if not sql:[0m
+[1m                raise EmptyResultSet[0m
+[1m        except EmptyResultSet:[0m
+[1m            if result_type == MULTI:[0m
+[1m                return iter([])[0m
+[1m            else:[0m
+[1m                return[0m
+[1m        if chunked_fetch:[0m
+[1m            cursor = self.connection.chunked_cursor()[0m
+[1m        else:[0m
+[1m            cursor = self.connection.cursor()[0m
+[1m        try:[0m
+[1m            cursor.execute(sql, params)[0m
+[1m        except Exception:[0m
+[1m            # Might fail for server-side cursors (e.g. connection closed)[0m
+[1m>           cursor.close()[0m
+[1m[31mE           psycopg2.OperationalError: cursor "_django_curs_140644337785736_7" does not exist[0m
+
+[1m[31m/usr/local/lib/python3.6/site-packages/django/db/models/sql/compiler.py[0m:1071: OperationalError
+                                                                 [32m100% [0m[40m[32m█[0m[40m[32m█████████[0m
+
+Results (4.74s):
+[32m       1 passed[0m
+[31m       9 error[0m
