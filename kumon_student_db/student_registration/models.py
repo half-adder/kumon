@@ -17,6 +17,7 @@ class MonthlyCost(models.Model):
 
 class WhyChoice(models.Model):
     """Why the student is registering"""
+
     description = models.CharField(max_length=300)
 
     def __str__(self):
@@ -25,6 +26,7 @@ class WhyChoice(models.Model):
 
 class HowChoice(models.Model):
     """How the student found out about Kumon"""
+
     description = models.CharField(max_length=300)
 
     def __str__(self):
@@ -43,24 +45,24 @@ class Student(core_models.TimeStampedModel):
 
     # TODO: turn these choices to Enums
     PRIMARY_DAY_CHOICES = (
-        ('tues', 'Tuesday'),
-        ('sat', 'Saturday'),
-        ('tues_sat', 'Tuesday & Saturday'),
+        ("tues", "Tuesday"),
+        ("sat", "Saturday"),
+        ("tues_sat", "Tuesday & Saturday"),
     )
 
     LEVEL_CHOICES = (
-        ('na', 'N/A'),
-        ('6a1', '6A1'),
-        ('5a1', '5A1'),
-        ('4a1', '4A1'),
-        ('3a1', '3A1'),
-        ('3a71', '3A71'),
-        ('2a1', '2A1'),
-        ('a1', 'A1'),
-        ('b1', 'B1'),
-        ('c1', 'C1'),
-        ('d1', 'D1'),
-        ('e1', 'E1'),
+        ("na", "N/A"),
+        ("6a1", "6A1"),
+        ("5a1", "5A1"),
+        ("4a1", "4A1"),
+        ("3a1", "3A1"),
+        ("3a71", "3A71"),
+        ("2a1", "2A1"),
+        ("a1", "A1"),
+        ("b1", "B1"),
+        ("c1", "C1"),
+        ("d1", "D1"),
+        ("e1", "E1"),
     )
 
     # Contact Info
@@ -70,15 +72,24 @@ class Student(core_models.TimeStampedModel):
 
     # Kumon Info
     start_date = models.DateField()
-    primary_day = models.CharField(choices=PRIMARY_DAY_CHOICES, max_length=utils.len_longest_ith_item(PRIMARY_DAY_CHOICES, 0))
-    math_level = models.CharField(choices=LEVEL_CHOICES, max_length=utils.len_longest_ith_item(LEVEL_CHOICES, 0))
-    reading_level = models.CharField(choices=LEVEL_CHOICES, max_length=utils.len_longest_ith_item(LEVEL_CHOICES, 0))
+    primary_day = models.CharField(
+        choices=PRIMARY_DAY_CHOICES,
+        max_length=utils.len_longest_ith_item(PRIMARY_DAY_CHOICES, 0),
+    )
+    math_level = models.CharField(
+        choices=LEVEL_CHOICES, max_length=utils.len_longest_ith_item(LEVEL_CHOICES, 0)
+    )
+    reading_level = models.CharField(
+        choices=LEVEL_CHOICES, max_length=utils.len_longest_ith_item(LEVEL_CHOICES, 0)
+    )
 
     why_choices = models.ManyToManyField(WhyChoice, blank=True)  # TODO: blank false
     how_choices = models.ManyToManyField(HowChoice, blank=True)  # TODO: blank false
 
     # Payment Info
-    registration_discount_percent = core_models.SmallIntegerRangeField(min_value=0, max_value=100)
+    registration_discount_percent = core_models.SmallIntegerRangeField(
+        min_value=0, max_value=100
+    )
     registration_discount_reason = models.CharField(max_length=500, blank=True)
 
     payment_date = models.DateField(auto_now_add=True)  # TODO: lookup auto_now_add
@@ -93,11 +104,16 @@ class Student(core_models.TimeStampedModel):
     # Computed fields
     @property
     def n_subjects(self):
-        return sum(1 if lvl != 'na' else 0 for lvl in [self.math_level, self.reading_level])
+        return sum(
+            1 if lvl != "na" else 0 for lvl in [self.math_level, self.reading_level]
+        )
 
     @property
     def registration_cost(self):
-        return float(self.registration_discount_percent * self.BASE_REGISTRATION_COST) / 100
+        return (
+            float(self.registration_discount_percent * self.BASE_REGISTRATION_COST)
+            / 100
+        )
 
     @property
     def sixth_month(self):

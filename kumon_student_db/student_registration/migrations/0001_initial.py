@@ -10,68 +10,170 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='HowChoice',
+            name="HowChoice",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('description', models.CharField(max_length=300)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("description", models.CharField(max_length=300)),
             ],
         ),
         migrations.CreateModel(
-            name='MonthlyCost',
+            name="MonthlyCost",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('cost', models.IntegerField()),
-                ('effective_date', models.DateField(default=datetime.date.today)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("cost", models.IntegerField()),
+                ("effective_date", models.DateField(default=datetime.date.today)),
             ],
         ),
         migrations.CreateModel(
-            name='Parent',
+            name="Parent",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('first_name', models.CharField(max_length=30)),
-                ('last_name', models.CharField(max_length=30)),
-                ('email_address', models.EmailField(max_length=254)),
-                ('phone_number', phonenumber_field.modelfields.PhoneNumberField(max_length=128)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("first_name", models.CharField(max_length=30)),
+                ("last_name", models.CharField(max_length=30)),
+                ("email_address", models.EmailField(max_length=254)),
+                (
+                    "phone_number",
+                    phonenumber_field.modelfields.PhoneNumberField(max_length=128),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='Student',
+            name="Student",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('first_name', models.CharField(max_length=30)),
-                ('last_name', models.CharField(max_length=30)),
-                ('start_date', models.DateField()),
-                ('primary_day', models.CharField(choices=[('tues', 'Tuesday'), ('sat', 'Saturday'), ('tues_sat', 'Tuesday & Saturday')], max_length=8)),
-                ('math_level', models.CharField(choices=[('na', 'N/A'), ('6a1', '6A1'), ('5a1', '5A1'), ('4a1', '4A1'), ('3a1', '3A1'), ('3a71', '3A71'), ('2a1', '2A1'), ('a1', 'A1'), ('b1', 'B1'), ('c1', 'C1'), ('d1', 'D1'), ('e1', 'E1')], max_length=4)),
-                ('reading_level', models.CharField(choices=[('na', 'N/A'), ('6a1', '6A1'), ('5a1', '5A1'), ('4a1', '4A1'), ('3a1', '3A1'), ('3a71', '3A71'), ('2a1', '2A1'), ('a1', 'A1'), ('b1', 'B1'), ('c1', 'C1'), ('d1', 'D1'), ('e1', 'E1')], max_length=4)),
-                ('date_form_generated', models.DateField(auto_now_add=True)),
-                ('registration_discount_percent', models.IntegerField()),
-                ('registration_discount_reason', models.CharField(blank=True, max_length=500)),
-                ('payment_date', models.DateField(auto_now_add=True)),
-                ('cash_paid', models.DecimalField(decimal_places=2, max_digits=5)),
-                ('debit_paid', models.DecimalField(decimal_places=2, max_digits=5)),
-                ('check_paid', models.DecimalField(decimal_places=2, max_digits=5)),
-                ('credit_paid', models.DecimalField(decimal_places=2, max_digits=5)),
-                ('check_number', models.CharField(blank=True, max_length=50)),
-                ('how_choices', models.ManyToManyField(to='student_registration.HowChoice')),
-                ('parent', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='student_registration.Parent')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("first_name", models.CharField(max_length=30)),
+                ("last_name", models.CharField(max_length=30)),
+                ("start_date", models.DateField()),
+                (
+                    "primary_day",
+                    models.CharField(
+                        choices=[
+                            ("tues", "Tuesday"),
+                            ("sat", "Saturday"),
+                            ("tues_sat", "Tuesday & Saturday"),
+                        ],
+                        max_length=8,
+                    ),
+                ),
+                (
+                    "math_level",
+                    models.CharField(
+                        choices=[
+                            ("na", "N/A"),
+                            ("6a1", "6A1"),
+                            ("5a1", "5A1"),
+                            ("4a1", "4A1"),
+                            ("3a1", "3A1"),
+                            ("3a71", "3A71"),
+                            ("2a1", "2A1"),
+                            ("a1", "A1"),
+                            ("b1", "B1"),
+                            ("c1", "C1"),
+                            ("d1", "D1"),
+                            ("e1", "E1"),
+                        ],
+                        max_length=4,
+                    ),
+                ),
+                (
+                    "reading_level",
+                    models.CharField(
+                        choices=[
+                            ("na", "N/A"),
+                            ("6a1", "6A1"),
+                            ("5a1", "5A1"),
+                            ("4a1", "4A1"),
+                            ("3a1", "3A1"),
+                            ("3a71", "3A71"),
+                            ("2a1", "2A1"),
+                            ("a1", "A1"),
+                            ("b1", "B1"),
+                            ("c1", "C1"),
+                            ("d1", "D1"),
+                            ("e1", "E1"),
+                        ],
+                        max_length=4,
+                    ),
+                ),
+                ("date_form_generated", models.DateField(auto_now_add=True)),
+                ("registration_discount_percent", models.IntegerField()),
+                (
+                    "registration_discount_reason",
+                    models.CharField(blank=True, max_length=500),
+                ),
+                ("payment_date", models.DateField(auto_now_add=True)),
+                ("cash_paid", models.DecimalField(decimal_places=2, max_digits=5)),
+                ("debit_paid", models.DecimalField(decimal_places=2, max_digits=5)),
+                ("check_paid", models.DecimalField(decimal_places=2, max_digits=5)),
+                ("credit_paid", models.DecimalField(decimal_places=2, max_digits=5)),
+                ("check_number", models.CharField(blank=True, max_length=50)),
+                (
+                    "how_choices",
+                    models.ManyToManyField(to="student_registration.HowChoice"),
+                ),
+                (
+                    "parent",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="student_registration.Parent",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='WhyChoice',
+            name="WhyChoice",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('description', models.CharField(max_length=300)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("description", models.CharField(max_length=300)),
             ],
         ),
         migrations.AddField(
-            model_name='student',
-            name='why_choices',
-            field=models.ManyToManyField(to='student_registration.WhyChoice'),
+            model_name="student",
+            name="why_choices",
+            field=models.ManyToManyField(to="student_registration.WhyChoice"),
         ),
     ]

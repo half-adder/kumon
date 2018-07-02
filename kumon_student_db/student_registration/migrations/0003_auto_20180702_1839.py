@@ -5,29 +5,27 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('student_registration', '0002_auto_20180702_1744'),
-    ]
+    dependencies = [("student_registration", "0002_auto_20180702_1744")]
 
     operations = [
         migrations.AlterField(
-            model_name='student',
-            name='cash_paid',
+            model_name="student",
+            name="cash_paid",
             field=models.DecimalField(blank=True, decimal_places=2, max_digits=5),
         ),
         migrations.AlterField(
-            model_name='student',
-            name='check_paid',
+            model_name="student",
+            name="check_paid",
             field=models.DecimalField(blank=True, decimal_places=2, max_digits=5),
         ),
         migrations.AlterField(
-            model_name='student',
-            name='credit_paid',
+            model_name="student",
+            name="credit_paid",
             field=models.DecimalField(blank=True, decimal_places=2, max_digits=5),
         ),
         migrations.AlterField(
-            model_name='student',
-            name='debit_paid',
+            model_name="student",
+            name="debit_paid",
             field=models.DecimalField(blank=True, decimal_places=2, max_digits=5),
         ),
     ]
