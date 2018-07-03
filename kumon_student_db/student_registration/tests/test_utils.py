@@ -19,19 +19,14 @@ def test_n_tuesdays_left_in_month_on_a_non_tuesday():
     assert utils.tuesdays_left(d) == 5
 
 
-def test_n_tuesdays_left_on_a_tuesday_doesnt_include_that_tuesday():
+def test_n_tuesdays_left_on_a_tuesday_includes_that_tuesday():
     d = date(2018, 7, 3)  # A Tuesday in July, 2018
-    assert utils.tuesdays_left(d) == 4
+    assert utils.tuesdays_left(d) == 5
 
 
-def test_n_tuesdays_left_on_last_tuesday_of_month_is_zero():
+def test_n_tuesdays_left_on_last_tuesday_of_month_is_one():
     d = date(2018, 6, 26)  # The last Tuesday of June, 2018
-    assert utils.tuesdays_left(d) == 0
-
-
-def test_n_tuesdays_left_on_last_day_of_month_is_zero():
-    d = date(2018, 6, 30)  # The last day of June, 2018
-    assert utils.tuesdays_left(d) == 0
+    assert utils.tuesdays_left(d) == 1
 
 
 def test_n_saturdays_left_in_month_on_a_non_saturday():
@@ -41,17 +36,12 @@ def test_n_saturdays_left_in_month_on_a_non_saturday():
 
 def test_n_saturdays_left_on_a_saturday_doesnt_include_that_saturday():
     d = date(2018, 7, 7)  # A Saturday in July, 2018
-    assert utils.saturdays_left(d) == 3
+    assert utils.saturdays_left(d) == 4
 
 
 def test_n_saturdays_left_on_last_saturday_of_month_is_zero():
     d = date(2018, 7, 28)  # The last Saturday of July, 2018
-    assert utils.saturdays_left(d) == 0
-
-
-def test_n_saturdays_left_on_last_day_of_month_is_zero():
-    d = date(2018, 7, 31)  # The last day of July, 2018
-    assert utils.saturdays_left(d) == 0
+    assert utils.saturdays_left(d) == 1
 
 
 def test_weekdays_in_month_has_correct_number_days_in_month():

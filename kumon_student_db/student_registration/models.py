@@ -1,3 +1,6 @@
+import calendar
+import math
+
 from django.db import models
 from django.core.exceptions import FieldError
 from phonenumber_field.modelfields import PhoneNumberField
@@ -39,6 +42,13 @@ class Parent(core_models.TimeStampedModel):
     last_name = models.CharField(max_length=30)
     email_address = models.EmailField()
     phone_number = PhoneNumberField(blank=False)
+
+    @property
+    def full_name(self):
+        return self.first_name + " " + self.last_name
+
+    def __str__(self):
+        return "%s %s" % (self.first_name, self.last_name)
 
 
 class Student(core_models.TimeStampedModel):
@@ -103,6 +113,9 @@ class Student(core_models.TimeStampedModel):
     check_number = models.CharField(max_length=50, blank=True)
 
     # Computed fields
+    def full_name(self):
+        return self.first_name + " " + self.last_name
+
     @property
     def n_subjects(self):
         return sum(
@@ -125,18 +138,45 @@ class Student(core_models.TimeStampedModel):
         return self.start_date + relativedelta(months=+12)
 
     @property
-    def prorated_cost(self):
-        # TODO
-        return 0
+    def prorated_first_month_cost(self):
+        """
+        Returns the prorated cost for the first month.
+
+        The prorated cost is defined relative to the starting date as such:
+
+            floor((PDL / TPD) * C)
+
+        where
+            PDL = Primary Days Left in Month
+            TPD = Total Primary Days in Month
+            C = Monthly Cost
+
+        TODO: I bet that enum refactor will make this nicer
+        """
+        class_days_left = 0
+        total_class_days = 0
+        class_days_left += utils.tuesdays_left(self.start_date) + utils.saturdays_left(
+            self.start_date
+        )
+        total_class_days += utils.n_weekdays_in_month(
+            self.start_date.year, self.start_date.month, calendar.SATURDAY
+        ) + utils.n_weekdays_in_month(
+            self.start_date.year, self.start_date.month, calendar.TUESDAY
+        )
+        return math.floor((class_days_left / total_class_days) * self.monthly_cost)
 
     @property
     def monthly_cost(self):
-        # TODO
-        return 0
+        return (
+            MonthlyCost.objects.filter(effective_date__lt=self.start_date)
+            .order_by("-effective_date")
+            .first()
+            .cost
+        )
 
     @property
     def total_signup_cost(self):
-        per_subj_cost = self.prorated_cost + (2 * self.monthly_cost)
+        per_subj_cost = self.prorated_first_month_cost + (2 * self.monthly_cost)
         return self.registration_cost + (self.n_subjects * per_subj_cost)
 
     @property
@@ -144,6 +184,12 @@ class Student(core_models.TimeStampedModel):
         return self.cash_paid + self.debit_paid + self.check_paid + self.credit_paid
 
     def save(self, *args, **kwargs):
-        if self.registration_discount_percent < 0 or self.registration_discount_percent > 100:
-            raise FieldError('Registration discount must be in range [0,100].')
+        if (
+            self.registration_discount_percent < 0
+            or self.registration_discount_percent > 100
+        ):
+            raise FieldError("Registration discount must be in range [0,100].")
         super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.full_name

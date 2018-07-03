@@ -29,18 +29,18 @@ def sane_monthdays(year, month):
 
 
 def tuesdays_left(d):
-    """Return number of Tuesdays left in the given date's month AFTER the given date"""
+    """Return number of Tuesdays left in the given date's month INCLUDING the given date"""
     return weekdays_left(d, calendar.TUESDAY)
 
 
 def saturdays_left(d):
-    """Returns number of Saturdays left in the given date's month AFTER the given date"""
+    """Returns number of Saturdays left in the given date's month INCLUDING the given date"""
     return weekdays_left(d, calendar.SATURDAY)
 
 
 def weekdays_left(d, weekday):
     """
-    Returns the number of the given weekdays left in the given date's month AFTER the
+    Returns the number of the given weekdays left in the given date's month INCLUDING the
     given date.
 
     Weekdays range from 0 (Monday) to 6 (Sunday). A convenient mapping can be found in
@@ -48,7 +48,7 @@ def weekdays_left(d, weekday):
     """
     n_weekdays_left = 0
     for month_day, week_day in sane_monthdays(d.year, d.month):
-        if month_day > d.day and week_day == weekday:
+        if month_day >= d.day and week_day == weekday:
             n_weekdays_left += 1
     return n_weekdays_left
 
