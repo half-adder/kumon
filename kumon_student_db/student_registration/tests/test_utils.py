@@ -63,3 +63,16 @@ def test_weekdays_in_month_has_correct_number_days_in_month():
 
 def test_weekdays_in_month_starts_with_1():
     assert min([item[0] for item in utils.sane_monthdays(2018, 7)]) == 1
+
+
+def test_n_weekdays_in_month():
+    for weekday, n_weekdays_in_2018_7 in [
+        (calendar.MONDAY, 5),
+        (calendar.TUESDAY, 5),
+        (calendar.WEDNESDAY, 4),
+        (calendar.THURSDAY, 4),
+        (calendar.FRIDAY, 4),
+        (calendar.SATURDAY, 4),
+        (calendar.SUNDAY, 5),
+    ]:
+        assert utils.n_weekdays_in_month(2018, 7, weekday) == n_weekdays_in_2018_7

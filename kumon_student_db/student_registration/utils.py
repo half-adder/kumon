@@ -51,3 +51,17 @@ def weekdays_left(d, weekday):
         if month_day > d.day and week_day == weekday:
             n_weekdays_left += 1
     return n_weekdays_left
+
+
+def n_weekdays_in_month(year, month, weekday):
+    """
+    Returns the total number of the given weekdays in the given year and month
+
+    Weekdays range from 0 (Monday) to 6 (Sunday). A convenient mapping can be found in
+    the calendar module in the stdlib (calendar.MONDAY, etc).
+    """
+    n_weekdays_left = 0
+    for _, cal_weekday in sane_monthdays(year, month):
+        if cal_weekday == weekday:
+            n_weekdays_left += 1
+    return n_weekdays_left
