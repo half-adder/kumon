@@ -1,3 +1,5 @@
+import datetime
+from dateutil.relativedelta import relativedelta
 from django.core.exceptions import FieldError
 import pytest
 from kumon_student_db.student_registration.tests import factories
@@ -52,3 +54,25 @@ def test_registration_discount_max_100():
     with pytest.raises(FieldError):
         student = factories.StudentFactory(registration_discount_percent=101)
         student.save()
+
+
+def test_6th_month():
+    student = factories.StudentFactory()
+    delta = relativedelta(student.start_date, student.sixth_month)
+    assert abs(delta.months) == 6
+
+
+def test_6th_month_returns_date():
+    student = factories.StudentFactory()
+    assert type(student.sixth_month) is datetime.date
+
+
+def test_12th_month():
+    student = factories.StudentFactory()
+    delta = relativedelta(student.start_date, student.twelfth_month)
+    assert abs(delta.years * 12 + delta.months) == 12
+
+
+def test_12th_month_returns_date():
+    student = factories.StudentFactory()
+    assert type(student.twelfth_month) is datetime.date

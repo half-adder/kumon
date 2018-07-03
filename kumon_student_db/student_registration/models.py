@@ -118,13 +118,11 @@ class Student(core_models.TimeStampedModel):
 
     @property
     def sixth_month(self):
-        d = self.start_date + relativedelta(months=6)  # TODO: should this be +6?
-        return d.date()  # TODO: should this be d.date?
+        return self.start_date + relativedelta(months=+6)
 
     @property
     def twelfth_month(self):
-        d = self.start_date + relativedelta(months=12)  # TODO: should this be +6?
-        return d.date()  # TODO: should this be d.date?
+        return self.start_date + relativedelta(months=+12)
 
     @property
     def prorated_cost(self):

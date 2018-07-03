@@ -13,7 +13,7 @@
     <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="ignoredPackages">
         <value>
-          <list size="70">
+          <list size="71">
             <item index="0" class="java.lang.String" itemvalue="skimage" />
             <item index="1" class="java.lang.String" itemvalue="fabric" />
             <item index="2" class="java.lang.String" itemvalue="scikit-image" />
@@ -84,6 +84,7 @@
             <item index="67" class="java.lang.String" itemvalue="pytz" />
             <item index="68" class="java.lang.String" itemvalue="webencodings" />
             <item index="69" class="java.lang.String" itemvalue="black" />
+            <item index="70" class="java.lang.String" itemvalue="maya" />
           </list>
         </value>
       </option>
@@ -101,6 +102,7 @@
         <list>
           <option value="_collections_abc.Iterable.__add__" />
           <option value="cv2" />
+          <option value="maya" />
         </list>
       </option>
     </inspection_tool>
