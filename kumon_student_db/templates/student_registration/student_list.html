@@ -19,7 +19,7 @@
       <tbody>
         {% for student in student_list %}
           <tr>
-            <td>{{ student.full_name }}</td>
+            <td><a href="{{ student.id }}">{{ student.full_name }}</a></td>
             <td>{{ student.parent.full_name }}</td>
             <td>{{ student.start_date }}</td>
             <td>{{ student.get_primary_day_display }}</td>
