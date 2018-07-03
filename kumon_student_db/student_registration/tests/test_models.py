@@ -3,7 +3,7 @@ from dateutil.relativedelta import relativedelta
 from django.core.exceptions import FieldError
 import pytest
 from kumon_student_db.student_registration.tests import factories
-from kumon_student_db.student_registration.models import Student
+from kumon_student_db.student_registration.models import Student, MonthlyCost
 
 pytestmark = pytest.mark.django_db
 
@@ -76,3 +76,18 @@ def test_12th_month():
 def test_12th_month_returns_date():
     student = factories.StudentFactory()
     assert type(student.twelfth_month) is datetime.date
+
+
+def test_prorated_cost_unaffected_by_primary_day():
+    MonthlyCost.objects.create(cost=105, effective_date=datetime.date(1000, 1, 1))
+
+    student_tues = factories.StudentFactory(primary_day="tues")
+    student_sat = factories.StudentFactory(primary_day="sat")
+    student_tues_sat = factories.StudentFactory(primary_day="tues_sat")
+
+    students = [student_tues, student_sat, student_tues_sat]
+
+    assert all(
+        student.prorated_first_month_cost == students[0].prorated_first_month_cost
+        for student in students
+    )

@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, date
 
 import factory
 from faker import Faker
@@ -31,7 +31,7 @@ class HowChoiceFactory(factory.django.DjangoModelFactory):
 
 class MonthlyCostFactory(factory.django.DjangoModelFactory):
     cost = 100
-    effective_date = factory.Faker("date_time_this_century")
+    effective_date = date(1000, 1, 1)
 
 
 class StudentFactory(factory.django.DjangoModelFactory):
