@@ -16,6 +16,13 @@ urlpatterns = [
     path("users/", include("kumon_student_db.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
     # Your stuff: custom urls includes go here
+    path(
+        "students/",
+        include(
+            "kumon_student_db.student_registration.urls",
+            namespace="student_registration",
+        ),
+    ),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
