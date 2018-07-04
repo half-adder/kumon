@@ -12,3 +12,14 @@ class StudentDetail(DetailView):
 
     def get_object(self, queryset=models.Student.objects.all()):
         return super().get_object()
+
+
+class ParentList(ListView):
+    model = models.Parent
+
+
+class ParentDetail(DetailView):
+    model = models.Parent
+
+    def get_object(self, queryset=models.Parent.objects.all()):
+        return super().get_object()

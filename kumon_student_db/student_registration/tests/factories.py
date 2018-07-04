@@ -16,7 +16,7 @@ class ParentFactory(factory.django.DjangoModelFactory):
     first_name = factory.Faker("first_name")
     last_name = factory.Faker("last_name")
     email_address = factory.Faker("email")
-    phone_number = factory.Faker("phone_number")
+    phone_number = '+11234567'
     created = datetime.now()
     modified = datetime.now()
 
