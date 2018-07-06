@@ -107,7 +107,7 @@ class Student(core_models.TimeStampedModel):
     how_choices = models.ManyToManyField(HowChoice, blank=True)  # TODO: blank false
 
     # Payment Info
-    registration_discount_percent = core_models.SmallIntegerRangeField(
+    registration_discount_percent = core_models.SmallIntegerRangeField(  # TODO just make this a small integer field
         min_value=0, max_value=100
     )
     registration_discount_reason = models.CharField(max_length=500, blank=True)

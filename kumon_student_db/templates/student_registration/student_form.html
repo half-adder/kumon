@@ -4,12 +4,12 @@
 
 {% block content %}
   <h1>Create Student</h1>
+  <h2>Student Info.</h2>
   <form method="post">
     {% csrf_token %}
-    {{ form.non_field_errors }}
+    {{ form.non_field_errs }}
     <div class="form-row">
       <div class="form-group col">
-        {{ form.first_name.errors }} {# TODO: use full name instead of first/last#}
         <label for="{{ form.first_name.id_for_label }}">Student Name</label>
         <input type="text" class="form-control" id="{{ form.first_name.id_for_label }}" placeholder="Student Name">
       </div>
@@ -65,45 +65,109 @@
     </div>
 
     <div class="form-row">
+      {# TODO: Fix the formatting on this #}
       <div class="form-group col">
         <label>How did you hear about Kumon?</label>
-          {% for choice in form.how_choices %}
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox">
-              <label class="form-check-label" for="someID" >{{ choice }}</label>
-            </div>
-          {% endfor %}
+        {% for choice in form.how_choices %}
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox">
+            <label class="form-check-label" for="someID">{{ choice }}</label>
+          </div>
+        {% endfor %}
       </div>
       <div class="form-group col">
         <label>Why did you sign up for Kumon?</label>
         {% for choice in form.why_choices %}
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="someId">
-            <label class="form-check-label" for="someID" >{{ choice }}</label>
+            <label class="form-check-label" for="someID">{{ choice }}</label>
           </div>
         {% endfor %}
       </div>
     </div>
 
+    <h2>Cost</h2>
     <div class="form-row">
       <div class="form-group col-2">
-        <label for="{{ form.registration_discount_reason.id_for_label }}">Reg. Discount</label>
-        <input type="text" class="form-control" id="{{ form.registration_discount_reason.id_for_label }}" placeholder="0">
+        <label for="{{ form.registration_discount.id_for_label }}">Reg. Discount</label>
+        <input type="number" class="form-control" id="{{ form.registration_discount.id_for_label }}" placeholder="0">
       </div>
       <div class="form-group col">
         {# TODO: Autopopulate this field #}
         <label for="{{ form.registration_discount_reason.id_for_label }}">Registration Discount Reason</label>
-        <input type="text" class="form-control" id="{{ form.registration_discount_reason.id_for_label }}" placeholder="Registration Discount Reason">
+        <input type="text" class="form-control" id="{{ form.registration_discount_reason.id_for_label }}"
+               placeholder="Registration Discount Reason">
       </div>
     </div>
 
     <div class="form-row">
       {#  TODO: need to make an API call here #}
       {#  TODO: Also, this cost stuff should probably be a table? #}
-      <h5>Total Cost: </h5>
+      <div class="form-group col">
+        <table class="table table-bordered">
+          <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">Math</th>
+            <th scope="col">Reading</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <th scope="row">Registration</th>
+            <td colspan="2" style="text-align:center;">$<span id="registration_cost">60</span></td>
+          </tr>
+          <tr>
+            <th scope="row">Prorated</th>
+            <td>$<span class="prorated-cost">60</span></td>
+            <td>$<span class="prorated-cost">60</span></td>
+          </tr>
+          <tr>
+            <th scope="row">6th Month</th>
+            <td>$<span class="monthly-cost">110</span></td>
+            <td>$<span class="monthly-cost">110</span></td>
+          </tr>
+          <tr>
+            <th scope="row">12th Month</th>
+            <td>$<span class="monthly-cost">110</span></td>
+            <td>$<span class="monthly-cost">110</span></td>
+          </tr>
+          <tr class="table-dark">
+            <th scope="row">Total Cost</th>
+            <td colspan="2" style="text-align:center;">$340</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
+
+    <h2>Payment Info.</h2>
+    <div class="form-row">
+      <div class="form-group col">
+        <label for="{{ form.cash_paid.id_for_label }}">Cash Paid</label>
+        <input type="number" class="form-control" id="{{ form.cash_paid.id_for_label }}" placeholder="0">
+      </div>
+      <div class="form-group col">
+        <label for="{{ form.debit_paid.id_for_label }}">Debit Paid</label>
+        <input type="number" class="form-control" id="{{ form.debit_paid.id_for_label }}" placeholder="0">
+      </div>
+      <div class="form-group col">
+        <label for="{{ form.credit_paid.id_for_label }}">Credit Paid</label>
+        <input type="number" class="form-control" id="{{ form.credit_paid.id_for_label }}" placeholder="0">
+      </div>
+      <div class="form-group col">
+        <label for="{{ form.check_paid.id_for_label }}">Check Paid</label>
+        <input type="number" class="form-control" id="{{ form.check_paid.id_for_label }}" placeholder="0">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-3 ml-auto">
+        <label for="">Check Number</label>
+        <input type="number" class="form-control" placeholder="0">
+      </div>
+    </div>
+
 
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
 {% endblock %}
-

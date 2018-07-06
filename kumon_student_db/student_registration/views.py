@@ -40,8 +40,8 @@ def prorated_cost(request):
     """Return the prorated cost for the given date
 
     TODO: test this
-    TODO: what if a date is submitted before the first monthly cost entry?
-    TODO: what if a monthlycost entry doesn't exist?
+    TODO: what if a date is submitted before the first MonthlyCost entry?
+    TODO: what if a MonthlyCost entry doesn't exist?
     """
     try:
         start_date_str = request.GET["start_date"]
