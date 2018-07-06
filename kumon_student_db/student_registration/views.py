@@ -1,5 +1,8 @@
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import FormView
+from django.http import JsonResponse, HttpResponse
+
+from dateutil import parser
 
 from kumon_student_db.student_registration import models, forms, utils
 
@@ -16,9 +19,9 @@ class StudentDetail(DetailView):
 
 
 class StudentForm(FormView):
-    template_name = 'student_registration/student_form.html'
+    template_name = "student_registration/student_form.html"
     form_class = forms.StudentForm
-    success_url = '/'
+    success_url = "/"
 
 
 class ParentList(ListView):
@@ -33,10 +36,19 @@ class ParentDetail(DetailView):
 
 
 # API Functions
-def prorated_cost(request, start_date):
+def prorated_cost(request):
     """Return the prorated cost for the given date
 
     TODO: test this
+    TODO: what if a date is submitted before the first monthly cost entry?
+    TODO: what if a monthlycost entry doesn't exist?
     """
+    try:
+        start_date_str = request.GET["start_date"]
+        start_date = parser.isoparse(start_date_str).date()
+    except Exception as e:
+        return HttpResponse(e, status=500)
+
     monthly_cost = models.MonthlyCost.get_cost_for(start_date)
-    return utils.prorated_cost(start_date, monthly_cost)
+    cost = utils.prorated_cost(start_date, monthly_cost)
+    return JsonResponse({"prorated_cost": cost})
