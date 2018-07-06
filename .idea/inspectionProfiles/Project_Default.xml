@@ -13,7 +13,7 @@
     <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="ignoredPackages">
         <value>
-          <list size="71">
+          <list size="72">
             <item index="0" class="java.lang.String" itemvalue="skimage" />
             <item index="1" class="java.lang.String" itemvalue="fabric" />
             <item index="2" class="java.lang.String" itemvalue="scikit-image" />
@@ -85,6 +85,7 @@
             <item index="68" class="java.lang.String" itemvalue="webencodings" />
             <item index="69" class="java.lang.String" itemvalue="black" />
             <item index="70" class="java.lang.String" itemvalue="maya" />
+            <item index="71" class="java.lang.String" itemvalue="django-floppyforms" />
           </list>
         </value>
       </option>
