@@ -66,3 +66,29 @@ def test_n_weekdays_in_month():
         (calendar.SUNDAY, 5),
     ]:
         assert utils.n_weekdays_in_month(2018, 7, weekday) == n_weekdays_in_2018_7
+
+
+def test_prorated_cost_ex1():
+    start_date = date(2017, 11, 11)
+    monthly_cost = 115
+    assert 86 == utils.prorated_cost(start_date, monthly_cost)
+
+
+def test_prorated_cost_ex2():
+    start_date = date(2017, 12, 12)
+    monthly_cost = 115
+    assert 77 == utils.prorated_cost(start_date, monthly_cost)
+
+
+def test_prorated_cost_ex3():
+    start_date = date(2017, 11, 28)
+    monthly_cost = 115
+    assert 14 == utils.prorated_cost(start_date, monthly_cost)
+
+
+def test_prorated_cost_ex4():
+    start_date = date(2017, 10, 7)
+    monthly_cost = 115
+    assert 102 == utils.prorated_cost(start_date, monthly_cost)
+
+

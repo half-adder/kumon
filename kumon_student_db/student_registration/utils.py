@@ -68,10 +68,7 @@ def n_weekdays_in_month(year, month, weekday):
 
 
 def prorated_cost(start_date, monthly_cost):
-    """Return the prorated cost given the start_date and monthly_cost
-
-    TODO: Test this
-    """
+    """Return the prorated cost given the start_date and monthly_cost"""
     class_days_left = 0
     total_class_days = 0
 
