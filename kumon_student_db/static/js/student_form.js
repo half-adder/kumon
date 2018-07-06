@@ -1,4 +1,83 @@
-// TODO: how to guarantee import of jquery? Ask Tom.
 $("document").ready(function() {
-    alert('hi');
+
+    // Relevant elements
+    let startDate = $('#input_start_date');
+    let mathLevel = $('#input_math_level');
+    let readingLevel = $('#input_reading_level');
+    let regDiscount = $('#id_registration_discount');
+    let regCost = $('#registration_cost');
+    let mathProratedCost = $('#math_prorated_cost');
+    let readingProratedCost = $('#reading_prorated_cost');
+    let mathMonthlyCost = $('.math-monthly-cost');
+    let readingMonthlyCost = $('.reading-monthly-cost');
+    let totalCost = $('#total_cost');
+    $(document).on("change", '.cost-input', updateCosts);
+
+    function updateCosts() {
+
+        let startDateText = getStartDateText();
+        let nSubjects = getSubjectCount();
+        let regDiscountInt = getRegDiscount();
+
+        getCostInfo(startDateText, nSubjects, regDiscountInt, setCostInfo);
+    }
+
+    function getStartDateText() {
+        return startDate.val();
+    }
+
+    function getSubjectCount() {
+        let subjectCount = 0;
+        if (mathLevel.val()) {
+            subjectCount += 1;
+        }
+        if (readingLevel.val()) {
+            subjectCount += 1;
+        }
+        return subjectCount;
+    }
+
+    function getRegDiscount() {
+        return parseInt(regDiscount.val());
+    }
+
+
+    function setCostInfo(costInfo) {
+        regCost.text(costInfo['registration_cost']);
+        totalCost.text(costInfo['total_cost']);
+
+        // Math Cost Info
+        if (mathLevel.val()) {
+            mathMonthlyCost.text(costInfo['monthly_cost']);
+            mathProratedCost.text(costInfo['prorated_cost']);
+        } else {
+            mathMonthlyCost.text(0);
+            mathProratedCost.text(0);
+        }
+
+        // Reading Cost Info
+        if (readingLevel.val()) {
+            readingMonthlyCost.text(costInfo['monthly_cost']);
+            readingProratedCost.text(costInfo['prorated_cost']);
+        } else {
+            readingMonthlyCost.text(0);
+            readingProratedCost.text(0);
+        }
+    }
 });
+
+
+function getCostInfo(startDate, nSubjects, regDiscount, callback) {
+    const params = {
+        'start_date': startDate,
+        'n_subjects': nSubjects,
+        'registration_discount': regDiscount
+    };
+    let url = costInfoURL + $.param(params);
+
+    $.ajax({
+        type: 'GET',
+        url: url,
+        success: callback,
+    });
+}

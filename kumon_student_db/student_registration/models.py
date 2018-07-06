@@ -35,10 +35,10 @@ class RegistrationCost(models.Model):
     @staticmethod
     def get_cost_for(start_date):
         return (
-            MonthlyCost.objects.filter(effective_date__lt=start_date)
-                .order_by("-effective_date")
-                .first()
-                .cost
+            RegistrationCost.objects.filter(effective_date__lt=start_date)
+            .order_by("-effective_date")
+            .first()
+            .cost
         )
 
     def __str__(self):
@@ -88,7 +88,6 @@ class Student(core_models.TimeStampedModel):
     )
 
     LEVEL_CHOICES = (
-        ("na", "N/A"),
         ("6a1", "6A1"),
         ("5a1", "5A1"),
         ("4a1", "4A1"),
@@ -124,8 +123,10 @@ class Student(core_models.TimeStampedModel):
     how_choices = models.ManyToManyField(HowChoice, blank=True)  # TODO: blank false
 
     # Payment Info
-    registration_discount_percent = core_models.SmallIntegerRangeField(  # TODO just make this a small integer field
-        min_value=0, max_value=100
+    registration_discount_percent = core_models.SmallIntegerRangeField(
+        # TODO just make this a small integer field
+        min_value=0,
+        max_value=100,
     )
     registration_discount_reason = models.CharField(max_length=500, blank=True)
 
