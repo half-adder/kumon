@@ -1,3 +1,4 @@
+import math
 import calendar
 
 
@@ -65,3 +66,20 @@ def n_weekdays_in_month(year, month, weekday):
         if cal_weekday == weekday:
             n_weekdays_left += 1
     return n_weekdays_left
+
+
+def prorated_cost(start_date, monthly_cost):
+    """Return the prorated cost given the start_date and monthly_cost
+
+    TODO: Test this
+    """
+    class_days_left = 0
+    total_class_days = 0
+
+    class_days_left += tuesdays_left(start_date) + saturdays_left(start_date)
+
+    total_class_days += n_weekdays_in_month(
+        start_date.year, start_date.month, calendar.SATURDAY
+    ) + n_weekdays_in_month(start_date.year, start_date.month, calendar.TUESDAY)
+
+    return math.floor((class_days_left / total_class_days) * monthly_cost)

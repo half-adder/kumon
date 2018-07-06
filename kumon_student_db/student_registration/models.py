@@ -15,6 +15,15 @@ class MonthlyCost(models.Model):
     cost = models.IntegerField()
     effective_date = models.DateField(default=date.today)
 
+    @staticmethod
+    def get_cost_for(start_date):
+        return (
+            MonthlyCost.objects.filter(effective_date__lt=start_date)
+            .order_by("-effective_date")
+            .first()
+            .cost
+        )
+
     def __str__(self):
         return "<Cost: %d>, <Date: %s>" % (self.cost, self.effective_date)
 
@@ -153,26 +162,11 @@ class Student(core_models.TimeStampedModel):
 
         TODO: I bet that enum refactor will make this nicer
         """
-        class_days_left = 0
-        total_class_days = 0
-        class_days_left += utils.tuesdays_left(self.start_date) + utils.saturdays_left(
-            self.start_date
-        )
-        total_class_days += utils.n_weekdays_in_month(
-            self.start_date.year, self.start_date.month, calendar.SATURDAY
-        ) + utils.n_weekdays_in_month(
-            self.start_date.year, self.start_date.month, calendar.TUESDAY
-        )
-        return math.floor((class_days_left / total_class_days) * self.monthly_cost)
+        return utils.prorated_cost(self.start_date, self.monthly_cost)
 
     @property
     def monthly_cost(self):
-        return (
-            MonthlyCost.objects.filter(effective_date__lt=self.start_date)
-            .order_by("-effective_date")
-            .first()
-            .cost
-        )
+        return MonthlyCost.get_cost_for(self.start_date)
 
     @property
     def total_signup_cost(self):

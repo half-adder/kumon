@@ -1,5 +1,5 @@
 from django.urls import path
-from kumon_student_db.student_registration import views
+trom kumon_student_db.student_registration import views
 
 app_name = "student_registration"
 urlpatterns = [
