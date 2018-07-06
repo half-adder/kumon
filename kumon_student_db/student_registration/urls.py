@@ -10,5 +10,5 @@ urlpatterns = [
     path("parents/", views.ParentList.as_view(), name='parent-list'),
     path("parents/<int:pk>/", views.ParentDetail.as_view(), name='parent-detail'),
 
-    path("api/prorated_cost", views.prorated_cost, name='prorated-cost')
+    path("api/cost_info", views.get_cost_info, name='prorated-cost')
 ]

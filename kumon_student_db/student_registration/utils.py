@@ -83,3 +83,8 @@ def prorated_cost(start_date, monthly_cost):
     ) + n_weekdays_in_month(start_date.year, start_date.month, calendar.TUESDAY)
 
     return math.floor((class_days_left / total_class_days) * monthly_cost)
+
+
+def total_cost(start_date, monthly_cost, registration_cost, n_subjects):
+    per_subj_cost = prorated_cost(start_date, monthly_cost) + (2 * monthly_cost)
+    return registration_cost + (n_subjects * per_subj_cost)

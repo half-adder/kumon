@@ -28,6 +28,23 @@ class MonthlyCost(models.Model):
         return "<Cost: %d>, <Date: %s>" % (self.cost, self.effective_date)
 
 
+class RegistrationCost(models.Model):
+    cost = models.IntegerField()
+    effective_date = models.DateField(default=date.today)
+
+    @staticmethod
+    def get_cost_for(start_date):
+        return (
+            MonthlyCost.objects.filter(effective_date__lt=start_date)
+                .order_by("-effective_date")
+                .first()
+                .cost
+        )
+
+    def __str__(self):
+        return "<Cost: %d>, <Date: %s>" % (self.cost, self.effective_date)
+
+
 class WhyChoice(models.Model):
     """Why the student is registering"""
 
