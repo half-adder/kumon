@@ -17,7 +17,7 @@ urlpatterns = [
     path("accounts/", include("allauth.urls")),
     # Your stuff: custom urls includes go here
     path(
-        "student_registration/",
+        "registration/",
         include(
             "kumon_student_db.student_registration.urls",
             namespace="student_registration",

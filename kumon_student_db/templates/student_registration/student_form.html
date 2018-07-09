@@ -11,35 +11,40 @@
     <div class="form-row">
       <div class="form-group col">
         <label for="{{ form.first_name.id_for_label }}">Student Name</label>
-        <input type="text" class="form-control" id="{{ form.first_name.id_for_label }}" placeholder="Student Name">
+        <input type="text" class="form-control" id="{{ form.first_name.id_for_label }}" placeholder="Student Name"
+          {% if form.instance.id is not None %} value="{{ form.instance.full_name }}"{% endif %}>
       </div>
       <div class="col">
         <label for="inputParentName">Parent Name</label>
-        <input type="text" class="form-control" id="inputParentName" placeholder="Parent Name">
+        <input type="text" class="form-control" id="inputParentName" placeholder="Parent Name"
+               value="{{ form.instance.parent.full_name }}">
       </div>
     </div>
 
     <div class="form-row">
       <div class="form-group col">
         <label for="inputEmail">Email</label>
-        <input type="text" class="form-control" id="inputEmail" placeholder="Email">
+        <input type="text" class="form-control" id="inputEmail" placeholder="Email"
+          {% if form.instance.id is not None %} value="{{ form.instance.parent.email_address }}"{% endif %}>
       </div>
       <div class="col">
         <label for="inputPhoneNumber">Phone Number</label>
-        <input type="text" class="form-control" id="inputPhoneNumber" placeholder="Phone Number">
+        <input type="text" class="form-control" id="inputPhoneNumber" placeholder="Phone Number"
+          {% if form.instance.id is not None %} value="{{ form.instance.parent.phone_number }}"{% endif %}>
       </div>
     </div>
 
     <div class="form-row">
       <div class="form-group col">
         <label for="input_start_date">Start Date</label>
-        <input type="date" class="form-control cost-input" id="input_start_date">
+        <input type="date" class="form-control cost-input" id="input_start_date"
+        {% if form.instance.id is not None %} value="{{ form.instance.start_date|date:'Y-m-d' }}"{% endif %}>
       </div>
       <div class="form-group col">
         <label for="input_primary_day">Primary Day</label>
         <select class="form-control" id="input_primary_day">
           {% for choice_id, choice_label in  form.primary_day.field.choices %}
-            <option value="choice_id">{{ choice_label }}</option>
+            <option value="{{ choice_id }}" {% if form.instance.id is not None and form.instance.primary_day == choice_id %}selected="selected"{% endif %}>{{ choice_label }}</option>
           {% endfor %}
         </select>
       </div>
@@ -50,7 +55,7 @@
         <label for="input_math_level">Math Level</label>
         <select id="input_math_level" class="form-control cost-input">
           {% for choice_id, choice_label in form.math_level.field.choices %}
-            <option value="{{ choice_id }}">{{ choice_label }}</option>
+            <option value="{{ choice_id }}" {% if form.instance.id is not None and form.instance.math_level == choice_id %}selected="selected"{% endif %}>{{ choice_label }}</option>
           {% endfor %}
         </select>
       </div>
@@ -58,7 +63,7 @@
         <label for="input_reading_level">Reading Level</label>
         <select id="input_reading_level" class="form-control cost-input">
           {% for choice_id, choice_label in form.reading_level.field.choices %}
-            <option value="{{ choice_id }}">{{ choice_label }}</option>
+            <option value="{{ choice_id }}" {% if form.instance.id is not None and form.instance.reading_level == choice_id %}selected="selected"{% endif %}>{{ choice_label }}</option>
           {% endfor %}
         </select>
       </div>
@@ -79,7 +84,7 @@
         <label>Why did you sign up for Kumon?</label>
         {% for choice in form.why_choices %}
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="someId">
+            <input class="form-check-input" type="checkbox" id="someId" {% if form.instance.id is not None and choice in form.instance.why_choices %} checked {% endif %}>
             <label class="form-check-label" for="someID">{{ choice }}</label>
           </div>
         {% endfor %}
@@ -95,7 +100,8 @@
       <div class="form-group col">
         {# TODO: Autopopulate this field #}
         <label for="id_registration_discount_reason">Registration Discount Reason</label>
-        <input type="text" class="form-control" id="id_registration_discount_reason" placeholder="Registration Discount Reason">
+        <input type="text" class="form-control" id="id_registration_discount_reason"
+               placeholder="Registration Discount Reason">
       </div>
     </div>
 

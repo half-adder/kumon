@@ -3,6 +3,7 @@ import math
 
 from django.db import models
 from django.core.exceptions import FieldError
+from django.urls import reverse
 from phonenumber_field.modelfields import PhoneNumberField
 from datetime import date
 from dateutil.relativedelta import relativedelta
@@ -102,9 +103,9 @@ class Student(core_models.TimeStampedModel):
     )
 
     # Contact Info
-    first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=30)
-    parent = models.ForeignKey(Parent, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    parent_name = models.CharField(max_length=100)
+    email = models.EmailField()
 
     # Kumon Info
     start_date = models.DateField()
@@ -140,9 +141,6 @@ class Student(core_models.TimeStampedModel):
     check_number = models.CharField(max_length=50, blank=True)
 
     # Computed fields
-    def full_name(self):
-        return self.first_name + " " + self.last_name
-
     @property
     def n_subjects(self):
         return sum(
@@ -195,6 +193,9 @@ class Student(core_models.TimeStampedModel):
     def total_paid(self):
         return self.cash_paid + self.debit_paid + self.check_paid + self.credit_paid
 
+    def get_absolute_url(self):
+        return reverse('student-detail', kwargs={'pk': self.pk})
+
     def save(self, *args, **kwargs):
         if (
             self.registration_discount_percent < 0
@@ -204,4 +205,6 @@ class Student(core_models.TimeStampedModel):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return "%s %s" % (self.first_name, self.last_name)
+        return self.name
+
+

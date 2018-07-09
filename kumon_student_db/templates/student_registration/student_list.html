@@ -5,6 +5,7 @@
 {% block content %}
   <div class="container">
     <h2>Students</h2>
+    <a class="btn btn-primary" role="button" href="{% url 'student_registration:student-add' %}" style="margin-top: 5px; margin-bottom: 15px;">Add Student</a>
     <table class="table table-hover table-sm" id="table_id">
       <thead>
         <tr>
@@ -20,8 +21,8 @@
       <tbody>
         {% for student in student_list %}
           <tr>
-            <td><a href="{{ student.id }}">{{ student.full_name }}</a></td>
-            <td>{{ student.parent.full_name }}</td>
+            <td><a href="{{ student.id }}">{{ student.name }}</a></td>
+            <td>{{ student.parent_name }}</td>
             <td>{{ student.start_date }}</td>
             <td>{{ student.get_primary_day_display }}</td>
             <td>{{ student.math_level }}</td>

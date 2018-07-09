@@ -1,19 +1,25 @@
 $("document").ready(function() {
 
     // Relevant elements
-    let startDate = $('#input_start_date');
-    let mathLevel = $('#input_math_level');
-    let readingLevel = $('#input_reading_level');
-    let regDiscount = $('#id_registration_discount');
+    // Auto-generated elements
+    let startDate = $('#id_start_date');
+    let mathLevel = $('#id_math_level');
+    let readingLevel = $('#id_reading_level');
+    let regDiscount = $('#id_registration_discount_percent');
     let regCost = $('#registration_cost');
+
+    // Cost Table Elements
     let mathProratedCost = $('#math_prorated_cost');
     let readingProratedCost = $('#reading_prorated_cost');
     let mathMonthlyCost = $('.math-monthly-cost');
     let readingMonthlyCost = $('.reading-monthly-cost');
     let totalCost = $('#total_cost');
-    $(document).on("change", '.cost-input', updateCosts);
+
+    updateCosts();
+    $(document).on("change keyup", '.cost-input', updateCosts);
 
     function updateCosts() {
+        console.log("hello");
 
         let startDateText = getStartDateText();
         let nSubjects = getSubjectCount();
@@ -68,6 +74,7 @@ $("document").ready(function() {
 
 
 function getCostInfo(startDate, nSubjects, regDiscount, callback) {
+    console.log("hello");
     const params = {
         'start_date': startDate,
         'n_subjects': nSubjects,

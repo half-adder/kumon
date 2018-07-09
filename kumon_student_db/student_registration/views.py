@@ -1,5 +1,6 @@
-from django.views.generic import ListView, DetailView
-from django.views.generic.edit import FormView
+from django.urls import reverse_lazy
+from django.views.generic import ListView
+from django.views.generic.edit import UpdateView, DeleteView, CreateView
 from django.http import JsonResponse, HttpResponse
 
 from dateutil import parser
@@ -7,41 +8,39 @@ from dateutil import parser
 from kumon_student_db.student_registration import models, forms, utils
 
 
+# Template Views
 class StudentList(ListView):
     model = models.Student
 
 
-class StudentDetail(DetailView):
-    model = models.Student
-
-    def get_object(self, queryset=models.Student.objects.all()):
-        return super().get_object()
-
-
-class StudentForm(FormView):
-    template_name = "student_registration/student_form.html"
+class StudentCreate(CreateView):
     form_class = forms.StudentForm
-    success_url = "/"
+    template_name = "student_registration/student_form_crispy.html"
+    success_url = reverse_lazy("student_registration:student-list")
+
+    def get_queryset(self):
+        return models.Student.objects.all()
 
 
-class ParentList(ListView):
-    model = models.Parent
+class StudentUpdate(UpdateView):
+    form_class = forms.StudentForm
+    template_name = "student_registration/student_form_crispy.html"
+    success_url = reverse_lazy("student_registration:student-list")
+
+    def get_queryset(self):
+        return models.Student.objects.all()
 
 
-class ParentDetail(DetailView):
-    model = models.Parent
-
-    def get_object(self, queryset=models.Parent.objects.all()):
-        return super().get_object()
+class StudentDelete(DeleteView):
+    model = models.Student
+    success_url = reverse_lazy("student_registration:student-list")
 
 
-# API Functions
+# API Views
 def validate_request(request, allowed_methods, required_params):
     """
     TODO: docs
     TODO: tests
-    :param request:
-    :return:
     """
     if request.method not in allowed_methods:
         return HttpResponse("Only GET is allowed for this method", status=500)
@@ -55,8 +54,6 @@ def parse_start_date_or_error(request):
     """
     TODO: docs
     TODO: tests
-    :param request:
-    :return:
     """
     try:
         start_date_str = request.GET["start_date"]
@@ -69,8 +66,6 @@ def parse_n_subjects_or_error(request):
     """
     TODO: docs
     TODO: tests
-    :param request:
-    :return:
     """
     try:
         return int(request.GET["n_subjects"])
@@ -85,9 +80,11 @@ def get_cost_info(request):
 
     start_date = parse_start_date_or_error(request)
     n_subjects = parse_n_subjects_or_error(request)
-    registration_discount = request.GET['registration_discount']
+    registration_discount = request.GET["registration_discount"]
     registration_base_cost = models.RegistrationCost.get_cost_for(start_date)
-    registration_cost = registration_base_cost * (100 - int(registration_discount)) / 100
+    registration_cost = (
+        registration_base_cost * (100 - int(registration_discount)) / 100
+    )
     monthly_cost = models.MonthlyCost.get_cost_for(start_date)
     response = {
         "monthly_cost": monthly_cost,
