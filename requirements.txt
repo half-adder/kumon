@@ -1,1 +1,1 @@
-requirements/production.txt
+requirements-production.txt
