@@ -5,14 +5,15 @@
 {% block content %}
   <div class="container">
     <h2>Students</h2>
-    <table class="table table-hover table-sm">
+    <table class="table table-hover table-sm" id="table_id">
       <thead>
         <tr>
           <th scope="col">Student</th>
           <th scope="col">Parent</th>
           <th scope="col">Start Date</th>
           <th scope="col">Primary Day</th>
-          <th scope="col">Prorated Registration Cost</th>
+          <th scope="col">Math Level</th>
+          <th scope="col">Reading Level</th>
         </tr>
       </thead>
 
@@ -23,10 +24,15 @@
             <td>{{ student.parent.full_name }}</td>
             <td>{{ student.start_date }}</td>
             <td>{{ student.get_primary_day_display }}</td>
-            <td>${{ student.prorated_first_month_cost }}</td>
+            <td>{{ student.math_level }}</td>
+            <td>{{ student.reading_level }}</td>
           </tr>
         {% endfor %}
       </tbody>
     </table>
   </div>
 {% endblock content %}
+
+{% block pagejs %}
+  <script src="{% static 'js/student_list.js' %}"></script>
+{% endblock %}
