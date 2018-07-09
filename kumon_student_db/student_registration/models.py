@@ -26,7 +26,8 @@ class MonthlyCost(models.Model):
         )
 
     def __str__(self):
-        return f"<Cost: {self.cost:d}>, <Date: {self.effective_date}>"
+        return "Monthly Cost: %.2f, Effective Date: %s" % (float(self.cost), self.effective_date)
+        # return f"<Cost: {self.cost:d}>, <Date: {self.effective_date}>"
 
 
 class RegistrationCost(models.Model):
@@ -43,7 +44,7 @@ class RegistrationCost(models.Model):
         )
 
     def __str__(self):
-        return f"<Cost: {self.cost:f}>, <Date: {self.effective_date}>"
+        return "Registration Cost: %.2f, Effective Date: %s" % (float(self.cost), self.effective_date)
 
 
 class WhyChoice(models.Model):

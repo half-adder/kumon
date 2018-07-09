@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block content %}
+  <h1>New Registration Cost</h1>
+  {% load crispy_forms_tags %}
+  {% crispy form %}
+{% endblock %}
+

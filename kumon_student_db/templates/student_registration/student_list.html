@@ -4,33 +4,33 @@
 
 {% block content %}
   <div class="container">
-    <h2>Students</h2>
-    <a class="btn btn-primary" role="button" href="{% url 'student_registration:student-add' %}" style="margin-top: 5px; margin-bottom: 15px;">Add Student</a>
+    <h2>Students <a class="btn btn-outline-primary btn-sm" role="button" href="{% url 'student_registration:student-add' %}"
+                    style="margin-top: 5px; margin-bottom: 15px;">+</a></h2>
     <table class="table table-hover table-sm" id="table_id">
       <thead>
-        <tr>
-          <th scope="col">Student</th>
-          <th scope="col">Parent</th>
-          <th scope="col">Start Date</th>
-          <th scope="col">Primary Day</th>
-          <th scope="col">Math Level</th>
-          <th scope="col">Reading Level</th>
-          <th scope="col">Paid Off?</th>
-        </tr>
+      <tr>
+        <th scope="col">Student</th>
+        <th scope="col">Parent</th>
+        <th scope="col">Start Date</th>
+        <th scope="col">Primary Day</th>
+        <th scope="col">Math Level</th>
+        <th scope="col">Reading Level</th>
+        <th scope="col">Paid Off?</th>
+      </tr>
       </thead>
 
       <tbody>
-        {% for student in student_list %}
-          <tr>
-            <td><a href="{{ student.id }}">{{ student.name }}</a></td>
-            <td>{{ student.parent_name }}</td>
-            <td>{{ student.start_date }}</td>
-            <td>{{ student.get_primary_day_display }}</td>
-            <td>{{ student.math_level }}</td>
-            <td>{{ student.reading_level }}</td>
-            <td>{{ student.is_fully_paid }}</td>
-          </tr>
-        {% endfor %}
+      {% for student in student_list %}
+        <tr>
+          <td><a href="{{ student.id }}">{{ student.name }}</a></td>
+          <td>{{ student.parent_name }}</td>
+          <td>{{ student.start_date }}</td>
+          <td>{{ student.get_primary_day_display }}</td>
+          <td>{{ student.math_level }}</td>
+          <td>{{ student.reading_level }}</td>
+          <td>{{ student.is_fully_paid }}</td>
+        </tr>
+      {% endfor %}
       </tbody>
     </table>
   </div>
