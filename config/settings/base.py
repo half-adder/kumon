@@ -68,7 +68,6 @@ THIRD_PARTY_APPS = [
     "allauth.socialaccount",
     "rest_framework",
     "phonenumber_field",
-    "floppyforms",
 ]
 LOCAL_APPS = [
     "kumon_student_db.users.apps.UsersAppConfig",
