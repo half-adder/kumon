@@ -166,7 +166,7 @@ AWS_PRELOAD_METADATA = True
 # https://docs.sentry.io/clients/python/integrations/django/
 INSTALLED_APPS += ["raven.contrib.django.raven_compat"]  # noqa F405
 MIDDLEWARE = [
-    "raven.contrib.django.raven_compat.middleware.SentryResponseErrorIdMiddleware"
+    "raven.contrib.django.raven_compat.middleware.SentryResponseErrorIdMiddleware",
 ] + MIDDLEWARE
 
 # Sentry
@@ -220,3 +220,10 @@ SENTRY_CELERY_LOGLEVEL = env.int("DJANGO_SENTRY_LOG_LEVEL", logging.INFO)
 RAVEN_CONFIG = {"dsn": SENTRY_DSN}
 # Your stuff...
 # ------------------------------------------------------------------------------
+
+# Whitenoise
+# ------------------------------------------------------------------------------
+# Whitenosie *HAS* to be *FIRST*
+MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+] + MIDDLEWARE
