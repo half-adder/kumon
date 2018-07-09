@@ -15,6 +15,7 @@
           <th scope="col">Primary Day</th>
           <th scope="col">Math Level</th>
           <th scope="col">Reading Level</th>
+          <th scope="col">Paid Off?</th>
         </tr>
       </thead>
 
@@ -27,6 +28,7 @@
             <td>{{ student.get_primary_day_display }}</td>
             <td>{{ student.math_level }}</td>
             <td>{{ student.reading_level }}</td>
+            <td>{{ student.is_fully_paid }}</td>
           </tr>
         {% endfor %}
       </tbody>

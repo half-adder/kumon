@@ -4,6 +4,7 @@ from django.views.generic.edit import UpdateView, DeleteView, CreateView
 from django.http import JsonResponse, HttpResponse
 
 from dateutil import parser
+from decimal import Decimal
 
 from kumon_student_db.student_registration import models, forms, utils
 
@@ -80,12 +81,12 @@ def get_cost_info(request):
 
     start_date = parse_start_date_or_error(request)
     n_subjects = parse_n_subjects_or_error(request)
-    registration_discount = request.GET["registration_discount"]
+    registration_discount = Decimal(request.GET["registration_discount"])
+
     registration_base_cost = models.RegistrationCost.get_cost_for(start_date)
-    registration_cost = (
-        registration_base_cost * (100 - int(registration_discount)) / 100
-    )
+    registration_cost = float((100-registration_discount) * registration_base_cost / 100)
     monthly_cost = models.MonthlyCost.get_cost_for(start_date)
+
     response = {
         "monthly_cost": monthly_cost,
         "registration_cost": registration_cost,

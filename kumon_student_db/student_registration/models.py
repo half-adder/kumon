@@ -13,7 +13,7 @@ from kumon_student_db.core import models as core_models
 
 
 class MonthlyCost(models.Model):
-    cost = models.IntegerField()
+    cost = models.DecimalField(max_digits=5, decimal_places=2)
     effective_date = models.DateField(default=date.today)
 
     @staticmethod
@@ -26,11 +26,11 @@ class MonthlyCost(models.Model):
         )
 
     def __str__(self):
-        return "<Cost: %d>, <Date: %s>" % (self.cost, self.effective_date)
+        return f"<Cost: {self.cost:d}>, <Date: {self.effective_date}>"
 
 
 class RegistrationCost(models.Model):
-    cost = models.IntegerField()
+    cost = models.DecimalField(max_digits=5, decimal_places=2)
     effective_date = models.DateField(default=date.today)
 
     @staticmethod
@@ -43,7 +43,7 @@ class RegistrationCost(models.Model):
         )
 
     def __str__(self):
-        return "<Cost: %d>, <Date: %s>" % (self.cost, self.effective_date)
+        return f"<Cost: {self.cost:f}>, <Date: {self.effective_date}>"
 
 
 class WhyChoice(models.Model):
@@ -79,7 +79,6 @@ class Parent(core_models.TimeStampedModel):
 
 
 class Student(core_models.TimeStampedModel):
-    BASE_REGISTRATION_COST = 50  # Dollars
 
     # TODO: turn these choices to Enums
     PRIMARY_DAY_CHOICES = (
@@ -114,10 +113,14 @@ class Student(core_models.TimeStampedModel):
         max_length=utils.len_longest_ith_item(PRIMARY_DAY_CHOICES, 0),
     )
     math_level = models.CharField(
-        choices=LEVEL_CHOICES, max_length=utils.len_longest_ith_item(LEVEL_CHOICES, 0)
+        choices=LEVEL_CHOICES,
+        max_length=utils.len_longest_ith_item(LEVEL_CHOICES, 0),
+        blank=True,
     )
     reading_level = models.CharField(
-        choices=LEVEL_CHOICES, max_length=utils.len_longest_ith_item(LEVEL_CHOICES, 0)
+        choices=LEVEL_CHOICES,
+        max_length=utils.len_longest_ith_item(LEVEL_CHOICES, 0),
+        blank=True,
     )
 
     why_choices = models.ManyToManyField(WhyChoice, blank=True)  # TODO: blank false
@@ -125,7 +128,8 @@ class Student(core_models.TimeStampedModel):
 
     # Payment Info
     registration_discount_percent = core_models.SmallIntegerRangeField(
-        # TODO just make this a small integer field
+        # TODO just make this a small integer field?
+        default=0,
         min_value=0,
         max_value=100,
     )
@@ -133,10 +137,10 @@ class Student(core_models.TimeStampedModel):
 
     payment_date = models.DateField(auto_now_add=True)  # TODO: lookup auto_now_add
 
-    cash_paid = models.DecimalField(max_digits=5, decimal_places=2, blank=True)
-    debit_paid = models.DecimalField(max_digits=5, decimal_places=2, blank=True)
-    check_paid = models.DecimalField(max_digits=5, decimal_places=2, blank=True)
-    credit_paid = models.DecimalField(max_digits=5, decimal_places=2, blank=True)
+    cash_paid = models.DecimalField(max_digits=5, decimal_places=2, default=0)
+    debit_paid = models.DecimalField(max_digits=5, decimal_places=2, default=0)
+    check_paid = models.DecimalField(max_digits=5, decimal_places=2, default=0)
+    credit_paid = models.DecimalField(max_digits=5, decimal_places=2, default=0)
 
     check_number = models.CharField(max_length=50, blank=True)
 
@@ -144,13 +148,14 @@ class Student(core_models.TimeStampedModel):
     @property
     def n_subjects(self):
         return sum(
-            1 if lvl != "na" else 0 for lvl in [self.math_level, self.reading_level]
+            1 if lvl else 0 for lvl in [self.math_level, self.reading_level]
         )
 
     @property
     def registration_cost(self):
+        base_registration_cost = RegistrationCost.get_cost_for(self.start_date)
         return (
-            float(self.registration_discount_percent * self.BASE_REGISTRATION_COST)
+            float((100 - self.registration_discount_percent) * base_registration_cost)
             / 100
         )
 
@@ -187,14 +192,18 @@ class Student(core_models.TimeStampedModel):
     @property
     def total_signup_cost(self):
         per_subj_cost = self.prorated_first_month_cost + (2 * self.monthly_cost)
-        return self.registration_cost + (self.n_subjects * per_subj_cost)
+        return float(self.registration_cost) + float(self.n_subjects * per_subj_cost)
 
     @property
     def total_paid(self):
-        return self.cash_paid + self.debit_paid + self.check_paid + self.credit_paid
+        return self.cash_paid + self.credit_paid + self.debit_paid + self.check_paid
+
+    @property
+    def is_fully_paid(self):
+        return self.total_paid >= self.total_signup_cost
 
     def get_absolute_url(self):
-        return reverse('student-detail', kwargs={'pk': self.pk})
+        return reverse("student-detail", kwargs={"pk": self.pk})
 
     def save(self, *args, **kwargs):
         if (
@@ -206,5 +215,3 @@ class Student(core_models.TimeStampedModel):
 
     def __str__(self):
         return self.name
-
-

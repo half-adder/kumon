@@ -74,7 +74,6 @@ $("document").ready(function() {
 
 
 function getCostInfo(startDate, nSubjects, regDiscount, callback) {
-    console.log("hello");
     const params = {
         'start_date': startDate,
         'n_subjects': nSubjects,
