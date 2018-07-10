@@ -1,4 +1,6 @@
 import calendar
+from decimal import Decimal
+from datetime import date
 
 
 def flatten(l):
@@ -53,7 +55,7 @@ def weekdays_left(d, weekday):
     return n_weekdays_left
 
 
-def n_weekdays_in_month(year, month, weekday):
+def n_weekdays_in_month(year: int, month: int, weekday: int) -> int:
     """
     Returns the total number of the given weekdays in the given year and month
 
@@ -67,7 +69,7 @@ def n_weekdays_in_month(year, month, weekday):
     return n_weekdays_left
 
 
-def prorated_cost(start_date, monthly_cost):
+def prorated_cost(start_date: date, monthly_cost: Decimal) -> Decimal:
     """Return the prorated cost given the start_date and monthly_cost"""
     class_days_left = 0
     total_class_days = 0
@@ -81,6 +83,6 @@ def prorated_cost(start_date, monthly_cost):
     return round((class_days_left / total_class_days) * float(monthly_cost))
 
 
-def total_cost(start_date, monthly_cost, registration_cost, n_subjects):
+def total_cost(start_date, monthly_cost, registration_cost, n_subjects) -> Decimal:
     per_subj_cost = prorated_cost(start_date, monthly_cost) + (2 * monthly_cost)
     return float(registration_cost) + float((n_subjects * per_subj_cost))
