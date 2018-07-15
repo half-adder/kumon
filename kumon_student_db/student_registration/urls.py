@@ -8,6 +8,7 @@ urlpatterns = [
     path("students/create", views.StudentCreate.as_view(), name="student-add"),
     path("students/<int:pk>/", views.StudentUpdate.as_view(), name="student-update"),
     path("students/<int:pk>/delete", views.StudentDelete.as_view(), name="student-delete" ),
+    path("students/<int:pk>/printout", views.customer_copy, name="customer-copy"),
     # Cost Views
     path("costs/", views.cost_list, name="cost-list"),
     path("costs/monthly_costs/create/", views.MonthlyCostCreateView.as_view(), name="monthly-cost-add"),

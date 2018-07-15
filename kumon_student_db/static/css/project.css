@@ -11,3 +11,25 @@
   background-color: #f2dede;
   border-color: #eed3d7;
 }
+
+.underlined {
+  border-bottom: 1px solid black;
+}
+
+.table > tbody > tr > td,
+.table > tbody > tr > th {
+  border-top: none;
+}
+
+.bordered {
+  border: 1px solid black;
+}
+@media print {
+  @page {
+    size: 330mm 427mm;
+    margin: 2mm;
+  }
+  .container-fluid {
+    width: 80%;
+  }
+}

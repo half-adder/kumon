@@ -1,0 +1,247 @@
+{% load static i18n %}<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+  <!--[if lt IE 9]>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <![endif]-->
+
+  <link rel="icon" href="{% static 'images/favicons/favicon.ico' %}">
+
+  {% block css %}
+
+    <!-- Latest compiled and minified Bootstrap 4 beta CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
+          integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous"
+          media="all">
+
+
+    <!-- Your stuff: Third-party CSS libraries go here -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+
+    <!-- This file stores project-specific CSS -->
+
+    <link href="{% static 'css/project.css' %}" rel="stylesheet">
+
+
+  {% endblock %}
+
+</head>
+<body>
+<div class="container-fluid" style="width: 90%;">
+  <div class="row">
+    <div class="mx-auto text-center">
+      <img src="{% static 'images/kumon_logo.png' %}">
+    </div>
+  </div>
+  <div class="row mx-auto text-center">
+    <div class="col">
+      <small>
+        KUMON MATH & READING CENTER OF
+      </small>
+    </div>
+  </div>
+  <div class="row mx-auto text-center">
+    <div class="col">HOOVER</div>
+  </div>
+  <div class="row mx-auto text-center">
+    <div class="col font-weight-bold">205-444-9485</div>
+  </div>
+  <div class="row mt-5">
+    <div class="col underlined text-center text-uppercase font-weight-bold">{{ student.name }}</div>
+    <div class="col-2"></div>
+    <div class="col-2 underlined text-center">{{ student.start_date|date:"SHORT_DATE_FORMAT" }}</div>
+  </div>
+  <div class="row">
+    <div class="col">STUDENT: First, Last</div>
+  </div>
+  <div class="row mt-5">
+    <div class="col-md-auto mr-0">Reason for Registration Discount:</div>
+    <div class="col underlined ml-0 text-center">{{ student.registration_discount_reason }}</div>
+    <div class="col-4"></div>
+  </div>
+  <div class="row mt-5">
+    <div class="col underlined text-center text-uppercase font-weight-bold">{{ student.parent_name }}</div>
+    <div class="col-2"></div>
+    <div class="col-2 underlined text-center">{{ student.payment_date|date:"SHORT_DATE_FORMAT" }}</div>
+  </div>
+  <div class="row">
+    <div class="col">PARENT / GUARDIAN</div>
+    <div class="col-2"></div>
+    <div class="col-2 text-center">Payment Date</div>
+  </div>
+  <div class="row mt-5">
+    <div class="col-2">Subject:</div>
+    <div class="col"></div>
+    <div class="col-2 text-center text-primary">Math</div>
+    <div class="col-2 text-center text-danger">READING</div>
+    <div class="col"></div>
+    <div class="col-3 text-right">Primary Day:</div>
+    <div class="col-1 text-center">Tue</div>
+    <div class="col-1 text-center">Sat</div>
+  </div>
+  <div class="row">
+    <div class="col-2">Starting:</div>
+    <div class="col"></div>
+    <div class="col-2 bordered text-center text-uppercase text-primary"
+         style="border-right: 0px;">{{ student.math_level }}</div>
+    <div class="col-2 bordered text-center text-uppercase text-danger">{{ student.reading_level }}</div>
+    <div class="col"></div>
+    <div class="col-3 text-right">Tue, Sat, or Tue/Sat:</div>
+    <div class="col-1 bordered text-center font-weight-bold" style="border-right: 0px;">
+      {% if 'tues' in student.primary_day %}
+      X
+      {% endif %}
+    </div>
+    <div class="col-1 bordered text-center font-weight-bold">
+      {% if 'sat' in student.primary_day %}
+        X
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="row mt-1 align-items-center">
+    <div class="col"></div>
+    <div class="col-2 text-right">START:</div>
+    <div class="col-2 text-center text-uppercase text-primary text-nowrap"
+         style="border-right: 0px;">10 PPD
+    </div>
+    <div class="col-2 text-center text-uppercase text-danger text-nowrap">10 PPD In Class</div>
+    <div class="col"></div>
+    <div class="col-3 text-right"></div>
+    <div class="col-1 bordered text-center font-weight-bold">{{ student.n_subjects }}</div>
+    <div class="col-1 text-center font-weight-bold"></div>
+  </div>
+  <div class="row mt-4 mb-5">
+    <div class="col-5">One-time/family registration is our discount</div>
+    <div class="col"></div>
+    <div class="col-1"></div>
+    <div class="col text-right">REGISTRATION:</div>
+    <div class="col">${{ student.registration_cost }}</div>
+  </div>
+  <div class="row">
+    <div class="col">1st Month:</div>
+    <div class="col text-center">"Prorated" classes / month</div>
+    <div class="col"></div>
+    <div class="col-1">
+      {% if student.n_subjects >= 1 %}
+        ${{ student.prorated_first_month_cost }}
+      {% endif %}
+    </div>
+    <div class="col-1">
+      {% if student.n_subjects == 2 %}
+      ${{ student.prorated_first_month_cost }}
+      {% endif %}
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col">Prepaid months 6 & 12 are skip months:</div>
+  </div>
+  <div class="row">
+    <div class="col">6th Month:</div>
+    <div class="col bordered text-center">{{ student.sixth_month|date:"F, Y" }}</div>
+    <div class="col"></div>
+    <div class="col-1">
+      {% if student.n_subjects >= 1 %}
+        ${{ student.monthly_cost }}
+      {% endif %}
+    </div>
+    <div class="col-1">
+      {% if student.n_subjects == 2 %}
+        ${{ student.monthly_cost }}
+      {% endif %}
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col">12th Month:</div>
+    <div class="col bordered text-center">{{ student.twelfth_month|date:"F, Y" }}</div>
+    <div class="col"></div>
+    <div class="col-1">
+      {% if student.n_subjects >= 1 %}
+        ${{ student.monthly_cost }}
+      {% endif %}
+    </div>
+    <div class="col-1">
+      {% if student.n_subjects == 2 %}
+        ${{ student.monthly_cost }}
+      {% endif %}
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col"></div>
+    <div class="col"></div>
+    <div class="col"></div>
+    <div class="col-1">
+      {% if student.n_subjects >= 1 %}
+        ${{ student.per_subject_cost|add:student.registration_cost }}
+      {% endif %}
+    </div>
+    <div class="col-1">
+      {% if student.n_subjects == 2 %}
+        ${{ student.per_subject_cost|add:student.registration_cost }}
+      {% endif %}
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col"></div>
+    <div class="col"></div>
+    <div class="col text-right">TOTAL Cost:</div>
+    <div class="col-1 bordered" style="border-right: 0px;">
+        ${{ student.total_signup_cost }}
+    </div>
+    <div class="col-1 bordered"></div>
+  </div>
+  <div class="row mt-3">
+    <div class="col"></div>
+    <div class="col"></div>
+    <div class="col text-right">Cash:</div>
+    <div class="col-1 underlined" style="border-right: 0px;">${{ student.cash_paid }}</div>
+    <div class="col-1"></div>
+  </div>
+  <div class="row mt-3">
+    <div class="col"></div>
+    <div class="col"></div>
+    <div class="col text-right">Auto Debit:</div>
+    <div class="col-1 underlined" style="border-right: 0px;">${{ student.debit_paid }}</div>
+    <div class="col-1"></div>
+  </div>
+  <div class="row mt-3">
+    <div class="col"></div>
+    <div class="col"></div>
+    <div class="col text-right">#: <u>{{ student.check_number }}</u> Check:</div>
+    <div class="col-1 underlined" style="border-right: 0px;">${{ student.check_paid }}</div>
+    <div class="col-1"></div>
+  </div>
+  <div class="row mt-3">
+    <div class="col"></div>
+    <div class="col"></div>
+    <div class="col text-right">Credit:</div>
+    <div class="col-1 underlined" style="border-right: 0px;">${{ student.credit_paid }}</div>
+    <div class="col-1"></div>
+  </div>
+  <div class="row mt-3">
+    <div class="col"></div>
+    <div class="col"></div>
+    <div class="col text-right">TOTAL Paid:</div>
+    <div class="col-1 underlined bordered">${{ student.total_paid }}</div>
+    <div class="col-1"></div>
+  </div>
+  <div class="row mt-5">
+    <div class="col-2 text-right">Representative:</div>
+    <div class="col-5 underlined text-center">Brian Johnsen</div>
+    <div class="col"></div>
+  </div>
+  <div class="row mt-5 mb-5">
+    <div class="col-2 text-right">Signature:</div>
+    <div class="col-5 underlined"></div>
+    <div class="col-1 text-right">Date:</div>
+    <div class="col underlined text-center">8/11/2018</div>
+    <div class="col"></div>
+  </div>
+</div>
+</body>

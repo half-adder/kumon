@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView
 from django.views.generic.edit import UpdateView, DeleteView, CreateView
@@ -44,6 +44,15 @@ def cost_list(request):
         request,
         template_name="student_registration/costs_list.html",
         context={"monthly_costs": monthly_costs, "reg_costs": reg_costs},
+    )
+
+
+def customer_copy(request, pk):
+    student = get_object_or_404(models.Student, pk=pk)
+    return render(
+        request,
+        template_name="student_registration/customer_copy2.html",
+        context={"student": student},
     )
 
 

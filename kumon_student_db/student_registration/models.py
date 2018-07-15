@@ -191,9 +191,12 @@ class Student(core_models.TimeStampedModel):
         return MonthlyCost.get_cost_for(self.start_date)
 
     @property
+    def per_subject_cost(self):
+        return self.prorated_first_month_cost + (2 * self.monthly_cost)
+
+    @property
     def total_signup_cost(self):
-        per_subj_cost = self.prorated_first_month_cost + (2 * self.monthly_cost)
-        return float(self.registration_cost) + float(self.n_subjects * per_subj_cost)
+        return float(self.registration_cost) + float(self.n_subjects * self.per_subject_cost)
 
     @property
     def total_paid(self):

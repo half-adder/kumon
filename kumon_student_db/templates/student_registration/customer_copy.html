@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static i18n %}
+{% block title %}Customer Copy{% endblock %}
+
+{% block content %}
+  <div class="row" >
+    <div class="mx-auto">
+      <h2>Kumon</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col pr-5">
+      <div class="row underlined">{{ student.name }}</div>
+      <div class="row">STUDENT: First, Last</div>
+      <div class="row justify-content-start">
+        <div class="col pl-0 col-md-auto"><b>2nd subject or</b> SIBLING OF:</div>
+        <div class="col pl-0 underlined"></div>
+      </div>
+      <div class="row underlined">{{ student.parent_name }}</div>
+      <div class="row">PARENT / GUARDIAN</div>
+      <table class="table table-bordered">
+        <tbody>
+        <tr>
+          <td>Subject:</td>
+          <td></td>
+          <td>Math</td>
+          <td>READING</td>
+        </tr>
+        <tr>
+          <td>Starting:</td>
+          <td></td>
+          <td>6A1</td>
+          <td>7A1</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>START:</td>
+          <td>10 PPD</td>
+          <td>10 PPD IN CLASS</td>
+        </tr>
+        </tbody>
+      </table>
+      <div class="row">One-time/family registration is our discount</div>
+    </div>
+    <div class="col-2"></div>
+    <div class="col-3 pl-5">
+      <div class="row underlined">8/7/2018</div>
+      <div class="row underlined mt-5"></div>
+      <div class="row">Payment Date</div>
+    </div>
+  </div>
+{% endblock %}

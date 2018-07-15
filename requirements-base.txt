@@ -22,3 +22,5 @@ coreapi==2.3.3  # https://github.com/core-api/python-client
 django-phonenumber-field==2.0.0
 # Dateutil
 python-dateutil==2.7.3  # https://dateutil.readthedocs.io/en/stable/
+# Custom Admin (Django-Grapelli)
+django-grappelli==2.11.1
