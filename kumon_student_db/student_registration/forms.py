@@ -71,9 +71,10 @@ class StudentForm(forms.ModelForm):
             ),
             Row(Field("check_number", wrapper_class="col-3 ml-auto")),
             FormActions(
-                Submit("submit", "Submit"),
+                Submit("submit", "Submit Changes"),
+                Button("printout", "Print", css_class="btn btn-info", onclick="window.open('printout')"),
                 delete_button,
-                Button("cancel", "Cancel", css_class="btn btn-outline-secondary"),
+                Button("cancel", "Cancel", css_class="btn btn-outline-secondary", onclick="window.history.back()"),
             ),
         )
 
