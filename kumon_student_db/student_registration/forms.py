@@ -1,9 +1,10 @@
-from crispy_forms.bootstrap import FormActions, PrependedText
-from crispy_forms.layout import Submit, Button, Layout, HTML, ButtonHolder, Div, Field
+from crispy_forms.bootstrap import FormActions
+from crispy_forms.layout import Submit, Button, Layout, HTML, Div, Field
 from django import forms
 from django.template.loader import render_to_string
 
 from kumon_student_db.student_registration import models
+from kumon_student_db.student_registration.models import HowChoice, WhyChoice
 from crispy_forms.helper import FormHelper
 
 
@@ -25,11 +26,13 @@ class StudentForm(forms.ModelForm):
         widget=forms.CheckboxSelectMultiple,
         queryset=models.HowChoice.objects.all(),
         label="How did you learn about Kumon?",
+        required=False,
     )
     why_choices = forms.ModelMultipleChoiceField(
         widget=forms.CheckboxSelectMultiple,
         queryset=models.WhyChoice.objects.all(),
         label="Why did you enroll your child in Kumon?",
+        required=False,
     )
 
     def __init__(self, *args, **kwargs):
@@ -112,6 +115,24 @@ class StudentForm(forms.ModelForm):
         model = models.Student
         fields = "__all__"
         widgets = {"start_date": date_input_}
+
+    def save(self, commit=True):
+        if self.is_valid():
+            instance = super().save(False)
+
+            if self.cleaned_data.get("how_other", None):
+                new_how_choice = HowChoice(description=self.cleaned_data["how_other"])
+                new_how_choice.save()
+                self.instance.how_choices.add(new_how_choice)
+
+            if self.cleaned_data.get("why_other", None):
+                new_why_choice = WhyChoice(description=self.cleaned_data["why_other"])
+                new_why_choice.save()
+                self.instance.why_choices.add(new_why_choice)
+
+            return instance
+
+        return super().save(commit)
 
 
 class CostForm(forms.ModelForm):
