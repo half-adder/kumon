@@ -1,4 +1,4 @@
-from crispy_forms.bootstrap import FormActions
+from crispy_forms.bootstrap import FormActions, PrependedText
 from crispy_forms.layout import Submit, Button, Layout, HTML, ButtonHolder, Div, Field
 from django import forms
 from django.template.loader import render_to_string
@@ -18,6 +18,20 @@ class DateField(Field):
 
 
 class StudentForm(forms.ModelForm):
+    how_other = forms.CharField(label="Other", required=False)
+    why_other = forms.CharField(label="Other", required=False)
+
+    how_choices = forms.ModelMultipleChoiceField(
+        widget=forms.CheckboxSelectMultiple,
+        queryset=models.HowChoice.objects.all(),
+        label="How did you learn about Kumon?",
+    )
+    why_choices = forms.ModelMultipleChoiceField(
+        widget=forms.CheckboxSelectMultiple,
+        queryset=models.WhyChoice.objects.all(),
+        label="Why did you enroll your child in Kumon?",
+    )
+
     def __init__(self, *args, **kwargs):
         super(StudentForm, self).__init__(*args, **kwargs)
 
@@ -53,8 +67,12 @@ class StudentForm(forms.ModelForm):
                 Field("reading_level", wrapper_class="col cost-input"),
             ),
             Row(
-                Field("how_choices", wrapper_class="col"),
-                Field("why_choices", wrapper_class="col"),
+                Field("how_choices", "", wrapper_class="col"),
+                Field("why_choices", "", wrapper_class="col"),
+            ),
+            Row(
+                Field("how_other", wrapper_class="col"),
+                Field("why_other", wrapper_class="col"),
             ),
             Row(
                 Field(
@@ -72,9 +90,19 @@ class StudentForm(forms.ModelForm):
             Row(Field("check_number", wrapper_class="col-3 ml-auto")),
             FormActions(
                 Submit("submit", "Submit Changes"),
-                Button("printout", "Print", css_class="btn btn-info", onclick="window.open('printout')"),
+                Button(
+                    "printout",
+                    "Print",
+                    css_class="btn btn-info",
+                    onclick="window.open('printout')",
+                ),
                 delete_button,
-                Button("cancel", "Cancel", css_class="btn btn-outline-secondary", onclick="window.history.back()"),
+                Button(
+                    "cancel",
+                    "Cancel",
+                    css_class="btn btn-outline-secondary",
+                    onclick="window.history.back()",
+                ),
             ),
         )
 
@@ -100,12 +128,8 @@ class CostForm(forms.ModelForm):
         else:
             delete_button = None
         self.helper.layout = Layout(
-            Row(
-                Field("cost", wrapper_class="col"),
-            ),
-            Row(
-                DateField("effective_date", wrapper_class="col"),
-            ),
+            Row(Field("cost", wrapper_class="col")),
+            Row(DateField("effective_date", wrapper_class="col")),
             FormActions(
                 Submit("submit", "Submit"),
                 delete_button,
