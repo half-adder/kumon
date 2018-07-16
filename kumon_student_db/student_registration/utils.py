@@ -1,6 +1,7 @@
 import calendar
 from decimal import Decimal
 from datetime import date
+from django.db import connection
 
 
 def flatten(l):
@@ -86,3 +87,21 @@ def prorated_cost(start_date: date, monthly_cost: Decimal) -> Decimal:
 def total_cost(start_date, monthly_cost, registration_cost, n_subjects) -> Decimal:
     per_subj_cost = prorated_cost(start_date, monthly_cost) + (2 * monthly_cost)
     return float(registration_cost) + float((n_subjects * per_subj_cost))
+
+
+def get_choice_counts(how_or_why):
+    #  TODO check parameter validity
+    with connection.cursor() as c:
+        c.execute(
+            """
+        SELECT
+    student_registration_%(thing)schoice.description,
+    COUNT(*)
+FROM
+    student_registration_student_%(thing)s_choices
+    JOIN student_registration_%(thing)schoice ON student_registration_student_%(thing)s_choices.%(thing)schoice_id = student_registration_%(thing)schoice.id
+GROUP BY
+    student_registration_%(thing)schoice.id"""
+            % {"thing": how_or_why}
+        )
+        return dict((col[0], [col[1]]) for col in c.fetchall())

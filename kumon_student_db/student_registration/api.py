@@ -67,3 +67,15 @@ def get_cost_info(request):
     }
 
     return JsonResponse(response)
+
+
+def get_choice_data(request):
+    how_choice_counts = utils.get_choice_counts('how')
+    why_choice_counts = utils.get_choice_counts('why')
+    return JsonResponse({
+        'how_choice_counts': how_choice_counts,
+        'why_choice_counts': why_choice_counts
+    })
+
+def how_choice_data(request):
+    return JsonResponse(utils.get_choice_counts('how'))

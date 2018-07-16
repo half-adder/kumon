@@ -129,7 +129,7 @@ class StudentForm(forms.ModelForm):
                 new_why_choice = WhyChoice(description=self.cleaned_data["why_other"])
                 new_why_choice.save()
                 self.instance.why_choices.add(new_why_choice)
-
+            self.save_m2m()
             return instance
 
         return super().save(commit)
