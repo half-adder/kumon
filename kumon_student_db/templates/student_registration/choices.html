@@ -2,8 +2,15 @@
 {% load static i18n %}
 {% block title %}Student{% endblock %}
 
+{% block pagecss %}
+  <link href="{% static 'css/c3.min.css' %}" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
   <div class="container">
+  <div class="row">
+    <div id="chart"></div>
+  </div>
     <div class="row" style="margin-top: 20px;">
       <div class="col">
         <h2>"How" Choices <a class="btn btn-outline-primary btn-sm" role="button"
@@ -20,7 +27,8 @@
           {% for choice in how_choices %}
             <tr>
               <td>{{ choice.description }}</td>
-              <td><a href="{% url 'student_registration:how-choice-update' choice.id %}">Edit</a> | <a href="{% url 'student_registration:how-choice-delete' choice.id %}">Delete</a></td>
+              <td><a href="{% url 'student_registration:how-choice-update' choice.id %}">Edit</a> | <a
+                href="{% url 'student_registration:how-choice-delete' choice.id %}">Delete</a></td>
             </tr>
           {% endfor %}
           </tbody>
@@ -42,7 +50,8 @@
           {% for choice in why_choices %}
             <tr>
               <td>{{ choice.description }}</td>
-              <td><a href="{% url 'student_registration:why-choice-update' choice.id %}">Edit</a> | <a href="{% url 'student_registration:why-choice-delete' choice.id %}">Delete</a></td>
+              <td><a href="{% url 'student_registration:why-choice-update' choice.id %}">Edit</a> | <a
+                href="{% url 'student_registration:why-choice-delete' choice.id %}">Delete</a></td>
             </tr>
           {% endfor %}
           </tbody>
@@ -54,3 +63,9 @@
     </div>
   </div>
 {% endblock content %}
+
+{% block pagejs %}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.min.js"></script>
+  <script src="{% static 'js/c3.min.js' %}"></script>
+  <script src="{% static 'js/choices.js' %}"></script>
+{% endblock %}
