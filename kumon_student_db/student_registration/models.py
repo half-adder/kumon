@@ -1,6 +1,3 @@
-import calendar
-import math
-
 from django.db import models
 from django.core.exceptions import FieldError
 from django.urls import reverse

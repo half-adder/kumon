@@ -109,9 +109,16 @@
     <div class="col"></div>
     <div class="col-2 text-right">START:</div>
     <div class="col-2 text-center text-uppercase text-primary text-nowrap"
-         style="border-right: 0px;">10 PPD
+         style="border-right: 0px;">
+      {% if student.math_level %}
+          10 PPD
+      {% endif %}
     </div>
-    <div class="col-2 text-center text-uppercase text-danger text-nowrap">10 PPD In Class</div>
+    <div class="col-2 text-center text-uppercase text-danger text-nowrap">
+      {% if student.reading_level %}
+          10 PPD In Class
+      {% endif %}
+    </div>
     <div class="col"></div>
     <div class="col-3 text-right"></div>
     <div class="col-1 bordered text-center font-weight-bold">{{ student.n_subjects }}</div>
