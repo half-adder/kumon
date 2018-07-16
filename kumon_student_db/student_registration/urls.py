@@ -43,6 +43,38 @@ urlpatterns = [
         views.RegistrationCostDeleteView.as_view(),
         name="registration-cost-delete",
     ),
+    # Choices Views,
+    path("choices/", views.choices, name="choices"),
+    path(
+        "choices/how/create",
+        views.HowChoiceCreateView.as_view(),
+        name="how-choice-create",
+    ),
+    path(
+        "choices/why/create",
+        views.WhyChoiceCreateView.as_view(),
+        name="why-choice-create",
+    ),
+    path(
+        "choices/how/<int:pk>/",
+        views.HowChoiceUpdateView.as_view(),
+        name="how-choice-update",
+    ),
+    path(
+        "choices/how/<int:pk>/delete/",
+        views.HowChoiceDeleteView.as_view(),
+        name="how-choice-delete",
+    ),
+    path(
+        "choices/why/<int:pk>/",
+        views.WhyChoiceUpdateView.as_view(),
+        name="why-choice-update",
+    ),
+    path(
+        "choices/why/<int:pk>/delete/",
+        views.WhyChoiceDeleteView.as_view(),
+        name="why-choice-delete",
+    ),
     # API
     path("api/cost_info", api.get_cost_info, name="cost-info"),
 ]

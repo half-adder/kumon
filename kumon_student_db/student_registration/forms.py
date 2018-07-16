@@ -154,7 +154,12 @@ class CostForm(forms.ModelForm):
             FormActions(
                 Submit("submit", "Submit"),
                 delete_button,
-                Button("cancel", "Cancel", css_class="btn btn-outline-secondary"),
+                Button(
+                    "cancel",
+                    "Cancel",
+                    css_class="btn btn-outline-secondary",
+                    onclick="window.history.back()",
+                ),
             ),
         )
 
@@ -168,4 +173,44 @@ class MonthlyCostForm(CostForm):
 class RegistrationCostForm(CostForm):
     class Meta:
         model = models.RegistrationCost
+        fields = "__all__"
+
+
+class ChoiceForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(ChoiceForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        if self.instance.pk is not None:
+            delete_button = Button(
+                "delete",
+                "Delete",
+                onclick='window.location.href="delete"',
+                css_class="btn btn-outline-danger",
+            )
+        else:
+            delete_button = None
+        self.helper.layout = Layout(
+            Row(Field("description", wrapper_class="col")),
+            FormActions(
+                Submit("submit", "Submit"),
+                delete_button,
+                Button(
+                    "cancel",
+                    "Cancel",
+                    css_class="btn btn-outline-secondary",
+                    onclick="window.history.back()",
+                ),
+            ),
+        )
+
+
+class HowChoiceForm(ChoiceForm):
+    class Meta:
+        model = models.HowChoice
+        fields = "__all__"
+
+
+class WhyChoiceForm(ChoiceForm):
+    class Meta:
+        model = models.WhyChoice
         fields = "__all__"

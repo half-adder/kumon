@@ -56,6 +56,54 @@ def customer_copy(request, pk):
     )
 
 
+def choices(request):
+    how_choices = models.HowChoice.objects.all()
+    why_choices = models.WhyChoice.objects.all()
+    return render(request, template_name="student_registration/choices.html", context={'how_choices': how_choices, 'why_choices': why_choices})
+
+
+class HowChoiceCreateView(CreateView):
+    form_class = forms.HowChoiceForm
+    template_name = "student_registration/choice_form.html"
+    success_url = reverse_lazy("student_registration:choices")
+    queryset = models.HowChoice.objects.all()
+
+
+class WhyChoiceCreateView(CreateView):
+    form_class = forms.WhyChoiceForm
+    template_name = "student_registration/choice_form.html"
+    success_url = reverse_lazy("student_registration:choices")
+    queryset = models.WhyChoice.objects.all()
+
+
+class HowChoiceUpdateView(UpdateView):
+    model = models.HowChoice
+    form_class = forms.HowChoiceForm
+    template_name = "student_registration/choice_form.html"
+    success_url = reverse_lazy("student_registration:choices")
+    queryset = models.HowChoice.objects.all()
+
+
+class WhyChoiceUpdateView(UpdateView):
+    model = models.WhyChoice
+    form_class = forms.WhyChoiceForm
+    template_name = "student_registration/choice_form.html"
+    success_url = reverse_lazy("student_registration:choices")
+    queryset = models.WhyChoice.objects.all()
+
+
+class HowChoiceDeleteView(DeleteView):
+    model = models.HowChoice
+    template_name = "student_registration/cost_confirm_delete.html"
+    success_url = reverse_lazy("student_registration:choices")
+
+
+class WhyChoiceDeleteView(DeleteView):
+    model = models.WhyChoice
+    template_name = "student_registration/cost_confirm_delete.html"
+    success_url = reverse_lazy("student_registration:choices")
+
+
 class MonthlyCostCreateView(CreateView):
     form_class = forms.MonthlyCostForm
     template_name = "student_registration/monthly_cost_form.html"
