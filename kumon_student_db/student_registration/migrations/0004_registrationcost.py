@@ -6,17 +6,23 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('student_registration', '0003_auto_20180702_1839'),
-    ]
+    dependencies = [("student_registration", "0003_auto_20180702_1839")]
 
     operations = [
         migrations.CreateModel(
-            name='RegistrationCost',
+            name="RegistrationCost",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('cost', models.IntegerField()),
-                ('effective_date', models.DateField(default=datetime.date.today)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("cost", models.IntegerField()),
+                ("effective_date", models.DateField(default=datetime.date.today)),
             ],
-        ),
+        )
     ]

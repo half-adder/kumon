@@ -90,5 +90,3 @@ def test_prorated_cost_ex4():
     start_date = date(2017, 10, 7)
     monthly_cost = 115
     assert 102 == utils.prorated_cost(start_date, monthly_cost)
-
-

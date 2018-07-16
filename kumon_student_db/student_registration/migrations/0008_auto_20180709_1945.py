@@ -5,19 +5,17 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('student_registration', '0007_auto_20180709_1905'),
-    ]
+    dependencies = [("student_registration", "0007_auto_20180709_1905")]
 
     operations = [
         migrations.AlterField(
-            model_name='monthlycost',
-            name='cost',
+            model_name="monthlycost",
+            name="cost",
             field=models.DecimalField(decimal_places=2, max_digits=5),
         ),
         migrations.AlterField(
-            model_name='registrationcost',
-            name='cost',
+            model_name="registrationcost",
+            name="cost",
             field=models.DecimalField(decimal_places=2, max_digits=5),
         ),
     ]

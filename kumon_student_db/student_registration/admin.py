@@ -8,4 +8,3 @@ admin.site.register(models.WhyChoice)
 admin.site.register(models.HowChoice)
 admin.site.register(models.Parent)
 admin.site.register(models.Student)
-

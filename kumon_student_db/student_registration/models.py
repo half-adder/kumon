@@ -23,7 +23,10 @@ class MonthlyCost(models.Model):
         )
 
     def __str__(self):
-        return "Monthly Cost: %.2f, Effective Date: %s" % (float(self.cost), self.effective_date)
+        return "Monthly Cost: %.2f, Effective Date: %s" % (
+            float(self.cost),
+            self.effective_date,
+        )
         # return f"<Cost: {self.cost:d}>, <Date: {self.effective_date}>"
 
 
@@ -41,7 +44,10 @@ class RegistrationCost(models.Model):
         )
 
     def __str__(self):
-        return "Registration Cost: %.2f, Effective Date: %s" % (float(self.cost), self.effective_date)
+        return "Registration Cost: %.2f, Effective Date: %s" % (
+            float(self.cost),
+            self.effective_date,
+        )
 
 
 class WhyChoice(models.Model):
@@ -145,9 +151,7 @@ class Student(core_models.TimeStampedModel):
     # Computed fields
     @property
     def n_subjects(self):
-        return sum(
-            1 if lvl else 0 for lvl in [self.math_level, self.reading_level]
-        )
+        return sum(1 if lvl else 0 for lvl in [self.math_level, self.reading_level])
 
     @property
     def registration_cost(self):
@@ -193,7 +197,9 @@ class Student(core_models.TimeStampedModel):
 
     @property
     def total_signup_cost(self):
-        return float(self.registration_cost) + float(self.n_subjects * self.per_subject_cost)
+        return float(self.registration_cost) + float(
+            self.n_subjects * self.per_subject_cost
+        )
 
     @property
     def total_paid(self):

@@ -11,10 +11,7 @@ SECRET_KEY = env("DJANGO_SECRET_KEY")
 ALLOWED_HOSTS = env.list(
     "DJANGO_ALLOWED_HOSTS", default=["hoover-kumon.seanjohnsen.com"]
 )
-ALLOWED_HOSTS += [
-    'hoover-kumon.seanjohnsen.com',
-    'vast-ridge-13188.herokuapp.com',
-]
+ALLOWED_HOSTS += ["hoover-kumon.seanjohnsen.com", "vast-ridge-13188.herokuapp.com"]
 
 # DATABASES
 # ------------------------------------------------------------------------------
@@ -166,7 +163,7 @@ AWS_PRELOAD_METADATA = True
 # https://docs.sentry.io/clients/python/integrations/django/
 INSTALLED_APPS += ["raven.contrib.django.raven_compat"]  # noqa F405
 MIDDLEWARE = [
-    "raven.contrib.django.raven_compat.middleware.SentryResponseErrorIdMiddleware",
+    "raven.contrib.django.raven_compat.middleware.SentryResponseErrorIdMiddleware"
 ] + MIDDLEWARE
 
 # Sentry
@@ -224,6 +221,4 @@ RAVEN_CONFIG = {"dsn": SENTRY_DSN}
 # Whitenoise
 # ------------------------------------------------------------------------------
 # Whitenosie *HAS* to be *FIRST*
-MIDDLEWARE = [
-    'whitenoise.middleware.WhiteNoiseMiddleware',
-] + MIDDLEWARE
+MIDDLEWARE = ["whitenoise.middleware.WhiteNoiseMiddleware"] + MIDDLEWARE
