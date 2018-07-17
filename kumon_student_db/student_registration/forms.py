@@ -118,7 +118,7 @@ class StudentForm(forms.ModelForm):
 
     def save(self, commit=True):
         if self.is_valid():
-            instance = super().save(False)
+            instance = super().save()
 
             if self.cleaned_data.get("how_other", None):
                 new_how_choice = HowChoice(description=self.cleaned_data["how_other"])
@@ -129,7 +129,7 @@ class StudentForm(forms.ModelForm):
                 new_why_choice = WhyChoice(description=self.cleaned_data["why_other"])
                 new_why_choice.save()
                 self.instance.why_choices.add(new_why_choice)
-            self.save_m2m()
+
             return instance
 
         return super().save(commit)
