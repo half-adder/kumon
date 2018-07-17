@@ -1,10 +1,8 @@
 var chartHow = c3.generate({
     bindto: '#chart-how',
     data: {
-        columns: [
-            ['data1', 30,],
-            ['data2', 50,]
-        ],
+        url: '/registration/api/how_choice_data/',
+        mimeType: 'json',
         type: 'donut',
     },
 });
@@ -12,8 +10,8 @@ var chartHow = c3.generate({
 var chartWhy = c3.generate({
     bindto: '#chart-why',
     data: {
-        columns: [
-        ],
+        url: '/registration/api/why_choice_data/',
+        mimeType: 'json',
         type: 'donut',
     },
 });

@@ -77,5 +77,10 @@ def get_choice_data(request):
         'why_choice_counts': why_choice_counts
     })
 
+
 def how_choice_data(request):
     return JsonResponse(utils.get_choice_counts('how'))
+
+
+def why_choice_data(request):
+    return JsonResponse(utils.get_choice_counts('why'))

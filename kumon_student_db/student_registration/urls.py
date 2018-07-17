@@ -77,5 +77,6 @@ urlpatterns = [
     ),
     # API
     path("api/cost_info", api.get_cost_info, name="cost-info"),
-    path("api/how_choice_data", api.get_choice_data, name='choice-data'),
+    path("api/how_choice_data/", api.how_choice_data, name='choice-data'),
+    path("api/why_choice_data/", api.why_choice_data, name='choice-data'),
 ]
