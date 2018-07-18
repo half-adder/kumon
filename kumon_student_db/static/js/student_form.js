@@ -1,5 +1,4 @@
 $("document").ready(function() {
-
     // Relevant elements
     // Auto-generated elements
     let startDate = $('#id_start_date');
@@ -16,8 +15,11 @@ $("document").ready(function() {
     let totalCost = $('#total_cost');
 
     updateCosts();
+
     $(document).on("change keyup", '.cost-input', updateCosts);
 
+
+    // FUNCTIONS
     function updateCosts() {
         console.log("hello");
 
@@ -70,6 +72,8 @@ $("document").ready(function() {
             readingProratedCost.text(0);
         }
     }
+
+
 });
 
 

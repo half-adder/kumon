@@ -41,6 +41,7 @@ class StudentForm(forms.ModelForm):
         self.fields["registration_discount_percent"].label = "Reg. Discount %"
         self.fields["math_ppd"].label = "Math PPD"
         self.fields["reading_ppd"].label = "Reading PPD"
+        self.fields["phone"].data_mask = '(000) 000-0000'
 
         self.helper = FormHelper()
         cost_table_html = render_to_string(

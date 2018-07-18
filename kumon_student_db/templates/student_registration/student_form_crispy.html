@@ -7,9 +7,11 @@
 {% endblock %}
 
 {% block pagejs %}
+  <script src="{% static 'js/jquery.mask.min.js' %}"></script>
   <script>
     var costInfoURL = "{% url 'student_registration:cost-info' %}?";
   </script>
   <script src="{% static 'js/student_form.js' %}"></script>
+
 {% endblock %}
 

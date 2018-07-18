@@ -114,8 +114,8 @@ class Student(core_models.TimeStampedModel):
     # Contact Info
     name = models.CharField(max_length=100)
     parent_name = models.CharField(max_length=100)
-    email = models.EmailField()
-    phone = models.CharField(max_length=10)
+    email = models.EmailField(blank=True)
+    phone = models.CharField(max_length=14)
 
     # Kumon Info
     start_date = models.DateField()
