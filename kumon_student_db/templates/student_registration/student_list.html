@@ -2,8 +2,8 @@
 {% load static i18n %}
 {% block title %}Members{% endblock %}
 
-{% block content %}
-  <div class="container">
+{% block fluid-content %}
+  <div class="container-fluid">
     <h2>Students <a class="btn btn-outline-primary btn-sm" role="button" href="{% url 'student_registration:student-add' %}"
                     style="margin-top: 5px; margin-bottom: 15px;">+</a></h2>
     <table class="table table-hover table-sm" id="table_id">
@@ -11,7 +11,8 @@
       <tr>
         <th scope="col">Student</th>
         <th scope="col">Parent</th>
-        <th scope="col">Start Date</th>
+        <th scope="col">Email</th>
+        <th scope="col">Phone</th>
         <th scope="col">Primary Day</th>
         <th scope="col">Math Level</th>
         <th scope="col">Reading Level</th>
@@ -24,7 +25,8 @@
         <tr>
           <td><a href="{{ student.id }}">{{ student.name }}</a></td>
           <td>{{ student.parent_name }}</td>
-          <td>{{ student.start_date }}</td>
+          <td>{{ student.email }}</td>
+          <td>{{ student.phone }}</td>
           <td>{{ student.get_primary_day_display }}</td>
           <td>{{ student.math_level }}</td>
           <td>{{ student.reading_level }}</td>
@@ -34,7 +36,7 @@
       </tbody>
     </table>
   </div>
-{% endblock content %}
+{% endblock fluid-content %}
 
 {% block pagejs %}
   <script src="{% static 'js/student_list.js' %}"></script>
