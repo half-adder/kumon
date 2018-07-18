@@ -92,6 +92,7 @@ class Student(core_models.TimeStampedModel):
     )
 
     LEVEL_CHOICES = (
+        ("7a1", "7A1"),
         ("6a1", "6A1"),
         ("5a1", "5A1"),
         ("4a1", "4A1"),
@@ -105,10 +106,16 @@ class Student(core_models.TimeStampedModel):
         ("e1", "E1"),
     )
 
+    MATH_CHOICES = LEVEL_CHOICES[1:]
+    READING_CHOICES = LEVEL_CHOICES
+
+    PPD_CHOICES = ((5, 5), (10, 10), (20, 20))
+
     # Contact Info
     name = models.CharField(max_length=100)
     parent_name = models.CharField(max_length=100)
     email = models.EmailField()
+    phone = models.CharField(max_length=10)
 
     # Kumon Info
     start_date = models.DateField()
@@ -117,15 +124,18 @@ class Student(core_models.TimeStampedModel):
         max_length=utils.len_longest_ith_item(PRIMARY_DAY_CHOICES, 0),
     )
     math_level = models.CharField(
-        choices=LEVEL_CHOICES,
-        max_length=utils.len_longest_ith_item(LEVEL_CHOICES, 0),
+        choices=MATH_CHOICES,
+        max_length=utils.len_longest_ith_item(MATH_CHOICES, 0),
         blank=True,
     )
     reading_level = models.CharField(
-        choices=LEVEL_CHOICES,
-        max_length=utils.len_longest_ith_item(LEVEL_CHOICES, 0),
+        choices=READING_CHOICES,
+        max_length=utils.len_longest_ith_item(READING_CHOICES, 0),
         blank=True,
     )
+
+    math_ppd = models.IntegerField(choices=PPD_CHOICES, default=10)
+    reading_ppd = models.IntegerField(choices=PPD_CHOICES, default=10)
 
     why_choices = models.ManyToManyField(WhyChoice, blank=True)  # TODO: blank false
     how_choices = models.ManyToManyField(HowChoice, blank=True)  # TODO: blank false

@@ -39,6 +39,8 @@ class StudentForm(forms.ModelForm):
         super(StudentForm, self).__init__(*args, **kwargs)
 
         self.fields["registration_discount_percent"].label = "Reg. Discount %"
+        self.fields["math_ppd"].label = "Math PPD"
+        self.fields["reading_ppd"].label = "Reading PPD"
 
         self.helper = FormHelper()
         cost_table_html = render_to_string(
@@ -60,14 +62,19 @@ class StudentForm(forms.ModelForm):
                 Field("name", wrapper_class="col"),
                 Field("parent_name", wrapper_class="col"),
             ),
-            Row(Field("email", wrapper_class="col")),
+            Row(
+                Field("email", wrapper_class="col"),
+                Field("phone", wrapper_class="col"),
+            ),
             Row(
                 DateField("start_date", wrapper_class="col cost-input"),
                 Field("primary_day", wrapper_class="col cost-input"),
             ),
             Row(
                 Field("math_level", wrapper_class="col cost-input"),
+                Field("math_ppd", wrapper_class="col-2 cost-input"),
                 Field("reading_level", wrapper_class="col cost-input"),
+                Field("reading_ppd", wrapper_class="col-2 cost-input"),
             ),
             Row(
                 Field("how_choices", "", wrapper_class="col"),
