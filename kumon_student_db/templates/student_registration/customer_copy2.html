@@ -113,12 +113,12 @@
     <div class="col-2 text-center text-uppercase text-primary text-nowrap"
          style="border-right: 0px;">
       {% if student.math_level %}
-          10 PPD
+          {{ student.math_ppd }} PPD
       {% endif %}
     </div>
     <div class="col-2 text-center text-uppercase text-danger text-nowrap">
       {% if student.reading_level %}
-          10 PPD In Class
+          {{ student.reading_ppd }} PPD
       {% endif %}
     </div>
     <div class="col"></div>
