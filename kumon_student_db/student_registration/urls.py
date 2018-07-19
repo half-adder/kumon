@@ -75,6 +75,11 @@ urlpatterns = [
         views.WhyChoiceDeleteView.as_view(),
         name="why-choice-delete",
     ),
+    # Instructor Views
+    path("instructors/", views.instructor_list, name='instructor-list'),
+    path("instructors/create", views.InstructorCreate.as_view(), name='instructor-create'),
+    path("instructors/<int:pk>", views.InstructorUpdate.as_view(), name='instructor-update'),
+    path("instructors/<int:pk>/delete", views.InstructorDelete.as_view(), name='instructor-delete'),
     # API
     path("api/cost_info", api.get_cost_info, name="cost-info"),
     path("api/how_choice_data/", api.how_choice_data, name='choice-data'),

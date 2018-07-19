@@ -59,7 +59,11 @@ def customer_copy(request, pk):
 def choices(request):
     how_choices = models.HowChoice.objects.all()
     why_choices = models.WhyChoice.objects.all()
-    return render(request, template_name="student_registration/choices.html", context={'how_choices': how_choices, 'why_choices': why_choices})
+    return render(
+        request,
+        template_name="student_registration/choices.html",
+        context={"how_choices": how_choices, "why_choices": why_choices},
+    )
 
 
 class HowChoiceCreateView(CreateView):
@@ -142,3 +146,31 @@ class RegistrationCostDeleteView(DeleteView):
     model = models.RegistrationCost
     template_name = "student_registration/student_confirm_delete.html"
     success_url = reverse_lazy("student_registration:cost-list")
+
+
+def instructor_list(request):
+    return render(
+        request,
+        template_name="student_registration/instructor_list.html",
+        context={"instructors": models.Instructor.objects.all()},
+    )
+
+
+class InstructorCreate(CreateView):
+    model = models.Instructor
+    template_name = "student_registration/instructor_form.html"
+    success_url = reverse_lazy("student_registration:instructor-list")
+    queryset = models.Instructor.objects.all()
+
+
+class InstructorUpdate(UpdateView):
+    form_class = forms.InstructorForm
+    template_name = "student_registration/instructor_form.html"
+    success_url = reverse_lazy("student_registration:instructor-list")
+    queryset = models.Instructor.objects.all()
+
+
+class InstructorDelete(DeleteView):
+    model = models.Instructor
+    template_name = "student_registration/student_confirm_delete.html"
+    success_url = reverse_lazy("student_registration:instructor-list")

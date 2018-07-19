@@ -9,6 +9,13 @@ from kumon_student_db.student_registration import utils
 from kumon_student_db.core import models as core_models
 
 
+class Instructor(models.Model):
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
+
+
 class MonthlyCost(models.Model):
     cost = models.DecimalField(max_digits=5, decimal_places=2)
     effective_date = models.DateField(default=date.today)
@@ -116,6 +123,7 @@ class Student(core_models.TimeStampedModel):
     parent_name = models.CharField(max_length=100)
     email = models.EmailField(blank=True)
     phone = models.CharField(max_length=14)
+    instructor = models.ForeignKey(Instructor, on_delete=models.CASCADE, null=True)  # TODO: which on_delete method?
 
     # Kumon Info
     start_date = models.DateField()

@@ -99,6 +99,9 @@ class StudentForm(forms.ModelForm):
                 Field("check_paid", wrapper_class="col"),
             ),
             Row(Field("check_number", wrapper_class="col-3 ml-auto")),
+            Row(
+                Field("instructor", wrapper_class="col"),
+            ),
             FormActions(
                 Submit("submit", "Submit Changes"),
                 Button(
@@ -221,4 +224,37 @@ class HowChoiceForm(ChoiceForm):
 class WhyChoiceForm(ChoiceForm):
     class Meta:
         model = models.WhyChoice
+        fields = "__all__"
+
+
+class InstructorForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(InstructorForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        if self.instance.pk is not None:
+            delete_button = Button(
+                "delete",
+                "Delete",
+                onclick='window.location.href="delete"',
+                css_class="btn btn-outline-danger",
+            )
+        else:
+            delete_button = None
+        self.helper.layout = Layout(
+            Row(Field("name", wrapper_class="col")),
+            FormActions(
+                Submit("submit", "Submit"),
+                delete_button,
+                Button(
+                    "cancel",
+                    "Cancel",
+                    css_class="btn btn-outline-secondary",
+                    onclick="window.history.back()",
+                ),
+            ),
+        )
+
+    class Meta:
+        model = models.Instructor
         fields = "__all__"
