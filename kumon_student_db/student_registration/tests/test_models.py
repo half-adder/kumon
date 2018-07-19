@@ -14,23 +14,23 @@ def test_student_factory_creation():
 
 def test_student_0_subjects_if_na_for_both():
     student = factories.StudentFactory(
-        math_level=Student.LEVEL_CHOICES[0][0],
-        reading_level=Student.LEVEL_CHOICES[0][0],
+        math_level="",
+        reading_level="",
     )
     assert student.n_subjects == 0
 
 
 def test_student_1_subj_if_only_reg_math():
     student = factories.StudentFactory(
-        math_level=Student.LEVEL_CHOICES[1][0],
-        reading_level=Student.LEVEL_CHOICES[0][0],
+        math_level=Student.LEVEL_CHOICES[0][0],
+        reading_level="",
     )
     assert student.n_subjects == 1
 
 
 def test_student_1_subj_if_only_reg_reading():
     student = factories.StudentFactory(
-        math_level=Student.LEVEL_CHOICES[0][0],
+        math_level="",
         reading_level=Student.LEVEL_CHOICES[1][0],
     )
     assert student.n_subjects == 1
@@ -70,7 +70,7 @@ def test_6th_month_returns_date():
 def test_12th_month():
     student = factories.StudentFactory()
     delta = relativedelta(student.start_date, student.twelfth_month)
-    assert abs(delta.years * 12 + delta.months) == 12
+    assert delta.months == 0 and abs(delta.years) == 1
 
 
 def test_12th_month_returns_date():

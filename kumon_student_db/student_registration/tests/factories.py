@@ -34,13 +34,21 @@ class MonthlyCostFactory(factory.django.DjangoModelFactory):
     effective_date = date(1000, 1, 1)
 
 
+class InstructorFactory(factory.django.DjangoModelFactory):
+    name = factory.Faker("name")
+
+    class Meta:
+        model = models.Instructor
+
 class StudentFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = models.Student
 
-    first_name = factory.Faker("first_name")
-    last_name = factory.Faker("last_name")
-    parent = factory.SubFactory(ParentFactory)
+    name = factory.Faker("name")
+    parent_name = factory.Faker("name")
+    email = factory.Faker("email")
+    phone = "(205) 643-0304"
+    instructor = factory.SubFactory(InstructorFactory)
 
     start_date = fake.date_between(start_date="-5y", end_date="+5y")
     primary_day = "tues"
@@ -64,7 +72,7 @@ class StudentFactory(factory.django.DjangoModelFactory):
     check_paid = 0.0
     credit_paid = 0.0
 
-    check_number = "0790"
+    check_number = "1234"
 
     created = datetime.now()
     modified = datetime.now()
