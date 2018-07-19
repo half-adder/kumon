@@ -157,7 +157,7 @@ def instructor_list(request):
 
 
 class InstructorCreate(CreateView):
-    model = models.Instructor
+    form_class = forms.InstructorForm
     template_name = "student_registration/instructor_form.html"
     success_url = reverse_lazy("student_registration:instructor-list")
     queryset = models.Instructor.objects.all()
