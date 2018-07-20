@@ -24,3 +24,6 @@ django-phonenumber-field==2.0.0
 python-dateutil==2.7.3  # https://dateutil.readthedocs.io/en/stable/
 # Custom Admin (Django-Grapelli)
 django-grappelli==2.11.1
+django-tables2==1.21.2
+tablib==0.12.1
+django-filter==2.0.0

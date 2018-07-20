@@ -4,7 +4,7 @@ from kumon_student_db.student_registration import views, api
 app_name = "student_registration"
 urlpatterns = [
     # Students Views
-    path("students/", views.StudentList.as_view(), name="student-list"),
+    path("students/", views.student_list, name="student-list"),
     path("students/create", views.StudentCreate.as_view(), name="student-add"),
     path("students/<int:pk>/", views.StudentUpdate.as_view(), name="student-update"),
     path(

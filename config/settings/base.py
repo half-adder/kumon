@@ -68,6 +68,7 @@ THIRD_PARTY_APPS = [
     "allauth.socialaccount",
     "rest_framework",
     "phonenumber_field",
+    "django_tables2",
 ]
 LOCAL_APPS = [
     "kumon_student_db.users.apps.UsersAppConfig",
@@ -179,6 +180,7 @@ TEMPLATES = [
                 "django.template.context_processors.static",
                 "django.template.context_processors.tz",
                 "django.contrib.messages.context_processors.messages",
+                "django.template.context_processors.request",
             ],
         },
     }
@@ -225,3 +227,4 @@ SOCIALACCOUNT_ADAPTER = "kumon_student_db.users.adapters.SocialAccountAdapter"
 
 # Your stuff...
 # ------------------------------------------------------------------------------
+DJANGO_TABLES2_TEMPLATE = 'django_tables2/bootstrap.html'

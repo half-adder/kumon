@@ -4,37 +4,31 @@
 
 {% block fluid-content %}
   <div class="container-fluid">
-    <h2>Students <a class="btn btn-outline-primary btn-sm" role="button" href="{% url 'student_registration:student-add' %}"
+    <h2>Students <a class="btn btn-outline-primary btn-sm" role="button"
+                    href="{% url 'student_registration:student-add' %}"
                     style="margin-top: 5px; margin-bottom: 15px;">+</a></h2>
-    <table class="table table-hover table-sm" id="table_id">
-      <thead>
-      <tr>
-        <th scope="col">Student</th>
-        <th scope="col">Parent</th>
-        <th scope="col">Email</th>
-        <th scope="col">Phone</th>
-        <th scope="col">Primary Day</th>
-        <th scope="col">Math Level</th>
-        <th scope="col">Reading Level</th>
-        <th scope="col">Paid Off?</th>
-      </tr>
-      </thead>
-
-      <tbody>
-      {% for student in student_list %}
-        <tr>
-          <td><a href="{{ student.id }}">{{ student.name }}</a></td>
-          <td>{{ student.parent_name }}</td>
-          <td>{{ student.email }}</td>
-          <td>{{ student.phone }}</td>
-          <td>{{ student.get_primary_day_display }}</td>
-          <td>{{ student.math_level }}</td>
-          <td>{{ student.reading_level }}</td>
-          <td>{{ student.is_fully_paid }}</td>
-        </tr>
-      {% endfor %}
-      </tbody>
-    </table>
+    <form class="form-inline mb-2">
+      <div class="form-group">
+        <input type="text" class="form-control" id="id_student_name_input" placeholder="Name">
+        <input type="text" class="form-control ml-sm-3" id="id_student_name_input" placeholder="Parent Name">
+        <input type="text" class="form-control ml-sm-3" id="id_email_input" placeholder="Email">
+        <input type="text" class="form-control ml-sm-3" id="id_phone_input" placeholder="Phone">
+        <div class="form-check form-check-inline ml-sm-3">
+          <input class="form-check-input" type="checkbox" id="id_unpaid_checkbox" value="unpaid">
+          <label class="form-check-label" for="id_unpaid_checkbox">Unpaid</label>
+        </div>
+        <div class="form-check form-check-inline ml-sm-3">
+          <input class="form-check-input" type="checkbox" id="id_tuesday_checkbox" value="unpaid">
+          <label class="form-check-label" for="id_tuesday_checkbox">Tuesday</label>
+        </div>
+        <div class="form-check form-check-inline ml-sm-3">
+          <input class="form-check-input" type="checkbox" id="id_saturday_checkbox" value="unpaid">
+          <label class="form-check-label" for="id_saturday_checkbox">Saturday</label>
+        </div>
+      </div>
+    </form>
+    {% load render_table from django_tables2 %}
+    {% render_table table %}
   </div>
 {% endblock fluid-content %}
 

@@ -4,10 +4,20 @@ from django.views.generic import ListView
 from django.views.generic.edit import UpdateView, DeleteView, CreateView
 from django.http import HttpResponse
 
-from kumon_student_db.student_registration import models, forms
+from kumon_student_db.student_registration import models, forms, tables
 
 
 # Template Views
+def student_list(request):
+    table = tables.StudentTable(models.Student.objects.all())
+
+    return render(
+        request,
+        template_name="student_registration/student_list.html",
+        context={"table": table},
+    )
+
+
 class StudentList(ListView):
     model = models.Student
 
