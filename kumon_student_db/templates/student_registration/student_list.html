@@ -12,8 +12,31 @@
         <input type="text" class="form-control" id="id_custom_search" placeholder="Search">
       </div>
     </form>
-    {% load render_table from django_tables2 %}
-    {% render_table table %}
+    <table class="table table-hover table-sm" id="id_student_table">
+      <thead>
+      <tr>
+        <th scope="col">Student</th>
+        <th scope="col">Parent</th>
+        <th scope="col">Email</th>
+        <th scope="col">Phone</th>
+        <th scope="col">Total Cost</th>
+        <th scope="col">Total Paid</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      {% for student in student_list %}
+        <tr>
+          <td><a href="{{ student.id }}">{{ student.name }}</a></td>
+          <td>{{ student.parent_name }}</td>
+          <td>{{ student.email }}</td>
+          <td>{{ student.phone }}</td>
+          <td>${{ student.total_signup_cost }}</td>
+          <td>${{ student.total_paid }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
   </div>
 {% endblock fluid-content %}
 
