@@ -3,7 +3,15 @@ from kumon_student_db.student_registration import models
 
 
 class StudentTable(tables.Table):
-
     class Meta:
         model = models.Student
-        fields = ("name", "parent_name", "email", "phone", "start_date", )
+        fields = (
+            "name",
+            "parent_name",
+            "email",
+            "phone",
+            "start_date",
+            "total_signup_cost",
+            "total_paid",
+        )
+        attrs = {"id": "id_student_table", "class": "table table-striped"}

@@ -7,23 +7,12 @@
     <h2>Students <a class="btn btn-outline-primary btn-sm" role="button"
                     href="{% url 'student_registration:student-add' %}"
                     style="margin-top: 5px; margin-bottom: 15px;">+</a></h2>
-    <form class="form-inline mb-2">
+    <form class="form-inline mb-2" id="id_filter_form">
       <div class="form-group">
-        <input type="text" class="form-control" id="id_student_name_input" placeholder="Name">
-        <input type="text" class="form-control ml-sm-3" id="id_student_name_input" placeholder="Parent Name">
-        <input type="text" class="form-control ml-sm-3" id="id_email_input" placeholder="Email">
-        <input type="text" class="form-control ml-sm-3" id="id_phone_input" placeholder="Phone">
+        <input type="text" class="form-control" id="id_student_name_input" placeholder="Search">
         <div class="form-check form-check-inline ml-sm-3">
           <input class="form-check-input" type="checkbox" id="id_unpaid_checkbox" value="unpaid">
           <label class="form-check-label" for="id_unpaid_checkbox">Unpaid</label>
-        </div>
-        <div class="form-check form-check-inline ml-sm-3">
-          <input class="form-check-input" type="checkbox" id="id_tuesday_checkbox" value="unpaid">
-          <label class="form-check-label" for="id_tuesday_checkbox">Tuesday</label>
-        </div>
-        <div class="form-check form-check-inline ml-sm-3">
-          <input class="form-check-input" type="checkbox" id="id_saturday_checkbox" value="unpaid">
-          <label class="form-check-label" for="id_saturday_checkbox">Saturday</label>
         </div>
       </div>
     </form>
@@ -32,6 +21,7 @@
   </div>
 {% endblock fluid-content %}
 
-{% block pagejs %}
+{% block javascript %}
+  {{ block.super }}
   <script src="{% static 'js/student_list.js' %}"></script>
 {% endblock %}
