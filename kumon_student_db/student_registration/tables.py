@@ -14,4 +14,5 @@ class StudentTable(tables.Table):
             "total_signup_cost",
             "total_paid",
         )
-        attrs = {"id": "id_student_table", "class": "table table-striped"}
+        attrs = {"id": "id_student_table",}
+        orderable = False
