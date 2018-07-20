@@ -38,10 +38,18 @@ class StudentForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(StudentForm, self).__init__(*args, **kwargs)
 
-        self.fields["registration_discount_percent"].label = "Reg. Discount %"
-        self.fields["math_ppd"].label = "Math PPD"
-        self.fields["reading_ppd"].label = "Reading PPD"
-        self.fields["phone"].data_mask = '(000) 000-0000'
+        self.fields['registration_discount_percent'].initial = 100
+        self.fields['instructor'].initial = 1
+
+        custom_labels = {
+            "registration_discount_percent": "Reg. Discount %",
+            "math_ppd": "Math PPD",
+            "reading_ppd": "Reading PPD",
+            "debit_paid": "Bank Draft Paid",
+        }
+
+        for k, v in custom_labels.items():
+            self.fields[k].label = v
 
         self.helper = FormHelper()
         cost_table_html = render_to_string(
@@ -64,8 +72,7 @@ class StudentForm(forms.ModelForm):
                 Field("parent_name", wrapper_class="col"),
             ),
             Row(
-                Field("email", wrapper_class="col"),
-                Field("phone", wrapper_class="col"),
+                Field("email", wrapper_class="col"), Field("phone", wrapper_class="col")
             ),
             Row(
                 DateField("start_date", wrapper_class="col cost-input"),
@@ -87,7 +94,8 @@ class StudentForm(forms.ModelForm):
             ),
             Row(
                 Field(
-                    "registration_discount_percent", wrapper_class="col-3 cost-input"
+                    "registration_discount_percent",
+                    wrapper_class="col-3 cost-input",
                 ),
                 Field("registration_discount_reason", wrapper_class="col"),
             ),
@@ -99,9 +107,7 @@ class StudentForm(forms.ModelForm):
                 Field("check_paid", wrapper_class="col"),
             ),
             Row(Field("check_number", wrapper_class="col-3 ml-auto")),
-            Row(
-                Field("instructor", wrapper_class="col"),
-            ),
+            Row(Field("instructor", wrapper_class="col")),
             FormActions(
                 Submit("submit", "Submit Changes"),
                 Button(
@@ -228,7 +234,6 @@ class WhyChoiceForm(ChoiceForm):
 
 
 class InstructorForm(forms.ModelForm):
-
     def __init__(self, *args, **kwargs):
         super(InstructorForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()

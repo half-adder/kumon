@@ -10,7 +10,7 @@ from kumon_student_db.core import models as core_models
 
 
 class Instructor(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
 
     def __str__(self):
         return self.name
@@ -123,7 +123,7 @@ class Student(core_models.TimeStampedModel):
     parent_name = models.CharField(max_length=100)
     email = models.EmailField(blank=True)
     phone = models.CharField(max_length=14)
-    instructor = models.ForeignKey(Instructor, on_delete=models.CASCADE, null=True)  # TODO: which on_delete method?
+    instructor = models.ForeignKey(Instructor, on_delete=models.CASCADE)  # TODO: which on_delete method?
 
     # Kumon Info
     start_date = models.DateField()
