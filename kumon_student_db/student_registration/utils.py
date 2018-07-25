@@ -1,4 +1,5 @@
 import calendar
+import math
 from decimal import Decimal
 from datetime import date
 from django.db import connection
@@ -81,7 +82,7 @@ def prorated_cost(start_date: date, monthly_cost: Decimal) -> Decimal:
         start_date.year, start_date.month, calendar.SATURDAY
     ) + n_weekdays_in_month(start_date.year, start_date.month, calendar.TUESDAY)
 
-    return round((class_days_left / total_class_days) * float(monthly_cost))
+    return math.floor((class_days_left / total_class_days) * float(monthly_cost))
 
 
 def total_cost(start_date, monthly_cost, registration_cost, n_subjects) -> Decimal:
