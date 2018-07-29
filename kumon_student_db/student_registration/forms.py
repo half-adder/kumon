@@ -38,7 +38,7 @@ class StudentForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(StudentForm, self).__init__(*args, **kwargs)
 
-        self.fields['registration_discount_percent'].initial = 100
+        # self.fields['registration_discount_percent'].initial = 0
         self.fields['instructor'].initial = 1
 
         custom_labels = {

@@ -118,6 +118,8 @@ class Student(core_models.TimeStampedModel):
 
     PPD_CHOICES = ((5, 5), (10, 10), (20, 20))
 
+    REG_DISCOUNT_CHOICES = ((0, 0), (50, 50), (100, 100))
+
     # Contact Info
     name = models.CharField(max_length=100)
     parent_name = models.CharField(max_length=100)
@@ -149,12 +151,7 @@ class Student(core_models.TimeStampedModel):
     how_choices = models.ManyToManyField(HowChoice, blank=True)  # TODO: blank false
 
     # Payment Info
-    registration_discount_percent = core_models.SmallIntegerRangeField(
-        # TODO just make this a small integer field?
-        default=0,
-        min_value=0,
-        max_value=100,
-    )
+    registration_discount_percent = models.IntegerField(choices=REG_DISCOUNT_CHOICES, default=0)
     registration_discount_reason = models.CharField(max_length=500, blank=True)
 
     payment_date = models.DateField(auto_now_add=True)  # TODO: lookup auto_now_add
