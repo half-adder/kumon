@@ -6,7 +6,8 @@
   {% crispy form %}
 {% endblock %}
 
-{% block pagejs %}
+{% block javascript %}
+  {{ block.super }}
   <script src="{% static 'js/jquery.mask.min.js' %}"></script>
   <script>
     var costInfoURL = "{% url 'student_registration:cost-info' %}?";
