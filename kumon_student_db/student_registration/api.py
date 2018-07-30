@@ -84,3 +84,7 @@ def how_choice_data(request):
 
 def why_choice_data(request):
     return JsonResponse(utils.get_choice_counts('why'))
+
+
+def student_csv(request):
+    return utils.students_csv(request, models.Student.objects.all())

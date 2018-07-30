@@ -4,7 +4,7 @@ from django.views.generic import ListView
 from django.views.generic.edit import UpdateView, DeleteView, CreateView
 from django.http import HttpResponse
 
-from kumon_student_db.student_registration import models, forms, tables
+from kumon_student_db.student_registration import models, forms, tables, utils
 
 
 # Template Views
@@ -64,6 +64,8 @@ def choices(request):
         template_name="student_registration/choices.html",
         context={"how_choices": how_choices, "why_choices": why_choices},
     )
+
+
 
 
 class HowChoiceCreateView(CreateView):
@@ -174,3 +176,5 @@ class InstructorDelete(DeleteView):
     model = models.Instructor
     template_name = "student_registration/student_confirm_delete.html"
     success_url = reverse_lazy("student_registration:instructor-list")
+
+

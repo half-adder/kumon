@@ -227,6 +227,14 @@ class Student(core_models.TimeStampedModel):
     def get_absolute_url(self):
         return reverse("student-detail", kwargs={"pk": self.pk})
 
+    @property
+    def how_list_string(self):
+        return ", ".join([choice.description for choice in self.how_choices.all()])
+
+    @property
+    def why_list_string(self):
+        return ", ".join([choice.description for choice in self.why_choices.all()])
+
     def save(self, *args, **kwargs):
         if (
             self.registration_discount_percent < 0

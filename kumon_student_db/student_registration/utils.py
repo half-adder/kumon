@@ -1,8 +1,13 @@
 import calendar
+import datetime
 import math
 from decimal import Decimal
 from datetime import date
 from django.db import connection
+import csv
+
+from django.http import HttpResponse
+from pytz import timezone
 
 
 def flatten(l):
@@ -106,3 +111,48 @@ GROUP BY
             % {"thing": how_or_why}
         )
         return dict((col[0], [col[1]]) for col in c.fetchall())
+
+
+def students_csv(request, queryset):
+    headers = {
+        "name": "Name",
+        "parent_name": "Parent Name",
+        "email": "Email",
+        "phone": "Phone Number",
+        "instructor": "Instructor",
+        "start_date": "Start Date",
+        "sixth_month": "6th Month",
+        "twelfth_month": "12th Month",
+        "primary_day": "Primary Day",
+        "math_level": "Math Level",
+        "reading_level": "Reading Level",
+        "math_ppd": "Math PPD",
+        "reading_ppd": "Reading PPD",
+        "registration_discount_percent": "Reg. Discount %",
+        "registration_discount_reason": "Reg. Discount Reason",
+        "registration_cost": "Registration Cost",
+        "prorated_first_month_cost": "Prorated First Month Cost",
+        "monthly_cost": "Monthly Cost",
+        "total_signup_cost": "Total Signup Cost",
+        "payment_date": "Payment Date",
+        "cash_paid": "Cash Paid",
+        "credit_paid": "Credit Paid",
+        "debit_paid": "Bank Draft Paid",
+        "check_paid": "Check Paid",
+        "check_number": "Check Number",
+        "total_paid": "Total Paid",
+        "how_list_string": "How Choices",
+        "why_list_string": "Why Choices",
+    }
+
+    response = HttpResponse(content_type="text/csv")
+    tz = timezone('US/Central')
+    response["Content-Disposition"] = 'attachment; filename="students_%s.csv"' % datetime.datetime.now(tz).strftime('%Y-%m-%d %I_%M %p')
+
+    writer = csv.writer(response)
+    writer.writerow(headers.values())
+
+    for obj in queryset:
+        writer.writerow([getattr(obj, key) for key in headers.keys()])
+
+    return response

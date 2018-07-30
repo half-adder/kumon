@@ -4,9 +4,14 @@
 
 {% block fluid-content %}
   <div class="container-fluid">
-    <h2>Students <a class="btn btn-outline-primary btn-sm" role="button"
-                    href="{% url 'student_registration:student-add' %}"
-                    style="margin-top: 5px; margin-bottom: 15px;">+</a></h2>
+    <h2>Students
+    </h2>
+    <a class="btn btn-outline-primary btn-sm" role="button"
+       href="{% url 'student_registration:student-add' %}"
+       style="margin-top: 5px; margin-bottom: 15px;">Add Student</a>
+    <a class="btn btn-outline-primary btn-sm" role="button"
+       href="{% url 'student_registration:student-csv' %}"
+       style="margin-top: 5px; margin-bottom: 15px;">Download</a>
     <form class="form-inline">
       <div class="form-group mb-3">
         <input type="text" class="form-control" id="id_custom_search" placeholder="Search">
