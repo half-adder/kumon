@@ -4,7 +4,7 @@ from django.views.generic import ListView
 from django.views.generic.edit import UpdateView, DeleteView, CreateView
 from django.http import HttpResponse
 
-from kumon_student_db.student_registration import models, forms, tables, utils
+from kumon_student_db.student_registration import models, forms
 
 
 # Template Views
@@ -15,17 +15,27 @@ class StudentList(ListView):
 class StudentCreate(CreateView):
     form_class = forms.StudentForm
     template_name = "student_registration/student_form_crispy.html"
-    success_url = reverse_lazy("student_registration:student-list")
 
     def get_queryset(self):
         return models.Student.objects.all()
+
+    def get_success_url(self):
+        if "print" in self.request.POST:
+            return reverse_lazy("student_registration:customer-copy", kwargs={'pk': self.object.pk})
+        else:
+            return reverse_lazy("student_registration:student-list")
 
 
 class StudentUpdate(UpdateView):
     form_class = forms.StudentForm
     template_name = "student_registration/student_form_crispy.html"
-    success_url = reverse_lazy("student_registration:student-list")
     queryset = models.Student.objects.all()
+
+    def get_success_url(self):
+        if "print" in self.request.POST:
+            return reverse_lazy("student_registration:customer-copy", kwargs={'pk': self.object.pk})
+        else:
+            return reverse_lazy("student_registration:student-list")
 
 
 class StudentDelete(DeleteView):
@@ -64,8 +74,6 @@ def choices(request):
         template_name="student_registration/choices.html",
         context={"how_choices": how_choices, "why_choices": why_choices},
     )
-
-
 
 
 class HowChoiceCreateView(CreateView):
@@ -176,5 +184,3 @@ class InstructorDelete(DeleteView):
     model = models.Instructor
     template_name = "student_registration/student_confirm_delete.html"
     success_url = reverse_lazy("student_registration:instructor-list")
-
-

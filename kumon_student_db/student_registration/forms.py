@@ -110,11 +110,10 @@ class StudentForm(forms.ModelForm):
             Row(Field("instructor", wrapper_class="col")),
             FormActions(
                 Submit("submit", "Submit Changes"),
-                Button(
-                    "printout",
+                Submit(
+                    "print",
                     "Print",
                     css_class="btn btn-info",
-                    onclick="window.open('printout')",
                 ),
                 delete_button,
                 Button(
