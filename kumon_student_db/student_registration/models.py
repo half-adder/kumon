@@ -111,7 +111,9 @@ class Student(core_models.TimeStampedModel):
     parent_name = models.CharField(max_length=100)
     email = models.EmailField(blank=True)
     phone = models.CharField(max_length=14)
-    instructor = models.ForeignKey(Instructor, on_delete=models.CASCADE)  # TODO: which on_delete method?
+    instructor = models.ForeignKey(
+        Instructor, on_delete=models.CASCADE
+    )  # TODO: which on_delete method?
 
     # Kumon Info
     start_date = models.DateField()
@@ -137,7 +139,9 @@ class Student(core_models.TimeStampedModel):
     how_choices = models.ManyToManyField(HowChoice, blank=True)  # TODO: blank false
 
     # Payment Info
-    registration_discount_percent = models.IntegerField(choices=REG_DISCOUNT_CHOICES, default=0)
+    registration_discount_percent = models.IntegerField(
+        choices=REG_DISCOUNT_CHOICES, default=0
+    )
     registration_discount_reason = models.CharField(max_length=500, blank=True)
 
     payment_date = models.DateField(auto_now_add=True)  # TODO: lookup auto_now_add
@@ -231,3 +235,72 @@ class Student(core_models.TimeStampedModel):
 
     def __str__(self):
         return self.name
+
+
+class LobbyStudent(core_models.TimeStampedModel):
+
+    SUBJECT_ENROLLING_CHOICES = (("math", "Math"), ("reading", "Reading"))
+    GENDER_CHOICES = (("male", "Male"), ("female", "Female"))
+    GRADE_CHOICES = (
+        ("pk-3", "PK-3"),
+        ("pk-2", "PK-2"),
+        ("pk-1", "PK-1"),
+        ("k", "K"),
+        ("1", "1"),
+        ("2", "2"),
+        ("3", "3"),
+        ("4", "4"),
+        ("5", "5"),
+        ("6", "6"),
+        ("7", "7"),
+        ("8", "8"),
+        ("9", "9"),
+        ("10", "10"),
+        ("11", "11"),
+        ("12", "12"),
+        ("other", "other"),
+    )
+    PARENT_RELATION_CHOICES = (
+        ("mother", "Mother"),
+        ("father", "Father"),
+        ("other", "Other"),
+    )
+
+    next_five_years = [date.today().year + i for i in range(5)]
+    school_year_choices = ["%d - %d" % (year, year_plus_one) for year, year_plus_one in zip(next_five_years, map(lambda x: x+1, next_five_years))]
+    SCHOOL_YEAR_CHOICES = list(zip(school_year_choices, school_year_choices))
+
+    name = models.CharField(max_length=50)  # TODO: what length?
+    birth_date = models.DateField()
+    gender = models.CharField(choices=GENDER_CHOICES, max_length=10)
+    school_year = models.CharField(max_length=20)
+    grade = models.CharField(choices=GRADE_CHOICES, max_length=10)
+    home_address = models.CharField(max_length=100)
+    apt_or_suite = models.CharField(max_length=20)
+    student_city = models.CharField(max_length=100)
+    student_state_province = models.CharField(max_length=100)
+    student_zip_code = models.CharField(max_length=10)
+    phone_number = models.CharField(
+        max_length=14
+    )  # TODO: make this a real phone number field
+    student_email = models.EmailField()
+    school = models.CharField(max_length=100)
+
+    # Parent / Guardian
+    parent_relation = models.CharField(choices=PARENT_RELATION_CHOICES, max_length=10)
+    parent_name = models.CharField(max_length=100)
+    parent_address = models.CharField(max_length=100)
+    parent_apt_or_suite = models.CharField(max_length=100)
+    parent_home_phone_number = models.CharField(max_length=14)
+    parent_mobile_phone_number = models.CharField(max_length=10)
+    parent_email = models.EmailField()
+    parent_city = models.CharField(max_length=100)
+    parent_state_province = models.CharField(max_length=100)
+    parent_zip_code = models.CharField(max_length=10)
+
+    # Emergency Contact Info
+    emergency_name = models.CharField(max_length=100)
+    emergency_phone_number = models.CharField(max_length=10)
+
+    why_choices = models.ManyToManyField(WhyChoice, blank=True)
+    how_choices = models.ManyToManyField(HowChoice, blank=True)

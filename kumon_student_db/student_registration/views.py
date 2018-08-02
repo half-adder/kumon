@@ -7,7 +7,13 @@ from django.http import HttpResponse
 from kumon_student_db.student_registration import models, forms
 
 
-# Template Views
+class StudentApplicationCreate(CreateView):
+    form_class = forms.StudentApplicationForm
+    template_name = "student_registration/student_application_form.html"
+    queryset = models.LobbyStudent.objects.all()
+    success_url = reverse_lazy("student_registration:student-application-create")
+
+
 class StudentList(ListView):
     model = models.Student
 
@@ -21,7 +27,9 @@ class StudentCreate(CreateView):
 
     def get_success_url(self):
         if "print" in self.request.POST:
-            return reverse_lazy("student_registration:customer-copy", kwargs={'pk': self.object.pk})
+            return reverse_lazy(
+                "student_registration:customer-copy", kwargs={"pk": self.object.pk}
+            )
         else:
             return reverse_lazy("student_registration:student-list")
 
@@ -33,7 +41,9 @@ class StudentUpdate(UpdateView):
 
     def get_success_url(self):
         if "print" in self.request.POST:
-            return reverse_lazy("student_registration:customer-copy", kwargs={'pk': self.object.pk})
+            return reverse_lazy(
+                "student_registration:customer-copy", kwargs={"pk": self.object.pk}
+            )
         else:
             return reverse_lazy("student_registration:student-list")
 

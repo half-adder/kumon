@@ -3,6 +3,12 @@ from kumon_student_db.student_registration import views, api
 
 app_name = "student_registration"
 urlpatterns = [
+    # Student Application Views
+    path(
+        "student_applications/create",
+        views.StudentApplicationCreate.as_view(),
+        name="student-application-create",
+    ),
     # Students Views
     path("students/", views.StudentList.as_view(), name="student-list"),
     path("students/create", views.StudentCreate.as_view(), name="student-add"),
@@ -76,13 +82,23 @@ urlpatterns = [
         name="why-choice-delete",
     ),
     # Instructor Views
-    path("instructors/", views.instructor_list, name='instructor-list'),
-    path("instructors/create", views.InstructorCreate.as_view(), name='instructor-create'),
-    path("instructors/<int:pk>", views.InstructorUpdate.as_view(), name='instructor-update'),
-    path("instructors/<int:pk>/delete", views.InstructorDelete.as_view(), name='instructor-delete'),
+    path("instructors/", views.instructor_list, name="instructor-list"),
+    path(
+        "instructors/create", views.InstructorCreate.as_view(), name="instructor-create"
+    ),
+    path(
+        "instructors/<int:pk>",
+        views.InstructorUpdate.as_view(),
+        name="instructor-update",
+    ),
+    path(
+        "instructors/<int:pk>/delete",
+        views.InstructorDelete.as_view(),
+        name="instructor-delete",
+    ),
     # API
     path("api/cost_info", api.get_cost_info, name="cost-info"),
-    path("api/how_choice_data/", api.how_choice_data, name='choice-data'),
-    path("api/why_choice_data/", api.why_choice_data, name='choice-data'),
-    path("api/students_csv/", api.student_csv, name='student-csv'),
+    path("api/how_choice_data/", api.how_choice_data, name="choice-data"),
+    path("api/why_choice_data/", api.why_choice_data, name="choice-data"),
+    path("api/students_csv/", api.student_csv, name="student-csv"),
 ]
