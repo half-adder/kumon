@@ -75,20 +75,6 @@ class HowChoice(models.Model):
         return self.description
 
 
-class Parent(core_models.TimeStampedModel):
-    first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=30)
-    email_address = models.EmailField()
-    phone_number = PhoneNumberField(blank=False)
-
-    @property
-    def full_name(self):
-        return self.first_name + " " + self.last_name
-
-    def __str__(self):
-        return "%s %s" % (self.first_name, self.last_name)
-
-
 class Student(core_models.TimeStampedModel):
 
     # TODO: turn these choices to Enums
