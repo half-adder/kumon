@@ -5,9 +5,24 @@ app_name = "student_registration"
 urlpatterns = [
     # Student Application Views
     path(
+        "student_applications/",
+        views.StudentApplicationList.as_view(),
+        name="student-application-list",
+    ),
+    path(
         "student_applications/create",
         views.StudentApplicationCreate.as_view(),
         name="student-application-create",
+    ),
+    path(
+        "student_applications/<int:pk>/",
+        views.StudentApplicationUpdate.as_view(),
+        name="student-application-update",
+    ),
+    path(
+        "student_applications/<int:pk>/delete",
+        views.StudentApplicationDelete.as_view(),
+        name="student-application-delete",
     ),
     # Students Views
     path("students/", views.StudentList.as_view(), name="student-list"),

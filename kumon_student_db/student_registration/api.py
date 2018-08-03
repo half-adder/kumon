@@ -2,8 +2,10 @@ from dateutil import parser
 from decimal import Decimal
 
 from django.http import HttpResponse, JsonResponse
+from django.shortcuts import get_object_or_404, render_to_response, redirect
+from django.urls import reverse
 
-from kumon_student_db.student_registration import utils, models
+from kumon_student_db.student_registration import utils, models, forms, views
 
 
 def validate_request(request, allowed_methods, required_params):
@@ -70,21 +72,21 @@ def get_cost_info(request):
 
 
 def get_choice_data(request):
-    how_choice_counts = utils.get_choice_counts('how')
-    why_choice_counts = utils.get_choice_counts('why')
-    return JsonResponse({
-        'how_choice_counts': how_choice_counts,
-        'why_choice_counts': why_choice_counts
-    })
+    how_choice_counts = utils.get_choice_counts("how")
+    why_choice_counts = utils.get_choice_counts("why")
+    return JsonResponse(
+        {"how_choice_counts": how_choice_counts, "why_choice_counts": why_choice_counts}
+    )
 
 
 def how_choice_data(request):
-    return JsonResponse(utils.get_choice_counts('how'))
+    return JsonResponse(utils.get_choice_counts("how"))
 
 
 def why_choice_data(request):
-    return JsonResponse(utils.get_choice_counts('why'))
+    return JsonResponse(utils.get_choice_counts("why"))
 
 
 def student_csv(request):
     return utils.students_csv(request, models.Student.objects.all())
+

@@ -1,6 +1,5 @@
 $(document).ready(function () {
     $('.phone').mask('(000) 000-0000');
-    $('.birthdate').mask('00/00/0000', {placeholder: "MM/DD/YYYY"});
 
     let student_parent_address_ids = {
         // 'student_id': 'parent_id',

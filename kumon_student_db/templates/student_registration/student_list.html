@@ -4,8 +4,7 @@
 
 {% block fluid-content %}
   <div class="container-fluid">
-    <h2>Students
-    </h2>
+    <h2>Students</h2>
     <a class="btn btn-outline-primary btn-sm" role="button"
        href="{% url 'student_registration:student-add' %}"
        style="margin-top: 5px; margin-bottom: 15px;">Add Student</a>
@@ -17,31 +16,36 @@
         <input type="text" class="form-control" id="id_custom_search" placeholder="Search">
       </div>
     </form>
-    <table class="table table-hover table-sm" id="id_student_table">
-      <thead>
-      <tr>
-        <th scope="col">Student</th>
-        <th scope="col">Parent</th>
-        <th scope="col">Email</th>
-        <th scope="col">Phone</th>
-        <th scope="col">Total Cost</th>
-        <th scope="col">Total Paid</th>
-      </tr>
-      </thead>
-
-      <tbody>
-      {% for student in student_list %}
+    <div class="table-responsive">
+      <table class="table table-hover table-sm" id="id_student_table">
+        <thead class="thead-light">
         <tr>
-          <td><a href="{{ student.id }}">{{ student.name }}</a></td>
-          <td>{{ student.parent_name }}</td>
-          <td>{{ student.email }}</td>
-          <td>{{ student.phone }}</td>
-          <td>${{ student.total_signup_cost }}</td>
-          <td>${{ student.total_paid }}</td>
+          <th scope="col">Modified</th>
+          <th scope="col">Student</th>
+          <th scope="col">Parent</th>
+          <th scope="col">Email</th>
+          <th scope="col">Phone</th>
+          <th scope="col">Total Cost</th>
+          <th scope="col">Total Paid</th>
         </tr>
-      {% endfor %}
-      </tbody>
-    </table>
+        </thead>
+
+        <tbody>
+        {% for student in student_list %}
+          <tr>
+            <td>{{ student.modified | date:'Y-m-d h:i a' }}</td>
+            <td><a href="{{ student.id }}">{{ student.name }}</a></td>
+            <td>{{ student.parent_name }}</td>
+            <td>{{ student.email }}</td>
+            <td>{{ student.phone }}</td>
+            <td>${{ student.total_signup_cost }}</td>
+            <td>${{ student.total_paid }}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
   </div>
 {% endblock fluid-content %}
 

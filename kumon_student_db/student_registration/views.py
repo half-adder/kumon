@@ -1,3 +1,5 @@
+import logging
+
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView
@@ -5,6 +7,8 @@ from django.views.generic.edit import UpdateView, DeleteView, CreateView
 from django.http import HttpResponse
 
 from kumon_student_db.student_registration import models, forms
+
+logger = logging.getLogger(__name__)
 
 
 class StudentApplicationCreate(CreateView):
@@ -14,6 +18,24 @@ class StudentApplicationCreate(CreateView):
     success_url = reverse_lazy("student_registration:student-application-create")
 
 
+class StudentApplicationUpdate(UpdateView):
+    form_class = forms.StudentApplicationForm
+    template_name = "student_registration/student_application_form.html"
+    queryset = models.LobbyStudent.objects.all()
+    success_url = reverse_lazy("student_registration:student-application-list")
+
+
+class StudentApplicationDelete(DeleteView):
+    model = models.LobbyStudent
+    success_url = reverse_lazy("student_registration:student-application-list")
+    template_name = "student_registration/student_confirm_delete.html"
+
+
+class StudentApplicationList(ListView):
+    model = models.LobbyStudent
+    template_name = "student_registration/student_application_list.html"
+
+
 class StudentList(ListView):
     model = models.Student
 
@@ -21,9 +43,7 @@ class StudentList(ListView):
 class StudentCreate(CreateView):
     form_class = forms.StudentForm
     template_name = "student_registration/student_form_crispy.html"
-
-    def get_queryset(self):
-        return models.Student.objects.all()
+    queryset = models.Student.objects.all()
 
     def get_success_url(self):
         if "print" in self.request.POST:
@@ -32,6 +52,22 @@ class StudentCreate(CreateView):
             )
         else:
             return reverse_lazy("student_registration:student-list")
+
+    def get_initial(self):
+        if self.request.GET.get('app_id', ''):
+            app_obj = get_object_or_404(models.LobbyStudent, id=self.request.GET['app_id'])
+            return {
+                'name': app_obj.name,
+                'parent_name': app_obj.parent_name,
+                'email': app_obj.parent_email if app_obj.parent_email else app_obj.student_email,
+                'phone': app_obj.parent_mobile_phone_number if app_obj.parent_mobile_phone_number else app_obj.parent_home_phone_number,
+                'how_choices': app_obj.how_choices.all(),
+                'why_choices': app_obj.why_choices.all(),
+                'instructor': 1,
+                'application': self.request.GET['app_id']
+            }
+        else:
+            return {}
 
 
 class StudentUpdate(UpdateView):

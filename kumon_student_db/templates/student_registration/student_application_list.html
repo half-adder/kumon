@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load static i18n %}
+{% block title %}Members{% endblock %}
+
+{% block fluid-content %}
+  <h2>Student Applications</h2>
+  <a class="btn btn-outline-primary btn-sm" role="button"
+     href="{% url 'student_registration:student-application-create' %}"
+     style="margin-top: 5px; margin-bottom: 15px;">Application Form</a>
+  <a class="btn btn-outline-primary btn-sm" role="button"
+     href="{% url 'student_registration:student-csv' %}"
+     style="margin-top: 5px; margin-bottom: 15px;">Download</a>
+  <form class="form-inline">
+    <div class="form-group mb-3 mr-3">
+      <input type="text" class="form-control" id="id_custom_search" placeholder="Search">
+
+    </div>
+
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="checkbox" id="id_reg_toggle" value="option1" checked>
+      <label class="form-check-label" for="id_reg_toggle">Only show unregistered students</label>
+    </div>
+  </form>
+
+  <div class="table-responsive">
+    <table class="table table-sm table-hover" id="id_table">
+      <thead class="thead-light">
+      <tr>
+        <th scope="col">Modified</th>
+        <th scope="col">Register</th>
+        <th scope="col">Student Name</th>
+        <th scope="col">Birthday</th>
+        <th scope="col">School Year</th>
+        <th scope="col">Grade</th>
+        <th scope="col">School</th>
+        <th scope="col">Parent Name</th>
+        <th scope="col">Parent Home Phone</th>
+        <th scope="col">Parent Mobile Phone</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      {% for student in lobbystudent_list %}
+        <tr class="{{ student.is_registered|yesno:'reg,unreg' }}">
+          <td>{{ student.modified | date:'Y-m-d h:i a' }}</td>
+          <td><a href="{{ student.registration_link }}">Register</a></td>
+          <td><a href="{{ student.id }}">{{ student.name.title }}</a></td>
+          <td>{{ student.birth_date }}</td>
+          <td>{{ student.school_year }}</td>
+          <td>{{ student.grade.upper }}</td>
+          <td>{{ student.school.title }}</td>
+          <td>{{ student.parent_name.title }}</td>
+          <td>{{ student.parent_home_phone_number }}</td>
+          <td>{{ student.parent_mobile_phone_number }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+{% endblock %}
+
+{% block javascript %}
+  {{ block.super }}
+  <script src="{% static 'js/student_application_list.js' %}"></script>
+{% endblock %}

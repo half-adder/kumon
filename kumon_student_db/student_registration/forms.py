@@ -1,3 +1,4 @@
+import logging
 from datetime import date
 
 from crispy_forms.bootstrap import FormActions, PrependedText
@@ -41,8 +42,8 @@ class StudentForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(StudentForm, self).__init__(*args, **kwargs)
 
-        # self.fields['registration_discount_percent'].initial = 0
         self.fields["instructor"].initial = 1
+        # self.fields["application"].widget = forms.HiddenInput()
 
         custom_labels = {
             "registration_discount_percent": "Reg. Discount %",
@@ -89,8 +90,8 @@ class StudentForm(forms.ModelForm):
                 Field("reading_ppd", wrapper_class="col-2 cost-input"),
             ),
             Row(
-                Field("how_choices", "", wrapper_class="col"),
-                Field("why_choices", "", wrapper_class="col"),
+                Field("how_choices", wrapper_class="col"),
+                Field("why_choices", wrapper_class="col"),
             ),
             Row(
                 Field("how_other", wrapper_class="col"),
@@ -111,6 +112,7 @@ class StudentForm(forms.ModelForm):
             ),
             Row(Field("check_number", wrapper_class="col-3 ml-auto")),
             Row(Field("instructor", wrapper_class="col")),
+            Row(Field("application")),
             FormActions(
                 Submit("submit", "Submit Changes"),
                 Submit("print", "Print", css_class="btn btn-info"),
@@ -127,6 +129,7 @@ class StudentForm(forms.ModelForm):
     class Meta:
         date_input_ = forms.DateInput()
         date_input_.input_type = "date"
+
         model = models.Student
         fields = "__all__"
         widgets = {"start_date": date_input_}
@@ -170,6 +173,9 @@ class StudentApplicationForm(forms.ModelForm):
     class Meta:
         model = models.LobbyStudent
         fields = "__all__"
+        date_input_ = forms.DateInput()
+        date_input_.input_type = "date"
+        widgets = {"birth_date": date_input_}
 
     def __init__(self, *args, **kwargs):
         super(StudentApplicationForm, self).__init__(*args, **kwargs)
@@ -218,7 +224,7 @@ class StudentApplicationForm(forms.ModelForm):
             HTML("<h4>Student Info</h4><hr>"),
             Row(
                 Field("name", wrapper_class="col"),
-                Field("birth_date", wrapper_class="col", css_class="birthdate"),
+                DateField("birth_date", wrapper_class="col"),
             ),
             Row(
                 Field("gender", wrapper_class="col"),
@@ -242,6 +248,11 @@ class StudentApplicationForm(forms.ModelForm):
                 Field("parent_relation", wrapper_class="col-3"),
                 Field("parent_name", wrapper_class="col"),
             ),
+            Row(
+                Field("parent_email", wrapper_class="col"),
+                Field("parent_home_phone_number", wrapper_class="col", css_class="phone"),
+                Field("parent_mobile_phone_number", wrapper_class="col", css_class="phone"),
+            ),
             HTML(
                 """
                 <div class="form-check">
@@ -264,8 +275,8 @@ class StudentApplicationForm(forms.ModelForm):
             ),
             HTML("<hr>"),
             Row(
-                Field("how_choices", "", wrapper_class="col"),
-                Field("why_choices", "", wrapper_class="col"),
+                Field("how_choices", wrapper_class="col"),
+                Field("why_choices", wrapper_class="col"),
             ),
             Row(
                 Field("how_other", wrapper_class="col"),
@@ -298,7 +309,6 @@ class StudentApplicationForm(forms.ModelForm):
                 self.instance.why_choices.add(new_why_choice)
 
             return instance
-
         return super().save(commit)
 
 

@@ -1,4 +1,6 @@
 $("document").ready(function() {
+    $('.phone').mask('(000) 000-0000');
+
     // Relevant elements
     // Auto-generated elements
     let startDate = $('#id_start_date');
@@ -21,8 +23,6 @@ $("document").ready(function() {
 
     // FUNCTIONS
     function updateCosts() {
-        console.log("hello");
-
         let startDateText = getStartDateText();
         let nSubjects = getSubjectCount();
         let regDiscountInt = getRegDiscount();
