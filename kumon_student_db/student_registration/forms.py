@@ -43,7 +43,7 @@ class StudentForm(forms.ModelForm):
         super(StudentForm, self).__init__(*args, **kwargs)
 
         self.fields["instructor"].initial = 1
-        # self.fields["application"].widget = forms.HiddenInput()
+        self.fields["application"].widget = forms.HiddenInput()
 
         custom_labels = {
             "registration_discount_percent": "Reg. Discount %",
