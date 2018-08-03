@@ -116,4 +116,5 @@ urlpatterns = [
     path("api/how_choice_data/", api.how_choice_data, name="choice-data"),
     path("api/why_choice_data/", api.why_choice_data, name="choice-data"),
     path("api/students_csv/", api.student_csv, name="student-csv"),
+    path("api/student_applications_csv/", api.student_applications_csv, name="student-application-csv"),
 ]

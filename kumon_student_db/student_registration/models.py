@@ -150,7 +150,7 @@ class LobbyStudent(core_models.TimeStampedModel):
 
     @property
     def is_registered(self):
-        return hasattr(self, 'student')
+        return hasattr(self, "student")
 
     @property
     def registration_link(self):
@@ -160,6 +160,7 @@ class LobbyStudent(core_models.TimeStampedModel):
 
     def __str__(self):
         return "<Lobby Student: %s>" % self.name
+
 
 class Student(core_models.TimeStampedModel):
 
@@ -243,7 +244,9 @@ class Student(core_models.TimeStampedModel):
 
     check_number = models.CharField(max_length=50, blank=True)
 
-    application = models.OneToOneField(LobbyStudent, on_delete=models.CASCADE, null=True, blank=True)
+    application = models.OneToOneField(
+        LobbyStudent, on_delete=models.CASCADE, null=True, blank=True
+    )
 
     # Computed fields
     @property
@@ -327,4 +330,3 @@ class Student(core_models.TimeStampedModel):
 
     def __str__(self):
         return self.name
-

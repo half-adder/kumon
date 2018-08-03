@@ -156,3 +156,48 @@ def students_csv(request, queryset):
         writer.writerow([getattr(obj, key) for key in headers.keys()])
 
     return response
+
+
+def student_applications_csv(request, queryset):
+    headers = {
+        "name": "Name",
+        "birth_date": "Birth Date",
+        "gender": "Gender",
+        "school_year": "School Year",
+        "grade": "Grade",
+        "home_address": "Student Home Address",
+        "apt_or_suite": "Student Apt. or Suite",
+        "student_city": "Student City",
+        "student_state_province": "Student State / Province",
+        "student_zip_code": "Student Zip Code",
+        "phone_number": "Student Phone Number",
+        "student_email": "Student Email",
+        "school": "School",
+
+        "parent_relation": "Parent Relation",
+        "parent_name": "Parent Name",
+        "parent_home_phone_number": "Parent Home Phone",
+        "parent_email": "Parent Email",
+        "parent_mobile_phone_number": "Parent Mobile Phone",
+        "parent_address": "Parent Address",
+        "parent_apt_or_suite": "Parent Apt. or Suite",
+        "parent_city": "Parent City",
+        "parent_state_province": "Parent State / Province",
+        "parent_zip_code": "Parent Zip Code",
+
+        "emergency_name": "Emergency Name",
+        "emergency_phone_number": "Emergency Phone Number",
+        "is_registered": "Is Student Registered",
+    }
+
+    response = HttpResponse(content_type="text/csv")
+    tz = timezone('US/Central')
+    response["Content-Disposition"] = 'attachment; filename="student_applications_%s.csv"' % datetime.datetime.now(tz).strftime('%Y-%m-%d %I_%M %p')
+
+    writer = csv.writer(response)
+    writer.writerow(headers.values())
+
+    for obj in queryset:
+        writer.writerow([getattr(obj, key) for key in headers.keys()])
+
+    return response

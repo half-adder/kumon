@@ -90,3 +90,6 @@ def why_choice_data(request):
 def student_csv(request):
     return utils.students_csv(request, models.Student.objects.all())
 
+
+def student_applications_csv(request):
+    return utils.student_applications_csv(request, models.LobbyStudent.objects.all())

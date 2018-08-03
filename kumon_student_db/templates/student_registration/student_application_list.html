@@ -43,7 +43,11 @@
       {% for student in lobbystudent_list %}
         <tr class="{{ student.is_registered|yesno:'reg,unreg' }}">
           <td>{{ student.modified | date:'Y-m-d h:i a' }}</td>
-          <td><a href="{{ student.registration_link }}">Register</a></td>
+          {% if student.is_registered %}
+            <td>Registered</td>
+          {% else %}
+            <td><a href="{{ student.registration_link }}">Register</a></td>
+          {% endif %}
           <td><a href="{{ student.id }}">{{ student.name.title }}</a></td>
           <td>{{ student.birth_date }}</td>
           <td>{{ student.school_year }}</td>
