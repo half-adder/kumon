@@ -1,3 +1,4 @@
+import datetime
 import logging
 
 from django.shortcuts import render, get_object_or_404
@@ -105,10 +106,11 @@ def cost_list(request):
 
 def customer_copy(request, pk):
     student = get_object_or_404(models.Student, pk=pk)
+    time = datetime.date.today()
     return render(
         request,
         template_name="student_registration/customer_copy2.html",
-        context={"student": student},
+        context={"student": student, 'time': time},
     )
 
 

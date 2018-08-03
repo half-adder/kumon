@@ -97,7 +97,7 @@
     <div class="col-3 text-right">Tue, Sat, or Tue/Sat:</div>
     <div class="col-1 bordered text-center font-weight-bold" style="border-right: 0px;">
       {% if 'tues' in student.primary_day %}
-      X
+        X
       {% endif %}
     </div>
     <div class="col-1 bordered text-center font-weight-bold">
@@ -113,12 +113,12 @@
     <div class="col-2 text-center text-uppercase text-primary text-nowrap"
          style="border-right: 0px;">
       {% if student.math_level %}
-          {{ student.math_ppd }} PPD
+        {{ student.math_ppd }} PPD
       {% endif %}
     </div>
     <div class="col-2 text-center text-uppercase text-danger text-nowrap">
       {% if student.reading_level %}
-          {{ student.reading_ppd }} PPD
+        {{ student.reading_ppd }} PPD
       {% endif %}
     </div>
     <div class="col"></div>
@@ -144,7 +144,7 @@
     </div>
     <div class="col-1">
       {% if student.n_subjects == 2 %}
-      ${{ student.prorated_first_month_cost }}
+        ${{ student.prorated_first_month_cost }}
       {% endif %}
     </div>
   </div>
@@ -186,13 +186,11 @@
     <div class="col"></div>
     <div class="col"></div>
     <div class="col-1">
-      {% if student.n_subjects >= 1 %}
         ${{ student.per_subject_cost|add:student.registration_cost }}
-      {% endif %}
     </div>
     <div class="col-1">
-      {% if student.n_subjects == 2 %}
-        ${{ student.per_subject_cost|add:student.registration_cost }}
+      {% if student.n_subjects > 1 %}
+        ${{ student.per_subject_cost }}
       {% endif %}
     </div>
   </div>
@@ -201,7 +199,7 @@
     <div class="col"></div>
     <div class="col text-right">TOTAL Cost:</div>
     <div class="col-1 bordered" style="border-right: 0px;">
-        ${{ student.total_signup_cost }}
+      ${{ student.total_signup_cost }}
     </div>
     <div class="col-1 bordered"></div>
   </div>
@@ -249,7 +247,7 @@
     <div class="col-2 text-right">Signature:</div>
     <div class="col-5 underlined"></div>
     <div class="col-1 text-right">Date:</div>
-    <div class="col underlined text-center">8/11/2018</div>
+    <div class="col underlined text-center">{{ time }}</div>
     <div class="col"></div>
   </div>
 </div>
